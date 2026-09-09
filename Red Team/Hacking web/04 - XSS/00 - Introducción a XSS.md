@@ -11,8 +11,6 @@ Nota previa:
 Nota siguiente: "[[01 - XSS Almacenado]]"
 Area: "[[XSS.base|XSS]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">El `Cross-Site Scripting` (XSS) explota un fallo en la sanitización de la entrada del usuario para "escribir" código JavaScript en la página y ejecutarlo en el lado cliente</mark>. Una web normal recibe el HTML del servidor y lo renderiza en el navegador; si la app no sanea la entrada, un atacante inyecta JS extra en un campo (un comentario, un nombre) y, cuando otro usuario carga esa página, ejecuta el código malicioso sin saberlo.
 
 # El riesgo: cliente, no servidor

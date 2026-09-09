@@ -11,12 +11,12 @@
   "colored-tags",
   "file-explorer-note-count",
   "code-styler",
-  "highlightr-plugin",
   "obsidian-tasks-plugin",
   "file-explorer-plus",
   "templater-obsidian",
   "dataview",
   "folder-links",
   "better-export-pdf",
-  "homepage"
+  "homepage",
+  "highlightr-plugin"
 ]

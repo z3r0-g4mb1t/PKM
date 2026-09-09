@@ -5,13 +5,13 @@ description: Use when extracting content from a HackTheBox Academy module to cre
 
 # Workflow de extracción HTB Academy → notas del PKM
 
-Activar este skill **antes** de tocar el navegador, antes de crear cualquier nota nueva y antes de modificar carpetas del vault (`Red Team/`, `Redes/`, `Ingenieria/`, `02 - Recursos/🛠️ Tools/`…). Aplica a **cualquier** path HTB (CWES/CWEE web o CPTS de red/infra), no solo web.
+Activar este skill **antes** de tocar el navegador, antes de crear cualquier nota nueva y antes de modificar carpetas del vault (`Red Team/`, `Redes/`, `Ingenieria/`, `02 - Recursos/🛠️ Tools/`…). Aplica a **cualquier** path HTB (CWES/CWEE web o CPTS de red/infra o CDSA), no solo web.
 
 ## Precondiciones
 
 1. El usuario tiene sesión iniciada en `academy.hackthebox.com` en su navegador Chrome.
 2. **Obsidian está abierto en el vault** del PKM (requisito para que la CLI de Obsidian responda a comandos en lugar de simplemente lanzar la app).
-3. **Extracción de contenido**: método principal = skill `claude-in-chrome` sobre el **Chrome ya logueado** del usuario + `fetch` a la **API interna de HTB** desde la pestaña (devuelve markdown limpio; endpoints en 0.2 y 1.1). Playwright MCP o `agent-browser` son alternativas si `claude-in-chrome` no está disponible.
+3. **Extracción de contenido**: método principal = skill `claude-in-chrome` sobre el **Chrome ya logueado** del usuario + `fetch` a la **API interna de HTB** desde la pestaña (devuelve markdown limpio; endpoints en 0.2 y 1.1). Playwright MCP o `agent-browser` (para ello cargar su agent skills correspondiente) son alternativas si `claude-in-chrome` no está disponible.
 4. Conoces el mapeo módulo → carpeta de `CLAUDE.md` (sección "Mapeo módulos HTB → carpetas del PKM"). **Releer ese mapeo** antes de empezar; carpetas pueden haber cambiado entre sesiones.
 
 ## Pasos obligatorios — 3 fases iterativas
@@ -22,7 +22,7 @@ La extracción de un módulo HTB se descompone en **Fase 0 (planificación) + Fa
 
 Un módulo net-new terminado contiene, **además** de las notas de capítulo, los **3 ejes del vault** (principio completo en CLAUDE.md § "Estándares de calidad — los 3 ejes"). No dependen de que el usuario los recuerde: se planifican en Fase 0.3 y se verifican en Fase 3.
 
-- **Eje 1 — Investigar y profundizar SIEMPRE (2026)** (disciplina y jerarquía de fuentes → skill `pkm-research`): para **todo** contenido de **todo** módulo (no solo los desfasados), contrastar cada técnica/flag/herramienta con **fuentes oficiales y de confianza** y el estado del arte, para explicar mejor, profundizar y ampliar. Cuando además algo esté obsoleto, **modernizarlo** hacia los estándares de seguridad y explotación actuales. Se integra en el cuerpo de cada nota (Fase 1.2).
+- **Eje 1 — Investigar y profundizar SIEMPRE (2026)** (disciplina y jerarquía de fuentes → skill `pkm-research`): para **todo** contenido de **todo** módulo (no solo los desfasados), contrastar cada técnica/flag/herramienta con **fuentes oficiales y de confianza** y el estado del arte, para explicar mejor, profundizar y ampliar. Cuando además algo esté obsoleto, **modernizarlo** hacia los estándares de seguridad, explotación y defensa actuales. Se integra en el cuerpo de cada nota (Fase 1.2).
 - **Eje 4 — Fuentes citadas**: contenido externo con fuentes actuales de referencia y **atribución por-fuente** (ver `pkm-note-format` § Fuentes). Se integra en el cuerpo.
 - **Eje 2 — `Detección y evasión`** y **Eje 3 — `Arsenal de herramientas`**: **notas dedicadas** net-new.
 
@@ -33,8 +33,10 @@ Un módulo net-new terminado contiene, **además** de las notas de capítulo, lo
 
 Contenido de cada deliverable:
 
-- **`Detección y evasión`**: cómo se detecta el ataque/técnica hoy (telemetría/logs que deja el atacante: EDR/IDS/IPS, WAF, SIEM) y cómo se evade en entornos reales (timing, fragmentación, decoys, living-off-the-land, blending). **Más a fondo que HTB**, con técnicas y herramientas profesionales actuales.
-- **`Arsenal de herramientas`**: tras entender la vuln/técnica a bajo nivel, el set profesional actual para **automatizar/asistir detección, evasión, explotación y registro**, con el *cómo* (comando de ejemplo, cuándo usar cada una, alternativa a la de HTB). Orientado a jornadas reales de pentest / bug bounty.
+- **`Detección y evasión`**: 
+  - Para la perspectiva de Red Team: cómo se detecta el ataque/técnica hoy (telemetría/logs que deja el atacante: EDR/IDS/IPS, WAF, SIEM) y cómo se evade en entornos reales (timing, fragmentación, decoys, living-off-the-land, blending). **Más a fondo que HTB**, con técnicas y herramientas profesionales actuales.
+  - Para la perspectiva de Blue Team: cómo se detecta el ataque/técnica hoy (más en profundidad, ya que nosotros somos los que vamos a manejar/configurar esos sistemas de detección, por lo que no nos vale con saber que un EDR ddetecta X cosa, si no que debemos conocer y saber cómo hacer para que nuestro EDR dedtecte eso y mucho más). Cómo se detecta e impide la evasión en entornos reales (y cómo se va un paso más allá para ahcer el sistema más eficiente y seguro, que detecte más cosas y de menos falsos positivos). **Más a fondo que HTB**, con técnicas y herramientas profesionales actuales.
+- **`Arsenal de herramientas`**: tras entender la vuln/técnica o la estrategia/técnica de ddefensa a bajo nivel, el set profesional actual para **automatizar/asistir detección, evasión, explotación, registro, acción tras detección y eficiencia de defensa** (recordar que blue team y red team tienen filosofías distintas y búsquedas de objetivos distintas), con el *cómo* (comando de ejemplo, cuándo usar cada una, alternativa a la de HTB). Orientado a jornadas reales de pentest / bug bounty / blue team.
 
 ### Fase 0 — Planificación (una vez por módulo)
 
@@ -107,12 +109,13 @@ fetch(`/api/v2/modules/<módulo>/sections/<id>?language=en`).then(r => r.json())
    - CVE famosas o hallazgos reales de bug bounty que ilustran el concepto.
    - Diagramas/tablas comparativas cuando expliquen mejor que un párrafo denso.
    - Definiciones de conceptos asumidos por el original.
-   - **Eje 4 — fuentes**: al añadir contenido externo, citar fuentes **actuales y de referencia** (PortSwigger, HackTricks, nmap.org, SANS, RFCs, advisories, blogs recientes) con **atribución por-fuente** en el texto (ver `pkm-note-format` § Fuentes).
+   - Técnicas o claves de detección actualizadas o modernas
+   - **Eje 4 — fuentes**: al añadir contenido externo, citar fuentes **actuales y de referencia** (PortSwigger, HackTricks, nmap.org, SANS, RFCs, advisories, blogs recientes, ...) con **atribución por-fuente** en el texto (ver `pkm-note-format` § Fuentes).
 4. **Densidad 1000–1500 palabras de teoría** (excluyendo callouts/código/enlaces/sintaxis). Si el capítulo era corto y no hay nada significativo que enriquecer → fusionar con el siguiente. Si es enorme → dividir.
 5. **Formato del PKM** (ver `pkm-note-format` skill):
    - Frontmatter completo con `Area` apuntando al **`.base` Level 2** del sub-tema, nunca al Level 1.
-   - Marks con colores semánticos: 4–8 por nota.
-   - Callouts (`> [!important]+`, `> [!warning]+`, `> [!success]+`, `> [!info]+`).
+   - Marks con colores semánticos.
+   - Callouts (`> [!important]+`, `> [!warning]+`, `> [!success]+`, `> [!info]+`, ...).
    - Bloques de código con lenguaje declarado: ` ```shell-session `, ` ```html `, ` ```javascript `, ` ```sql `, ` ```http `, etc.
    - Imágenes HTB por URL pública sólo si aportan valor real.
    - Tablas para comparativas (≤8 filas).
@@ -130,14 +133,16 @@ Antes de pasar al siguiente capítulo:
 
 Aplica **siempre**, también al primer módulo del path aunque haya poco PKM con el que cruzar. **No se omite** aunque ya hayas enlazado oportunísticamente durante Fases 1 y 2 — esta es la pasada explícita y exhaustiva.
 
-1. **Revisión cruzada con TODO el PKM**: para cada nota del módulo recién terminado, buscar enlaces a notas de **todas las áreas relevantes**, no solo el sub-tema actual — otros módulos del path, otros sub-temas de `Hacking web/`, `Pentesting/`, `Redes/`, `Ingenieria/` y herramientas en `Tools/`, lo que aplique. Herramientas:
+1. **Revisión cruzada con TODO el PKM**: para cada nota del módulo recién terminado, buscar enlaces a notas de **todas las áreas relevantes**, no solo el sub-tema actual — otros módulos del path, otros sub-temas de `Hacking web/`, `Pentesting/`, `Redes/`, `Ingenieria/`, `Blue Team/` y herramientas en `Tools/`, lo que aplique. Herramientas:
    - `obsidian backlinks file="<nota>"` para ver qué le apunta hoy.
    - `obsidian search:context "<concepto>"` para localizar menciones repartidas.
    - `Grep` rápido sobre el vault con la lista de conceptos clave del módulo.
 2. **Integrar los enlaces** en el cuerpo reescribiendo párrafos si hace falta. No basta con añadir `[[X]]` sueltos — la referencia debe tener sentido en el flujo.
 3. **Mejorar redacción a nivel global del módulo**: detectar repeticiones entre capítulos, ajustar definiciones que ahora se ven incoherentes, refinar la cadena `prev`/`next` si el orden óptimo cambió tras escribir todo.
 4. **Actualizar la MOC `.base` Level 2** del sub-tema (filtro, columnas, vistas). Si apareció un sub-tema nuevo, comprobar también el Level 1 (`Web Pentesting.base` o el que toque).
-5. **Verificar los deliverables de los 3 ejes**: existen `Detección y evasión` y `Arsenal de herramientas` (notas dedicadas net-new, o contenido modernizado si HTB ya cubría el tema). Si falta alguno → no cerrar el módulo.
+5. **Verificar los deliverables de los 3 ejes**: existen `Detección y evasión` y `Arsenal de herramientas` (notas dedicadas net-new, o contenido modernizado si HTB ya cubría el tema). Si falta alguno → no cerrar el módulo. Recordar que para `Blue Team/`, el concepto de `Detección y evasión` es distinto que para `Red Team/`, se plantea la misma sección pero desde 2 perspectivas y lados complétamente distintos. 
+   - Para `Red Team/`, dicha sección significa y responde a preguntas como: "¿cómo puedo evadir los sistemas ded defesa?", "¿cómo puedo detectar si hay un sistema de defensa (o varios)?", "¿cómo puedo detectar más información del sistema que estoy auditando (fase de enumeraión enriquecida)?", etc.
+   - Para `Blue Team/`, dicha sección significa y responde a preguntas como: "¿cómo podemos detectar si alguien está intentando atacar el sistema (detección enriquecida, smeels que indican que "algo raro" está pasando)?", "¿cómo podemos detectar si alguien a evadido o está intentando evadir la defensa?", "¿cómo mejorar la detección y hacer más difícil la evasión por parte de un atacante?", etc.
 6. **Reportar al usuario** al cierre:
    - Notas creadas (rutas absolutas).
    - Carpetas creadas.

@@ -157,7 +157,7 @@ Estados: `[ ]` pendiente · `[/]` en progreso · `[x]` hecha · `[-]` cancelada.
 - [/] Semana 4 · SSRF + SSTI/SSI/XSLT [[SSRF.base]] 🛫 2026-08-18 📅 2026-08-24 [esfuerzo:: 8h]
 - [ ] Semana 5 · Authentication básico + GraphQL [[Authentication.base]] 🛫 2026-08-25 📅 2026-08-31 [esfuerzo:: 24h]
 - [ ] Semana 6 · API Attacks + Web Attacks [[API Attacks.base]] 🛫 2026-09-01 📅 2026-09-07 [esfuerzo:: 24h]
-- [ ] Semana 7 · XSS avanzado + SQLi Blind [[XSS Avanzado.base]] 🛫 2026-09-08 📅 2026-09-14 [esfuerzo:: 24h]
+- [/] Semana 7 · XSS avanzado + SQLi Blind [[XSS Avanzado.base]] 🛫 2026-09-08 📅 2026-09-14 [esfuerzo:: 24h]
 - [ ] Semana 8 · Authentication avanzado + NoSQLi [[Authentication Avanzado.base]] 🛫 2026-09-15 📅 2026-09-21 [esfuerzo:: 16h]
 
 ## Ejes

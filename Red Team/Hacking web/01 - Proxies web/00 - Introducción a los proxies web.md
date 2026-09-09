@@ -11,8 +11,6 @@ Nota previa:
 Nota siguiente: "[[01 - Instalación y configuración del proxy]]"
 Area: "[[Proxies web.base|Proxies web]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">Un `web proxy` es una herramienta que se sitúa entre el navegador (o app móvil) y el servidor back-end para capturar, ver y manipular todo el tráfico web que pasa entre ambos</mark> — un `man-in-the-middle` controlado por ti. Es **la** herramienta del pentester web: casi todo lo que hace este PKM —[[00 - Introducción a XSS|XSS]], [[01 - Detección de SQL Injection|SQLi]], [[01 - Introducción a JWT|JWT]]— se ejecuta a través de un proxy.
 
 A diferencia de un sniffer de red como [[Wireshark]] (que analiza **todo** el tráfico de la interfaz), el web proxy trabaja sobre los puertos web (`HTTP/80`, `HTTPS/443`) y entiende la semántica HTTP: te deja **pausar** una petición, editarla y observar cómo reacciona el back-end. Esa capacidad de interceptar-modificar-reenviar es la base de todo el testing manual.

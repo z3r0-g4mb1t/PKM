@@ -13,7 +13,7 @@ Aplicar **siempre** que se cree o modifique una nota `.md` dentro del vault `C:\
 ---
 tags:
   - <tag-primario>
-  - <tag-fase-pentesting>
+  - <tag-fase-pentesting> o <tag-específico-blue-team>
   - <Tipo/…>                     # solo si NO es una nota de técnica
 Descripción: "<una frase, ≤180 caracteres, sin punto final>"
 Fecha de actualización: YYYY-MM-DD
@@ -21,14 +21,9 @@ Nota previa: "[[<nota anterior o vacío>]]"
 Nota siguiente: "[[<nota siguiente o vacío>]]"
 Area: "[[<MOC>.base|<MOC alias>]]"
 ---
----
 
 <contenido>
 ```
-
-Las dos líneas `---` consecutivas tras el frontmatter son intencionales:
-- La primera cierra el YAML.
-- La segunda es regla horizontal visible que separa metadatos de contenido.
 
 ### Campos del frontmatter
 
@@ -39,7 +34,7 @@ Las dos líneas `---` consecutivas tras el frontmatter son intencionales:
   - Fase del pentest: `Pentesting/Enumeracion`, `Pentesting/Explotacion`, `Pentesting/Post-Explotacion`, `Pentesting/Reporting`.
   - Tema específico: `XSS`, `SQLi`, `Fuzzing`, `Introduccion`.
 - **`Descripción`**: **obligatoria**. Una frase de ≤180 caracteres, **sin punto final**, que diga qué resuelve la nota — es la columna que hace legibles los 124 índices `.base`; sin ella el nombre del fichero es lo único que distingue una nota de otra. Entre comillas dobles, con las comillas internas en simple. No repetir el título: si la nota se llama `03 - XSS basado en DOM`, la descripción dice *qué es* y *cuándo importa*, no "nota sobre XSS basado en DOM".
-- **`tags` de tipo (`Tipo/…`)**: eje ortogonal que marca la **clase** de nota. Solo cuatro valores y **solo para la excepción**: `Tipo/Introduccion` (puerta de entrada del sub-tema), `Tipo/Deteccion` (detección y evasión), `Tipo/Defensa` (prevención/mitigación/hardening), `Tipo/Arsenal` (herramientas del tema). **Una nota de técnica o payload NO lleva `Tipo/`** — es el caso por defecto. Estos tags alimentan las vistas transversales de los Level 0.
+- **`tags` de tipo (`Tipo/…`)**: eje ortogonal que marca la **clase** de nota. Solo cuatro valores y **solo para la excepción**: `Tipo/Introduccion` (puerta de entrada del sub-tema), `Tipo/Deteccion` (detección y evasión), `Tipo/Defensa` (prevención/mitigación/hardening), `Tipo/Arsenal` (herramientas del tema). **Una nota de técnica o payload NO lleva `Tipo/`** — es el caso por defecto. Estos tags alimentan las vistas transversales de los Level 0. Siempre se pueden crear nuevas sub-tags bajo la de `Tipo/`, a medida que crece el PKM y los temas.
 - **`Fecha de actualización`**: formato estricto `YYYY-MM-DD`. Hoy = obtener fecha del sistema.
 - **`Nota previa`**: nombre EXACTO de la nota anterior en la cadena Zettelkasten, entre `"[[ ]]"`. Vacío sin comillas si es la primera del tema.
 - **`Nota siguiente`**: ídem para la siguiente. Vacío si es la última.
@@ -60,12 +55,11 @@ Sintaxis: `<mark style="background: #HEXVALUE;">texto</mark>`
 | Azul claro | `#ADCCFFA6` | Definir un concepto / "qué es X" | `<mark style="background: #ADCCFFA6;">FFUF es un fuzzer web escrito en Go</mark>` |
 | Rosa claro | `#FFB8EBA6` | Matices, condiciones, detalles importantes pero secundarios | `<mark style="background: #FFB8EBA6;">se encuentran muy comúnmente</mark>` |
 | Naranja | `#FFB86CA6` | Impacto, criticidad, lo que el atacante consigue | `<mark style="background: #FFB86CA6;">ejecuta el código JavaScript malicioso</mark>` |
-| Morado | `#8000E1A6` | Reformulación o consecuencia destacable, "esto significa que…" | `<mark style="background: #8000E1A6;">puede afectar a cualquier usuario</mark>` |
-| Coral-rojo | `#FF5582A6` | Hallazgo accionable / "esto importa para los próximos pasos" | `<mark style="background: #FF5582A6;">posible punto de entrada</mark>` |
+| Violeta claro | `#B163FF` | Reformulación o consecuencia destacable, "esto significa que…" | `<mark style="background: #8000E1A6;">puede afectar a cualquier usuario</mark>` |
+| Coral-rojo | `#FF5582A6` | Hallazgo accionable / "esto importa para los próximos pasos" o un resultado o error o cosa crítica | `<mark style="background: #FF5582A6;">posible punto de entrada</mark>` |
 
 **Reglas de densidad**:
-- Nota de 1000–1500 palabras → 4–8 marks total.
-- Más de 10 marks por nota → estás marcando ruido. Reducir.
+- Nota de 1000–1500 palabras → 8-15 marks total. No es es un intervalo estricto, es orientativo, pero no pasaría si se quedase por debajo o por arriba.
 - No marcar oraciones completas; marcar la frase/cláusula clave.
 
 ## Callouts (Obsidian)
@@ -87,6 +81,9 @@ Sintaxis `> [!tipo]+` (expandido) o `> [!tipo]-` (colapsado). Tipos usados:
 
 > [!example]+
 > Ejemplo extenso de payload, comando o flujo.
+
+> [!danger]+ o [!error]+
+> Algo crítico que no se deba a hacer o con lo que se deba tener mucho cuidado, porque si no tiene consecuencias.
 ```
 
 **Las palabras dentro de callouts NO cuentan** para la métrica 1000–1500 de teoría.
@@ -98,6 +95,7 @@ Lenguaje declarado siempre:
 | Contenido | Tag |
 | - | - |
 | Comandos shell (con `$` o `#`) | `shell-session` |
+| Comandos dde windows o Powershell | `powershell` |
 | HTML | `html` |
 | JavaScript | `javascript` o `js` |
 | TypeScript | `typescript` o `ts` |
@@ -110,6 +108,7 @@ Lenguaje declarado siempre:
 | JSON | `json` |
 | XML | `xml` |
 | YAML | `yaml` |
+| C, C++ y C# | `c`, `c++`, `c#` |
 | GraphQL | `graphql` |
 | Salida sin formato | `text` o sin tag |
 

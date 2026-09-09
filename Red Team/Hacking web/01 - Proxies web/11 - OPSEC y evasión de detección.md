@@ -45,7 +45,7 @@ Aquí está el trabajo de verdad. Para que tu JA3/JA4 parezca el de un navegador
 | **curl-impersonate** ([repo](https://github.com/lwthiker/curl-impersonate)) / **curl_cffi** | `curl` recompilado que imita el TLS de Chrome/Firefox; ideal para scripts |
 | **tls-client** ([bogdanfinn](https://github.com/bogdanfinn/tls-client)) · **uTLS** | Clientes Go que controlan el `ClientHello` (JA3, orden de cabeceras, HTTP/2) |
 
-<mark style="background: #8000E1A6;">La regla: si el objetivo está tras Cloudflare/Akamai y recibes `403` pese a un UA perfecto, sospecha del JA3 y enruta por uno de estos.</mark>
+La regla: si el objetivo está tras Cloudflare/Akamai y recibes `403` pese a un UA perfecto, sospecha del JA3 y enruta por uno de estos.
 
 ## Ritmo, IP y alcance
 - **Throttling y jitter**: baja la velocidad del scanner/[[08 - Fuzzing web - Burp Intruder y ZAP Fuzzer|Intruder]] (resource pools), evita `-t` alto. El sigilo lento gana al barrido agresivo — misma lógica que en [[05 - Defensas y evasión|el brute forcing]].

@@ -1,11 +1,11 @@
 ---
 name: pkm-research
-description: Use when investigating a technique, vulnerability, tool, protocol or claim against primary/official sources for the PKM — gathering docs/RFC/source-code facts, verifying an HTB claim, modernizing content, or when the user asks to research a topic or delegate reading legwork. Materializes eje 1 / eje 4 of the vault (bug bounty & pentest research).
+description: Use when investigating a technique, vulnerability, tool, protocol or claim against primary/official sources for the PKM — gathering docs/RFC/source-code facts, verifying an HTB claim, modernizing content, or when the user asks to research a topic or delegate reading legwork. Materializes eje 1 / eje 4 of the vault (bug bounty & pentest research & blue team research).
 ---
 
 # Investigación con fuentes de confianza (eje 1 · eje 4)
 
-Materializa el **eje 1** (investigar/profundizar SIEMPRE) y el **eje 4** (fuentes citadas con atribución por-fuente) del vault. Aplica al enriquecer una nota, verificar una afirmación de HTB, o investigar un tema a demanda (pentest / bug bounty). Adaptación PKM de `/research` de aihero.dev.
+Materializa el **eje 1** (investigar/profundizar SIEMPRE) y el **eje 4** (fuentes citadas con atribución por-fuente) del vault. Aplica al enriquecer una nota, verificar una afirmación de HTB, o investigar un tema a demanda (pentest / bug bounty / blue team). Adaptación PKM de `/research` de aihero.dev.
 
 ## Principio
 
@@ -13,9 +13,9 @@ Materializa el **eje 1** (investigar/profundizar SIEMPRE) y el **eje 4** (fuente
 
 ## Jerarquía de confianza (de más a menos)
 
-1. **Primaria / oficial**: RFCs, specs (WHATWG, W3C, OWASP ASVS y *Cheat Sheets* oficiales), documentación del *vendor* (nmap.org, docs de la herramienta), **código fuente** del proyecto, advisories/CVE (NVD, vendor), papers.
-2. **Referencia de la comunidad, mantenida y actual**: PortSwigger Web Security Academy, HackTricks, SANS, blogs de investigación reconocidos y recientes.
-3. **Secundaria**: posts sueltos, foros (StackOverflow, Reddit) — solo como pista; verificar contra 1 o 2.
+1. **Primaria / oficial**: RFCs, specs (WHATWG, W3C, OWASP ASVS y *Cheat Sheets* oficiales), documentación del *vendor* (nmap.org, docs de la herramienta), **código fuente** del proyecto, advisories/CVE (NVD, vendor), papers. Fuentes oficiales y de confianza para Blue Team (actualizadas).
+2. **Referencia de la comunidad, mantenida y actual**: PortSwigger Web Security Academy, HackTricks, SANS, blogs de investigación reconocidos y recientes. Otras plataformas de enseñanza (similares a HTB, con prestigio) o plataformas gubernamentales o de organizaciones importantes (BitWarden, Kaspersky, CrowdStrike, etc.), para blue team.
+3. **Secundaria**: posts sueltos, foros (StackOverflow, Reddit, etc.) — solo como pista; verificar contra 1 o 2.
 
 Descartar fuentes desactualizadas o sin autoría fiable. Ante conflicto, **gana la primaria** y se señala la discrepancia.
 
