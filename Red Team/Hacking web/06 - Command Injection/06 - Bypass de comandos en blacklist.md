@@ -9,8 +9,6 @@ Nota previa: "[[05 - Bypass de caracteres en blacklist]]"
 Nota siguiente: "[[07 - Ofuscación avanzada de comandos]]"
 Area: "[[Command Injection.base|Command Injection]]"
 ---
----
-
 Aun habiendo resuelto los caracteres, la petición puede seguir bloqueada: hay un filtro distinto que inspecciona el **nombre del comando**. Una blacklist de comandos es una lista de palabras (`whoami`, `cat`, `nc`, `bash`…), y la clave para evadirla es entender cómo compara: <mark style="background: #ADCCFFA6;">busca una coincidencia textual exacta</mark>. Si la shell ejecuta `whoami` pero el filtro no "ve" esa cadena literal, pasamos.
 
 # Cómo compara el filtro

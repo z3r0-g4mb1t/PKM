@@ -329,27 +329,6 @@
       {
         "name": "",
         "active": true,
-        "type": "DIRECTORIES",
-        "pattern": "Red Team",
-        "patternType": "STRICT"
-      },
-      {
-        "name": "",
-        "active": true,
-        "type": "DIRECTORIES",
-        "pattern": "Blue Team",
-        "patternType": "STRICT"
-      },
-      {
-        "name": "",
-        "active": true,
-        "type": "DIRECTORIES",
-        "pattern": "Ingenieria",
-        "patternType": "STRICT"
-      },
-      {
-        "name": "",
-        "active": true,
         "type": "FILES",
         "pattern": "Red Team/Pentesting/02 - Evaluación de vulnerabilidades/Evaluación de vulnerabilidades.base",
         "patternType": "STRICT"
@@ -373,6 +352,41 @@
         "active": true,
         "type": "FILES",
         "pattern": "Red Team/Pentesting/03 - Transferencia de archivos/Transferencia de archivos.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "Red Team/Hacking web/04 - XSS/XSS.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "Red Team/Desarrollo ofensivo/Desarrollo ofensivo.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "Red Team/Hacking web/04 - XSS/Avanzado/XSS Avanzado.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "Red Team/AI Hacking/AI Hacking.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "Plan-de-Bug-Bounty.md",
         "patternType": "STRICT"
       }
     ],

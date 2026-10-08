@@ -13,8 +13,6 @@ Estado: Idea
 Dificultad: 1
 Esfuerzo: 2 semanas
 ---
----
-
 **Nombre propuesto**: `flightrec`
 
 A media mañana el cliente llama: *"a las 14:32 de ayer alguien intentó autenticarse 40 veces contra el DC. ¿Fuisteis vosotros?"*. Esa pregunta —el **deconflicting**— se responde con certeza o no se responde. Si la respuesta es "creo que sí, déjame mirar mis notas", el SOC ya ha activado el plan de respuesta a incidentes por algo que hiciste tú, y la factura de esa confusión la paga el cliente en horas de su equipo.

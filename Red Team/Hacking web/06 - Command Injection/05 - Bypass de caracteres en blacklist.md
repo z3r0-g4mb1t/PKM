@@ -9,8 +9,6 @@ Nota previa: "[[04 - Bypass de filtros de espacios]]"
 Nota siguiente: "[[06 - Bypass de comandos en blacklist]]"
 Area: "[[Command Injection.base|Command Injection]]"
 ---
----
-
 Tras el espacio, los caracteres que más se filtran son la barra `/` y la contrabarra `\` —imprescindibles para rutas en Linux y Windows— y los propios operadores de inyección como `;`. La técnica general es la misma para todos: <mark style="background: #ADCCFFA6;">producir el carácter que necesitamos sin teclearlo</mark>, dejando que la shell lo genere por nosotros. Hay dos familias fiables: extraerlo de una variable de entorno, o desplazarlo en la tabla ASCII.
 
 # Linux: substring de variables de entorno
@@ -43,7 +41,7 @@ $ echo ${LS_COLORS:10:1}
 Para cazar qué variable contiene el carácter que te falta, vuelca el entorno y búscalo:
 
 ```shell-session
-$ printenv          # o 'env' — lista todas las variables y sus valores
+$ printenv      # o 'env' — lista todas las variables y sus valores
 ```
 
 Localiza tu carácter en algún valor, cuenta su posición, y recórtalo con `${VAR:pos:1}`. `$HOME` y `$PWD` también empiezan por `/` y sirven igual que `$PATH`.

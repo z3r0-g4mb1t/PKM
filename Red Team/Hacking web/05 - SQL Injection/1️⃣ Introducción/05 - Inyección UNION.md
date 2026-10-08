@@ -9,13 +9,11 @@ Nota previa: "[[04 - La cláusula UNION]]"
 Nota siguiente: "[[06 - Enumeración de la base de datos]]"
 Area: "[[SQL Injection.base|SQL Injection]]"
 ---
----
-
-Con la [[04 - La cláusula UNION|mecánica de `UNION`]] clara, la inyección práctica sigue tres pasos: averiguar **cuántas columnas** devuelve la consulta, identificar **cuáles son visibles** en la respuesta, y dirigir ahí la extracción. El escenario ideal es un parámetro cuyo resultado se imprime en la página —un buscador, un listado— donde una comilla provoca un error, confirmando la inyección según la [[01 - Detección de SQL Injection|metodología de detección]].
+Con la [[04 - La cláusula UNION|mecánica de UNION]] clara, la inyección práctica sigue tres pasos: averiguar **cuántas columnas** devuelve la consulta, identificar **cuáles son visibles** en la respuesta, y **dirigir ahí la extracción**. El escenario ideal es un parámetro cuyo resultado se imprime en la página —un buscador, un listado— donde una comilla provoca un error, confirmando la inyección según la [[01 - Detección de SQL Injection|metodología de detección]].
 
 # Detectar el número de columnas
 
-`UNION` exige que ambos `SELECT` tengan el mismo número de columnas, así que primero hay que contarlas. Dos métodos:
+`UNION` exige que ambos `SELECT` tengan el mismo número de columnas, así que <mark style="background: #FFB86CA6;">primero hay que contarlas</mark>. Dos métodos:
 
 ## Método `ORDER BY`
 
@@ -50,7 +48,7 @@ Una consulta puede devolver varias columnas pero la aplicación imprimir solo al
 cn' UNION SELECT 1,2,3,4-- -
 ```
 
-Si en la página aparecen `2`, `3` y `4` pero no `1`, esas tres posiciones son visibles y la `1` no (típico de un campo `id` que la app usa internamente pero no muestra). <mark style="background: #8000E1A6;">Esta es la ventaja de rellenar con números: actúan como marcadores de posición</mark> que revelan dónde escribir. La regla de oro: **no pongas el payload en una columna no visible** (frecuentemente la primera).
+Si en la página aparecen `2`, `3` y `4` pero no `1`, esas tres posiciones son visibles y la `1` no (típico de un campo `id` que la app usa internamente pero no muestra). Esta es la ventaja de rellenar con números: actúan como marcadores de posición que revelan dónde escribir. La regla de oro: **no pongas el payload en una columna no visible** (frecuentemente la primera).
 
 > [!info]+
 > En motores estrictos (MSSQL, PostgreSQL) los números pueden chocar con columnas de tipo texto. La táctica robusta es contar y tipar con `NULL` (`UNION SELECT NULL,NULL,NULL,NULL`) y, una vez localizada una posición visible y de tipo compatible, sustituir ahí el `NULL` por un marcador o por el dato real.

@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
-      "LiBinary",
-      "OcRocket24",
-      "LiTrainFrontTunnel",
-      "TiBrandSpeedtest",
-      "LiLibrary"
+      "FasJedi",
+      "RaBarrier",
+      "IbGames",
+      "RaWyvern",
+      "LiBinary"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -85,5 +85,7 @@
   "Red Team/Hacking Wi-Fi": "LiWifi",
   "Red Team/Pentesting": "RaCrossedAxes",
   "Blue Team/00 - Manejo de incidentes": "RaCrackedShield",
-  "Blue Team/02 - Manejo de logs": "LiLogs"
+  "Blue Team/02 - Manejo de logs": "LiLogs",
+  "Games": "IbGames",
+  "Games/BDO": "RaBarrier"
 }

@@ -11,8 +11,6 @@ Nota previa:
 Nota siguiente: "[[01 - Enumeración de usuarios]]"
 Area: "[[Authentication.base|Authentication]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">La autenticación es el proceso de verificar que una entidad es quien dice ser</mark> ([RFC 4949](https://datatracker.ietf.org/doc/rfc4949/)). Es la primera línea de defensa de cualquier aplicación, y por eso uno de los focos de superficie más rentables. Romperla es lo que cataloga OWASP como **A07:2021 – Identification and Authentication Failures**, una de las categorías más recurrentes del Top 10.
 
 No confundir con la **autorización**, que decide *qué* puede hacer una identidad ya verificada. La autenticación ocurre antes y responde a "¿eres tú?"; la autorización responde a "¿puedes hacer esto?". Saltarse la primera ([[08 - Bypass de autenticación - acceso directo|bypass de autenticación]]) y saltarse la segunda ([[06 - Introducción a IDOR|IDOR]]) son fallos distintos con notas distintas.

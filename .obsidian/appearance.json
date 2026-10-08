@@ -1,6 +1,6 @@
 {
   "cssTheme": "Soft Paper",
-  "theme": "moonstone",
+  "theme": "obsidian",
   "accentColor": "",
   "baseFontSize": 18,
   "enabledCssSnippets": [
@@ -10,5 +10,5 @@
   "showViewHeader": true,
   "showRibbon": true,
   "translucency": false,
-  "interfaceFontFamily": "Aldo"
+  "interfaceFontFamily": "Inter"
 }

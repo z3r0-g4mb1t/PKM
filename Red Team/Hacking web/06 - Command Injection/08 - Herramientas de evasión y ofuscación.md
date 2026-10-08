@@ -9,8 +9,6 @@ Nota previa: "[[07 - Ofuscación avanzada de comandos]]"
 Nota siguiente: "[[09 - Prevención de Command Injection]]"
 Area: "[[Command Injection.base|Command Injection]]"
 ---
----
-
 Componer a mano las capas de [[07 - Ofuscación avanzada de comandos|ofuscación]] es lento y propenso a error. Cuando enfrentas defensas serias o necesitas iterar rápido, conviene automatizar la generación del payload ofuscado. <mark style="background: #ADCCFFA6;">Estas herramientas aplican y encadenan decenas de técnicas de transformación sobre un comando</mark>, produciendo variantes que a mano costaría horas. Las dos referencias clásicas son `Bashfuscator` (Linux) e `Invoke-DOSfuscation` (Windows).
 
 # Bashfuscator (Linux)

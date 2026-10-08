@@ -8,7 +8,7 @@ tags:
 Descripción: "Un implante C2 para engagements autorizados cuya característica diferenciadora es que mide su propia huella y reporta su detectabilidad, en vez de afirmar su OPSEC por fe"
 Fecha de actualización: 2026-08-04
 Nota previa: "[[14 - Orquestador de operación]]"
-Nota siguiente: ""
+Nota siguiente: "[[16 - Planificador de presupuesto de cracking]]"
 Area: "[[Proyectos ofensivos.base|Proyectos ofensivos]]"
 Estado: Idea
 Dificultad: 5

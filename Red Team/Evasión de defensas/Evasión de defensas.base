@@ -1,5 +1,5 @@
 formulas:
-  sub-tema: 'file.name.replace(".base", "")'
+  sub-tema: file.name.replace(".base", "")
 properties:
   formula.sub-tema:
     displayName: Sub-tema
@@ -21,4 +21,4 @@ views:
         direction: ASC
     columnSize:
       formula.sub-tema: 320
-      file.folder: 420
+      file.folder: 451

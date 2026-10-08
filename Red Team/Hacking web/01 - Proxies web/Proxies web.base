@@ -1,8 +1,7 @@
 views:
   - type: table
     name: Notas
-    filters:
-      Area == link("Proxies web.base", "Proxies web")
+    filters: Area == link("Proxies web.base", "Proxies web")
     order:
       - file.name
       - Descripción

@@ -154,6 +154,7 @@
     "splunk": 354,
     "sql": 58,
     "sqli": 207,
+    "ssti": 365,
     "subdomain-takeover": 355,
     "tcp": 308,
     "thick-clients": 356,

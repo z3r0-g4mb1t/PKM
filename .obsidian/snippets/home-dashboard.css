@@ -1400,6 +1400,64 @@
   .home .pkm-proj:hover { transform: none; }
 }
 
+/* Alternador de lenguaje del catálogo (Go / Python / Todos) */
+.home .pkm-langbar {
+  display: flex;
+  gap: 6px;
+  margin: 2px 0 10px;
+  flex-wrap: wrap;
+}
+.home .pkm-langbtn {
+  appearance: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--pkm-border-strong);
+  background: var(--pkm-surface-2);
+  color: var(--pkm-ink-soft);
+  box-shadow: none;
+  transition: background 0.2s var(--pkm-ease), color 0.2s var(--pkm-ease),
+              border-color 0.2s var(--pkm-ease);
+}
+.home .pkm-langbtn:hover {
+  color: var(--pkm-ink);
+  border-color: var(--pkm-ink-faint);
+}
+.home .pkm-langbtn.is-active {
+  background: color-mix(in srgb, var(--pkm-violet) 16%, transparent);
+  color: var(--pkm-violet);
+  border-color: color-mix(in srgb, var(--pkm-violet) 45%, transparent);
+}
+.home .pkm-langbtn[data-lang="go"].is-active {
+  background: color-mix(in srgb, var(--pkm-blue) 16%, transparent);
+  color: var(--pkm-blue);
+  border-color: color-mix(in srgb, var(--pkm-blue) 45%, transparent);
+}
+.home .pkm-langbtn[data-lang="python"].is-active {
+  background: color-mix(in srgb, var(--pkm-amber) 16%, transparent);
+  color: var(--pkm-amber);
+  border-color: color-mix(in srgb, var(--pkm-amber) 45%, transparent);
+}
+.home .pkm-langbtn-n {
+  opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+  margin-left: 5px;
+}
+/* Filtrado por lenguaje: ocultar las filas que no casan con el botón activo */
+.home .pkm-projs[data-filter="go"] .pkm-proj[data-lang="python"],
+.home .pkm-projs[data-filter="go"] .pkm-proj[data-lang="otro"],
+.home .pkm-projs[data-filter="python"] .pkm-proj[data-lang="go"],
+.home .pkm-projs[data-filter="python"] .pkm-proj[data-lang="otro"] {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home .pkm-langbtn { transition-duration: 0.01ms !important; }
+}
+
 
 /* ───────────────────────────────────────────────────────────────────────────
    6 · PANELES — contenedores de las queries de Dataview

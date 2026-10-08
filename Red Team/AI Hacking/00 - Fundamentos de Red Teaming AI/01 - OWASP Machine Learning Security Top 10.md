@@ -10,8 +10,6 @@ Nota previa: "[[00 - Red teaming de sistemas basados en ML]]"
 Nota siguiente: "[[02 - Manipulación del modelo]]"
 Area: "[[Red Teaming AI.base|Red Teaming AI]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">El `OWASP Machine Learning Security Top 10` cataloga los diez riesgos principales de los sistemas basados en ML **clásico** — clasificadores, detectores, modelos predictivos.</mark> Es el equivalente al Top 10 web pero para modelos, y no debe confundirse con el [[03 - OWASP Top 10 para aplicaciones LLM]], que cubre aplicaciones generativas y es una lista distinta y mucho más madura.
 
 > [!warning]+ Sigue siendo un borrador, y conviene decirlo al citarlo

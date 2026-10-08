@@ -9,8 +9,6 @@ Nota previa: "[[00 - Introducción a XSS]]"
 Nota siguiente: "[[02 - XSS Reflejado]]"
 Area: "[[XSS.base|XSS]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">El `Stored XSS` (o `Persistent XSS`) ocurre cuando el payload inyectado se guarda en la base de datos del back-end y se recupera al visitar la página</mark>. Es el tipo más crítico: <mark style="background: #FFB86CA6;">al quedar almacenado, afecta a **cualquier** usuario que cargue la página</mark>, no solo a quien lo inyectó. Además es difícil de erradicar — hay que eliminar el payload del propio backend.
 
 # Probar si una página es vulnerable

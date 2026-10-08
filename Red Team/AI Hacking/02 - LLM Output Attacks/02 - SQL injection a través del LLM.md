@@ -10,8 +10,6 @@ Nota previa: "[[01 - XSS desde la salida del modelo]]"
 Nota siguiente: "[[03 - Inyección de comandos a través del LLM]]"
 Area: "[[LLM Output Attacks.base|LLM Output Attacks]]"
 ---
----
-
 El patrón que produce esta vulnerabilidad se llama `text-to-SQL`: el usuario pregunta en lenguaje natural, el LLM traduce a SQL, la aplicación ejecuta la consulta y devuelve el resultado. Es una categoría de producto real y en expansión, y su superficie de ataque es enorme por una razón concreta.
 
 # Por qué las sentencias preparadas no sirven aquí

@@ -9,8 +9,6 @@ Nota previa: "[[06 - Bypass de comandos en blacklist]]"
 Nota siguiente: "[[08 - Herramientas de evasión y ofuscación]]"
 Area: "[[Command Injection.base|Command Injection]]"
 ---
----
-
 Frente a un `WAF`, las inserciones de la nota anterior (comillas, backslashes) ya no bastan: el WAF no busca la palabra exacta, busca **patrones**, y `w'h'o'am'i` es uno que reconoce. La ofuscación avanzada da un paso más: <mark style="background: #ADCCFFA6;">transforma el comando en algo que no se parece a un comando, y lo reconstruye en tiempo de ejecución dentro de una sub-shell</mark>. El comando nunca aparece en claro en la petición, así que no hay firma que detectar.
 
 # Manipulación de mayúsculas/minúsculas

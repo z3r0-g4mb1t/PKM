@@ -10,8 +10,6 @@ Nota previa: "[[08 - Command-line y PPID spoofing]]"
 Nota siguiente: "[[10 - Object callbacks y robo de handles]]"
 Area: "[[Callbacks de kernel.base|Callbacks de kernel]]"
 ---
----
-
 El [[08 - Command-line y PPID spoofing|spoofing de argumentos y padre]] miente sobre el *contexto*. Esta familia miente sobre algo más gordo: **qué código se está ejecutando realmente**. El objetivo es evadir las detecciones *basadas en imagen* (nombre de fichero, hash, firma, escaneo del binario) y, de paso, saltarse *application whitelisting*, reglas de firewall por aplicación y comprobaciones de "quién me está llamando" del lado servidor.
 
 Todas las variantes explotan **la misma decisión de diseño de Microsoft**, y entenderla vale más que memorizar las cuatro técnicas.

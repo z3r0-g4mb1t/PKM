@@ -9,8 +9,6 @@ Nota previa: "[[06 - Herramientas para XSS]]"
 Nota siguiente: "[[08 - Phishing]]"
 Area: "[[XSS.base|XSS]]"
 ---
----
-
 El ataque más simple sobre una [[01 - XSS Almacenado|XSS almacenada]] es el `defacing`. <mark style="background: #ADCCFFA6;">*Defacing* es cambiar el aspecto de una web para todo el que la visite</mark>. Es la firma típica de los grupos hacktivistas para reclamar un hackeo —como el *defacing* del NHS británico en 2018—; cuando le pasa a un banco o una tecnológica, el eco mediático puede afectar a su reputación y cotización.
 
 # Elementos para el defacing

@@ -10,9 +10,7 @@ Nota previa: "[[00 - Introducción a SQL Injection]]"
 Nota siguiente: "[[02 - Subvertir la lógica de consulta]]"
 Area: "[[SQL Injection.base|SQL Injection]]"
 ---
----
-
-En 2026 la SQL injection es escasa pero no extinta: el reto profesional ya no es explotarla en un laboratorio limpio, sino **detectarla** donde sobrevive entre defensas modernas. Esta nota sistematiza el descubrimiento —la parte que el material clásico da por supuesta— porque una detección rigurosa es lo que separa encontrar el bug de pasarlo por alto. HTB lo trata de pasada dentro de [[02 - Subvertir la lógica de consulta|subvertir la lógica]]; aquí lo elevamos a metodología.
+<mark style="background: #FF5582A6;">En 2026 la SQL injection es escasa pero no extinta</mark>: el reto profesional ya no es explotarla en un laboratorio limpio, sino **detectarla donde sobrevive entre defensas modernas**. Esta nota sistematiza el descubrimiento, porque una detección rigurosa es lo que separa encontrar el bug de pasarlo por alto. HTB lo trata de pasada dentro de [[02 - Subvertir la lógica de consulta|subvertir la lógica]]; aquí lo elevamos a metodología.
 
 # Identificar los puntos de inyección
 
@@ -31,14 +29,14 @@ En 2026 la SQL injection es escasa pero no extinta: el reto profesional ya no es
 
 Antes de explotar hay que saber **cómo** se inserta la entrada en la consulta. El contexto determina qué carácter rompe la query:
 
-| Contexto | Consulta típica | Cómo romperlo |
-| -------- | --------------- | ------------- |
-| Numérico | `... WHERE id = 1` | Sin comillas: `1 AND 1=1` |
-| String (comilla simple) | `... WHERE user = '$x'` | `'` |
-| String (comilla doble) | `... WHERE user = "$x"` | `"` |
-| Dentro de `LIKE` | `... LIKE '%$x%'` | `%' ` |
-| Entre paréntesis | `... WHERE (id = $x)` | `)` o `')` |
-| Identificador (`ORDER BY`) | `... ORDER BY $x` | número de columna; no necesita comillas |
+| **Contexto**               | **Consulta típica**     | **Cómo romperlo**                       |
+| -------------------------- | ----------------------- | --------------------------------------- |
+| Numérico                   | `... WHERE id = 1`      | Sin comillas: `1 AND 1=1`               |
+| String (comilla simple)    | `... WHERE user = '$x'` | `'`                                     |
+| String (comilla doble)     | `... WHERE user = "$x"` | `"`                                     |
+| Dentro de `LIKE`           | `... LIKE '%$x%'`       | `%' `                                   |
+| Entre paréntesis           | `... WHERE (id = $x)`   | `)` o `')`                              |
+| Identificador (`ORDER BY`) | `... ORDER BY $x`       | número de columna; no necesita comillas |
 
 # Señales de que un parámetro es vulnerable
 
@@ -79,7 +77,7 @@ Si no hay reflexión ni error (caso ciego), se fuerza un retardo condicional. La
 
 ## Out-of-band (OOB)
 
-Cuando ni la salida ni el tiempo son fiables, se fuerza al servidor a iniciar una conexión externa (DNS/HTTP) a un dominio controlado (Burp Collaborator, `interactsh`). Recibir esa petición confirma la ejecución. Es la última carta, pero la única que funciona en inyecciones totalmente ciegas tras un WAF.
+Cuando ni la salida ni el tiempo son fiables, se fuerza al servidor a iniciar una conexión externa ([[DNS]]/[[HTTP]]) a un dominio controlado (*Burp Collaborator*, `interactsh`). Recibir esa petición confirma la ejecución. Es la última carta, pero la única que funciona en inyecciones totalmente ciegas tras un WAF.
 
 # Fingerprinting del DBMS
 
@@ -101,6 +99,6 @@ SELECT @@version;        -- MSSQL / MySQL
 > <mark style="background: #8000E1A6;">La detección manual sigue siendo imprescindible</mark>: las herramientas automáticas fallan ante contextos raros (JSON anidado, parámetros que requieren encoding doble, inyección de segundo orden) y generan ruido que dispara WAFs y *rate limits*. Detecta a mano, confirma el contexto, y solo entonces lanza la herramienta afinada al punto exacto.
 
 > [!important]+ SQLi en APIs y web services
-> Las APIs sufren SQLi igual que un formulario; cambia el **envoltorio** (JSON, XML, SOAP), no el *sink*. Ventaja para el atacante: el **WSDL/OpenAPI** entrega los nombres y tipos de parámetro exactos a atacar, y los errores de API (un `<soap:Fault>` verboso, un *stack trace* JSON) suelen filtrar más que una web. Caso real: [SQLi en un WSDL del DoD (HackerOne #390359)](https://hackerone.com/reports/390359). Fuzzea **todo** parámetro identificado, incluso los que no parecen tocar la base de datos.
+> Las APIs sufren [[SQLi Blind.base|SQLi]] igual que un formulario; cambia el **envoltorio** (JSON, XML, SOAP), no el *sink*. Ventaja para el atacante: el **WSDL/OpenAPI** entrega los nombres y tipos de parámetro exactos a atacar, y los errores de API (un `<soap:Fault>` verboso, un *stack trace* JSON) suelen filtrar más que una web. Caso real: [SQLi en un WSDL del DoD (HackerOne #390359)](https://hackerone.com/reports/390359). Fuzzea **todo** parámetro identificado, incluso los que no parecen tocar la base de datos.
 
 Con un punto de inyección confirmado y el contexto claro, el primer uso práctico es alterar la consulta a nuestro favor: [[02 - Subvertir la lógica de consulta]].

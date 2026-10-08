@@ -1,8 +1,7 @@
 views:
   - type: table
     name: Notas
-    filters:
-      Area == link("Authentication.base", "Authentication")
+    filters: Area == link("Authentication.base", "Authentication")
     order:
       - file.name
       - Descripción

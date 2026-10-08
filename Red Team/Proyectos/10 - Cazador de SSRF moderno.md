@@ -14,8 +14,6 @@ Estado: Idea
 Dificultad: 4
 Esfuerzo: 4 semanas
 ---
----
-
 **Nombre propuesto**: `farside`
 
 El SSRF es la vulnerabilidad que convierte "el servidor hace una petición por ti" en <mark style="background: #FFB86CA6;">"el servidor te abre su red interna y te presta las credenciales de su rol en la nube"</mark>. Pero encontrarlo y explotarlo en 2026 ya no es mandar `http://169.254.169.254/` y ver qué sale: los filtros han mejorado, IMDSv2 exige un *handshake* que un simple GET no puede hacer, y el caso más común —el SSRF ciego— no devuelve nada por el canal principal. La distancia entre "creo que hay un SSRF aquí" y "he confirmado qué alcanza" es donde se pierde el tiempo.

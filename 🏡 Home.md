@@ -1045,31 +1045,53 @@ try {
     .sort((p) => p.file.name, "asc")
     .array();
 
+  /* Lenguaje del proyecto, leído de sus tags (#Go / #Python). */
+  const langOf = (p) => {
+    let arr = [];
+    try {
+      const raw = p.file.tags;
+      arr = (raw && raw.array ? raw.array() : Array.from(raw || [])).map((t) => String(t).toLowerCase());
+    } catch (e) {}
+    if (arr.includes("#python")) return "python";
+    if (arr.includes("#go")) return "go";
+    return "otro";
+  };
+
   const sec = dv.container.createDiv({ cls: "pkm-section" });
   const baseHref = "Red Team/Proyectos/Proyectos ofensivos.base";
+  const nGo = proyectos.filter((p) => langOf(p) === "go").length;
+  const nPy = proyectos.filter((p) => langOf(p) === "python").length;
   sec.createDiv({ cls: "pkm-h", text: "Proyectos ofensivos" }).insertAdjacentHTML(
     "beforeend",
-    `<span class="pkm-h-note">${proyectos.length} en Go, de más simple a capstone · ` +
+    `<span class="pkm-h-note">${nGo} en Go · ${nPy} en Python, de más simple a capstone · ` +
     `<a class="internal-link" href="${esc(baseHref)}" data-href="${esc(baseHref)}">el catálogo</a></span>`);
 
   if (!proyectos.length) {
     sec.createDiv({ cls: "dataview-error-box", text: "Ningún proyecto indexado todavía." });
   } else {
-    const cuenta = (f) => proyectos.filter(f).length;
     const kpi = (n, t, tono) =>
       `<div class="pkm-kpi" data-tono="${tono}"><span class="pkm-kpi-n">${n}</span><span class="pkm-kpi-t">${t}</span></div>`;
 
-    const ideas = cuenta((p) => claseEstado(p.Estado) === "idea");
-    const enCurso = cuenta((p) => claseEstado(p.Estado) === "curso");
-    const hechos = cuenta((p) => claseEstado(p.Estado) === "hecho");
+    /* Orden fijo del DOM: barra de lenguaje → KPIs → filas. */
+    const barra = sec.createDiv({ cls: "pkm-langbar" });
+    const kpisWrap = sec.createDiv({ cls: "pkm-kpis" });
+    const projsDiv = sec.createDiv({ cls: "pkm-projs" });
 
-    sec.insertAdjacentHTML("beforeend", `<div class="pkm-kpis">
-${kpi(proyectos.length, "proyectos", "info")}
-${kpi(ideas, "en idea", "aviso")}
-${kpi(enCurso, "en curso", "curso")}
-${kpi(hechos, hechos === 1 ? "terminado" : "terminados", "ok")}
-</div>`);
+    const enFiltro = (p, f) => f === "all" || langOf(p) === f;
 
+    /* Los KPIs se recalculan según el filtro activo. */
+    const pintarKpis = (f) => {
+      const set = proyectos.filter((p) => enFiltro(p, f));
+      const c = (fn) => set.filter(fn).length;
+      const hechos = c((p) => claseEstado(p.Estado) === "hecho");
+      kpisWrap.innerHTML =
+        kpi(set.length, set.length === 1 ? "proyecto" : "proyectos", "info") +
+        kpi(c((p) => claseEstado(p.Estado) === "idea"), "en idea", "aviso") +
+        kpi(c((p) => claseEstado(p.Estado) === "curso"), "en curso", "curso") +
+        kpi(hechos, hechos === 1 ? "terminado" : "terminados", "ok");
+    };
+
+    /* Las filas se pintan todas una vez; el filtro solo oculta por CSS. */
     const filas = proyectos.map((p) => {
       const m = p.file.name.match(/^(\d+)\s*-\s*(.+)$/);
       const num = m ? m[1] : "";
@@ -1082,7 +1104,7 @@ ${kpi(hechos, hechos === 1 ? "terminado" : "terminados", "ok")}
       const pips = Array.from({ length: 5 }, (_, i) =>
         `<i class="pkm-pip${i < dif ? " on" : ""}"></i>`).join("");
 
-      return `<a class="internal-link pkm-proj" data-dif="${dif}" data-estado="${ek}" href="${esc(p.file.path)}" data-href="${esc(p.file.path)}" aria-label="${esc(titulo)}">
+      return `<a class="internal-link pkm-proj" data-dif="${dif}" data-estado="${ek}" data-lang="${langOf(p)}" href="${esc(p.file.path)}" data-href="${esc(p.file.path)}" aria-label="${esc(titulo)}">
 <span class="pkm-proj-num">${esc(num)}</span>
 <span class="pkm-proj-main">
 <span class="pkm-proj-name">${esc(titulo)}</span>
@@ -1095,8 +1117,24 @@ ${esf ? `<span class="pkm-proj-esf">${esf}</span>` : ""}
 </span>
 </a>`;
     }).join("");
+    projsDiv.innerHTML = filas;
 
-    sec.insertAdjacentHTML("beforeend", `<div class="pkm-projs">${filas}</div>`);
+    /* Alternador Go / Python / Todos: cambia data-filter y repinta KPIs. */
+    const aplicar = (f) => {
+      projsDiv.dataset.filter = f;
+      barra.querySelectorAll(".pkm-langbtn").forEach((b) =>
+        b.classList.toggle("is-active", b.dataset.lang === f));
+      pintarKpis(f);
+    };
+    [["all", "Todos", proyectos.length], ["go", "Go", nGo], ["python", "Python", nPy]]
+      .forEach(([f, etq, n]) => {
+        const b = barra.createEl("button", { cls: "pkm-langbtn" });
+        b.dataset.lang = f;
+        b.insertAdjacentHTML("beforeend", `${esc(etq)}<span class="pkm-langbtn-n">${n}</span>`);
+        b.addEventListener("click", () => aplicar(f));
+      });
+
+    aplicar("all");
   }
 } catch (e) {
   dv.container.createDiv({

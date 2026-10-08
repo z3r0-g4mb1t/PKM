@@ -32,6 +32,48 @@ views:
       note.Esfuerzo: 130
       note.Descripción: 520
   - type: table
+    name: Ruta Go
+    filters:
+      and:
+        - Area == link("Proyectos ofensivos.base", "Proyectos ofensivos")
+        - file.hasTag("Go")
+    order:
+      - file.name
+      - Estado
+      - formula.nivel
+      - Esfuerzo
+      - Descripción
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 380
+      note.Estado: 110
+      formula.nivel: 120
+      note.Esfuerzo: 130
+      note.Descripción: 520
+  - type: table
+    name: Ruta Python
+    filters:
+      and:
+        - Area == link("Proyectos ofensivos.base", "Proyectos ofensivos")
+        - file.hasTag("Python")
+    order:
+      - file.name
+      - Estado
+      - formula.nivel
+      - Esfuerzo
+      - Descripción
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 380
+      note.Estado: 110
+      formula.nivel: 120
+      note.Esfuerzo: 130
+      note.Descripción: 520
+  - type: table
     name: Por estado
     filters: Area == link("Proyectos ofensivos.base", "Proyectos ofensivos")
     groupBy:

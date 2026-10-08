@@ -10,8 +10,6 @@ Nota previa:
 Nota siguiente: "[[01 - Entorno moderno y módulos]]"
 Area: "[[Fundamentos de Go.base|Fundamentos de Go]]"
 ---
----
-
 Go es el lenguaje que vas a aprender para construir tu propio arsenal ofensivo. Este primer bloque enseña **Go moderno (2026) desde cero**; los bloques siguientes lo aplican a proyectos reales de red team siguiendo *Black Hat Go*. No necesitas saber Go previamente, pero sí manejar la terminal y conceptos básicos de programación.
 
 ## Qué es Go

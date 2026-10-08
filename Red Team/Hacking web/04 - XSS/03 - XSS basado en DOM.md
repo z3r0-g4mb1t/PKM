@@ -9,8 +9,6 @@ Nota previa: "[[02 - XSS Reflejado]]"
 Nota siguiente: "[[04 - Descubrimiento de XSS]]"
 Area: "[[XSS.base|XSS]]"
 ---
----
-
 El tercer tipo, también no persistente, es el `DOM-based XSS`. Mientras el [[02 - XSS Reflejado|reflected]] envía la entrada al servidor, <mark style="background: #ADCCFFA6;">el DOM XSS se procesa **100% en el cliente**: JavaScript modifica la página a través del `Document Object Model (DOM)` sin que la entrada llegue nunca al back-end</mark>.
 
 # Cómo reconocerlo
@@ -45,13 +43,13 @@ Entrada controlada + salida sin sanear = vulnerable.
 
 # Ataque: payloads sin `<script>`
 
-El payload `<script>` clásico **no funciona** aquí: <mark style="background: #FFB8EBA6;">`innerHTML` no ejecuta etiquetas `<script>` insertadas dinámicamente</mark> — no por seguridad, sino por cómo la especificación HTML trata los scripts insertados al parsear un fragmento. <mark style="background: #FF5582A6;">No es una protección</mark>: los manejadores de evento (`onerror`, `onload`) sí ejecutan, así que `innerHTML` sigue siendo un *sink* peligroso. La solución es justamente un manejador de evento:
+El payload `<script>` clásico **no funciona** aquí: `innerHTML` no ejecuta etiquetas `<script>` insertadas dinámicamente — no por seguridad, sino por cómo la especificación HTML trata los scripts insertados al parsear un fragmento. <mark style="background: #FF5582A6;">No es una protección</mark>: los manejadores de evento (`onerror`, `onload`) sí ejecutan, así que `innerHTML` sigue siendo un *sink* peligroso. La solución es justamente un manejador de evento:
 
 ```html
 <img src="" onerror=alert(window.origin)>
 ```
 
-Crea una imagen con una URL vacía; al fallar la carga, el atributo `onerror` <mark style="background: #FF5582A6;">ejecuta el JavaScript sin necesidad de `<script>`</mark>. Para atacar a una víctima, le compartes la URL con el payload en el fragmento (`#task=...`).
+Crea una imagen con una URL vacía; al fallar la carga, el atributo `onerror` ejecuta el JavaScript sin necesidad de `<script>`. Para atacar a una víctima, le compartes la URL con el payload en el fragmento (`#task=...`).
 
 > [!info]+ DOM XSS en el mundo real
 > - Distingue dos clases de *sink*: los que **inyectan HTML** (`innerHTML`, `document.write`) requieren payload con etiqueta/evento (`<img onerror>`); los que **ejecutan JS directamente** (`eval()`, `setTimeout()`/`setInterval()` con string, `location='javascript:...'`) aceptan código JS a secas. Vigila también `element.setAttribute()`.

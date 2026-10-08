@@ -149,15 +149,15 @@ Estados: `[ ]` pendiente · `[/]` en progreso · `[x]` hecha · `[-]` cancelada.
 >
 > El botón **«+ Nueva tarea»** de la Home añade una plantilla al final de esta sección y abre esta nota para que la rellenes.
 
-- [ ] Semana 1 · Brute forcing + SQLi básico [[Brute Forcing.base]] 🛫 2026-07-28 📅 2026-08-03 ⏫ [esfuerzo:: 14h]
-- [/] Semana 1 · Nmap [[Nmap.base]] 🛫 2026-07-28 📅 2026-08-03 🔽 [esfuerzo:: 7h]
-- [/] Semana 2 · XSS básico + File Inclusion [[XSS.base]] 🛫 2026-08-04 📅 2026-08-10 ⏫ [esfuerzo:: 14h]
-- [/] Semana 2 · Evaluación de vulnerabilidades [[Evaluación de vulnerabilidades.base]] 🛫 2026-08-04 📅 2026-08-10 🔽 [esfuerzo:: 2h]
-- [/] Semana 3 · Command Injection + File Upload [[Command Injection.base]] 🛫 2026-08-11 📅 2026-08-17 [esfuerzo:: 14h]
-- [/] Semana 4 · SSRF + SSTI/SSI/XSLT [[SSRF.base]] 🛫 2026-08-18 📅 2026-08-24 [esfuerzo:: 8h]
+- [ ] Semana 1 · Brute forcing + Proxies web [[Brute Forcing.base]] 🛫 2026-09-29 📅 2026-10-06 ⏫ [esfuerzo:: 14h]
+- [ ] Semana 1 · Nmap [[Nmap.base]] 🛫 2026-10-07 📅 2026-10-14 🔽 [esfuerzo:: 7h]
+- [/] Semana 2 · XSS básico + SQLi básico [[XSS.base]] 🛫 2026-09-21 📅 2026-09-28 ⏫ [esfuerzo:: 14h]
+- [ ] Semana 2 · Evaluación de vulnerabilidades [[Evaluación de vulnerabilidades.base]] 🛫 2026-08-04 📅 2026-08-10 🔽 [esfuerzo:: 2h]
+- [ ] Semana 3 · Command Injection + File Upload [[Command Injection.base]] 🛫 2026-08-11 📅 2026-08-17 [esfuerzo:: 14h]
+- [ ] Semana 4 · SSRF + SSTI/SSI/XSLT [[SSRF.base]] 🛫 2026-08-18 📅 2026-08-24 [esfuerzo:: 8h]
 - [ ] Semana 5 · Authentication básico + GraphQL [[Authentication.base]] 🛫 2026-08-25 📅 2026-08-31 [esfuerzo:: 24h]
 - [ ] Semana 6 · API Attacks + Web Attacks [[API Attacks.base]] 🛫 2026-09-01 📅 2026-09-07 [esfuerzo:: 24h]
-- [/] Semana 7 · XSS avanzado + SQLi Blind [[XSS Avanzado.base]] 🛫 2026-09-08 📅 2026-09-14 [esfuerzo:: 24h]
+- [ ] Semana 7 · XSS avanzado + SQLi Blind [[XSS Avanzado.base]] 🛫 2026-09-08 📅 2026-09-14 [esfuerzo:: 24h]
 - [ ] Semana 8 · Authentication avanzado + NoSQLi [[Authentication Avanzado.base]] 🛫 2026-09-15 📅 2026-09-21 [esfuerzo:: 16h]
 
 ## Ejes

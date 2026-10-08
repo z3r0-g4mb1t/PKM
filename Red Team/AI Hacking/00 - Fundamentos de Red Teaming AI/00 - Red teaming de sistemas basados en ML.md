@@ -5,14 +5,12 @@ tags:
   - Pentesting
   - Introduccion
   - Tipo/Introduccion
-Descripción: "Evaluar la seguridad de un sistema basado en ML exige entender sus componentes y sus algoritmos, porque buena parte de los fallos no están en el código sino en las propiedades…"
+Descripción: Evaluar la seguridad de un sistema basado en ML exige entender sus componentes y sus algoritmos, porque buena parte de los fallos no están en el código sino en las propiedades…
 Fecha de actualización: 2026-07-28
-Nota previa: 
+Nota previa:
 Nota siguiente: "[[01 - OWASP Machine Learning Security Top 10]]"
 Area: "[[Red Teaming AI.base|Red Teaming AI]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">Evaluar la seguridad de un sistema basado en ML exige entender sus componentes y sus algoritmos, porque buena parte de los fallos no están en el código sino en las propiedades estadísticas del modelo y en las costuras entre piezas.</mark> Un sistema de IA no es una aplicación con un modelo dentro: es un pipeline de datos, un modelo, una capa de aplicación y una infraestructura, y las vulnerabilidades aparecen sobre todo en los puntos de interacción.
 
 # Los tres tipos de evaluación
@@ -40,23 +38,23 @@ Aquí es donde conviene ajustar expectativas, porque hay diferencias metodológi
 **El comportamiento no es determinista.** Un `exploit` de desbordamiento de búfer funciona o no funciona. <mark style="background: #FF5582A6;">Un `jailbreak` puede funcionar el 40% de las veces</mark>, porque el muestreo del modelo es estocástico y porque el proveedor puede haber ajustado el modelo entre dos intentos. Consecuencias prácticas:
 
 - Un intento fallido **no** demuestra que la defensa funcione, y uno exitoso no demuestra que sea fiable.
-- Los hallazgos se reportan con **tasa de éxito sobre N intentos**, no como binario. "12 de 30 intentos (40%) con el mismo prompt" es una evidencia utilizable; "conseguí que el modelo lo hiciera" no lo es.
-- Hay que fijar y documentar los parámetros de inferencia (`temperature`, `top-p`, versión del modelo, fecha), porque sin ellos el hallazgo no es reproducible.
+- Los hallazgos se reportan con **tasa de éxito sobre N intentos**, no como binario. <mark style="background: #FFB86CA6;">"12 de 30 intentos (40%) con el mismo prompt" es una evidencia utilizable</mark>; <mark style="background: #FF5582A6;">"conseguí que el modelo lo hiciera" no lo es</mark>.
+- Hay que <mark style="background: #ADCCFFA6;">fijar y documentar los parámetros de inferencia</mark> (`temperature`, `top-p`, versión del modelo, fecha), porque sin ellos el hallazgo no es reproducible.
 
-**Muchos hallazgos no tienen parche.** La `prompt injection` es una propiedad de la arquitectura, no un error de implementación — el motivo está en [[04 - Transformers y el mecanismo de atención]]. Reportarla como "vulnerabilidad a corregir" lleva a una recomendación imposible. Lo correcto es reportar el **impacto concreto que habilita en ese sistema** y recomendar controles de arquitectura: mínimo privilegio en las herramientas, validación de la salida, aprobación humana en acciones irreversibles.
+**Muchos hallazgos no tienen parche.** La `prompt injection` es una propiedad de la arquitectura, no un error de implementación — el motivo está en [[04 - Transformers y el mecanismo de atención]]. Reportarla como "vulnerabilidad a corregir" lleva a una recomendación imposible. Lo correcto es reportar el **impacto concreto que habilita en ese sistema** y <mark style="background: #FFB8EBA6;">recomendar controles de arquitectura</mark>: mínimo privilegio en las herramientas, validación de la salida, aprobación humana en acciones irreversibles.
 
 **Dos disciplinas bajo el mismo nombre.** Conviene separarlas en la propuesta y en el informe:
 
-- **Red teaming de seguridad** — impacto técnico clásico: RCE, exfiltración de datos, acceso no autorizado, escalada de privilegios a través del sistema de IA. Es lo que cubre este path.
-- **Red teaming de seguridad de contenido** (*safety*) — hacer que el modelo genere contenido dañino, sesgado o prohibido. Importa para cumplimiento y reputación, pero <mark style="background: #8000E1A6;">no es lo mismo que comprometer un sistema</mark>, y mezclar ambos en un informe diluye los hallazgos que sí tienen impacto técnico.
+- **Red teaming de seguridad** — <mark style="background: #ADCCFFA6;">impacto técnico clásico</mark>: RCE, exfiltración de datos, acceso no autorizado, escalada de privilegios a través del sistema de IA. Es lo que cubre este path.
+- **Red teaming de seguridad de contenido** (*safety*) — <mark style="background: #ADCCFFA6;">hacer que el modelo genere contenido dañino, sesgado o prohibido</mark>. Importa para cumplimiento y reputación, pero <mark style="background: #FFB8EBA6;">no es lo mismo que comprometer un sistema</mark>, y mezclar ambos en un informe diluye los hallazgos que sí tienen impacto técnico.
 
 **La reproducibilidad del entorno es frágil.** El modelo objetivo puede actualizarse sin aviso, los `guardrails` cambian, y un hallazgo válido en enero puede no reproducirse en marzo. Registrar versión de modelo, fecha, hora y configuración exacta pasa de buena práctica a requisito — ver [[02 - Evidencias, capturas y redacción]].
 
 # El mapa del resto del módulo
 
-La superficie de ataque se descompone en cuatro componentes —datos, modelo, aplicación y sistema— y esa descomposición estructura las notas siguientes. Conviene mirarla con **dos lentes distintas**, porque cada una revela cosas diferentes:
+La superficie de ataque se descompone en cuatro componentes —<mark style="background: #ADCCFFA6;">datos, modelo, aplicación y sistema</mark>— y esa descomposición estructura las notas siguientes. Conviene mirarla con **dos lentes distintas**, porque cada una revela cosas diferentes:
 
-**Lente 1 — el flujo**: cómo se propaga una manipulación a través del sistema.
+**Lente 1 — el flujo**: <mark style="background: #FFB86CA6;">cómo se propaga una manipulación a través del sistema</mark>.
 
 ```mermaid
 flowchart LR
@@ -69,7 +67,7 @@ flowchart LR
 
 Se lee de izquierda a derecha: quien contamina los datos condiciona el modelo, quien manipula el modelo condiciona lo que la aplicación ejecuta. <mark style="background: #FFB8EBA6;">Es la lente que explica por qué un ataque puede introducirse en un componente y manifestarse en otro, meses después</mark> — la separación entre *introducción* y *exposición* del riesgo que formaliza el Risk Map de [[04 - Google Secure AI Framework (SAIF)]].
 
-**Lente 2 — la contención**: qué acceso da comprometer cada capa. El `Sistema` envuelve a todo lo demás, así que un `MLflow` sin autenticar entrega los datos y el modelo de una vez. Se desarrolla en [[06 - Red teaming de IA generativa]].
+**Lente 2 — la contención**: <mark style="background: #FFB86CA6;">qué acceso da comprometer cada capa</mark>. El `Sistema` envuelve a todo lo demás, así que un `MLflow` sin autenticar entrega los datos y el modelo de una vez. Se desarrolla en [[06 - Red teaming de IA generativa]].
 
 Antes de recorrerlas, tres marcos de referencia ordenan el trabajo y dan vocabulario común con el cliente: el [[01 - OWASP Machine Learning Security Top 10]], el [[03 - OWASP Top 10 para aplicaciones LLM]] y el [[04 - Google Secure AI Framework (SAIF)]], complementados por [[05 - MITRE ATLAS y NIST AI RMF]].
 

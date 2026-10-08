@@ -9,8 +9,6 @@ Nota previa: "[[00 - Por qué Go para el hacking]]"
 Nota siguiente: "[[02 - Toolchain y compilación]]"
 Area: "[[Fundamentos de Go.base|Fundamentos de Go]]"
 ---
----
-
 *Black Hat Go* monta el entorno con `GOROOT`, `GOPATH` y un *workspace* de tres carpetas (`bin`, `pkg`, `src`). Eso está **muerto desde Go 1.16**. El Go moderno se organiza con **módulos**, y tu proyecto puede vivir en cualquier carpeta del disco. Esta nota deja un entorno de 2026 listo para compilar tooling.
 
 ## Instalar Go
@@ -23,7 +21,6 @@ go version go1.26 linux/amd64
 $ go env GOROOT GOPATH GOBIN
 /usr/local/go
 /home/kali/go
-
 ```
 
 > [!warning]+ El paso `GOROOT` del libro sobra

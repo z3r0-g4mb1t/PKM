@@ -9,24 +9,22 @@ Nota previa: "[[01 - Detección de Command Injection]]"
 Nota siguiente: "[[03 - Identificación de filtros y defensas]]"
 Area: "[[Command Injection.base|Command Injection]]"
 ---
----
-
 Confirmada la inyección, el **operador** que elijamos determina cómo se encadena nuestro comando con el original y qué salida recibimos. No es un detalle menor: el operador correcto convierte un payload que rompe la aplicación en uno que devuelve un resultado limpio. <mark style="background: #ADCCFFA6;">Un operador de inyección es el metacarácter del shell que separa o combina comandos</mark>, y la shell lo interpreta antes de ejecutar.
 
 # La tabla de operadores
 
 Estos son los operadores que sirven para inyectar un comando adicional sobre el previsto. La columna *URL-encoded* es la que de verdad importa en web: casi siempre hay que enviarlos codificados.
 
-| Operador | Carácter | URL-encoded | Qué ejecuta |
-| - | - | - | - |
-| Punto y coma | `;` | `%3b` | Ambos comandos |
-| Nueva línea | `\n` | `%0a` | Ambos |
-| Background | `&` | `%26` | Ambos (suele mostrar primero la 2ª salida) |
-| Pipe | `\|` | `%7c` | Ambos (solo se ve la salida del 2º) |
-| AND | `&&` | `%26%26` | Ambos (el 2º solo si el 1º tiene éxito) |
-| OR | `\|\|` | `%7c%7c` | El 2º solo si el 1º falla |
-| Sub-shell | `` `` `` | `%60%60` | Solo Linux/bash (en PowerShell el backtick es escape, no abre sub-shell) |
-| Sub-shell | `$()` | `%24%28%29` | Linux/bash **y** Windows/PowerShell (subexpression operator; no en `cmd.exe`) |
+| Operador         | Carácter | URL-encoded | Qué ejecuta                                                                   |
+| ---------------- | -------- | ----------- | ----------------------------------------------------------------------------- |
+| **Punto y coma** | ;        | `%3b`       | Ambos comandos                                                                |
+| **Nueva línea**  | \n       | `%0a`       | Ambos                                                                         |
+| **Background**   | &        | `%26`       | Ambos (suele mostrar primero la 2ª salida)                                    |
+| **Pipe**         | \|       | `%7c`       | Ambos (solo se ve la salida del 2º)                                           |
+| **AND**          | &&       | `%26%26`    | Ambos (el 2º solo si el 1º tiene éxito)                                       |
+| **OR**           | \|\|     | `%7c%7c`    | El 2º solo si el 1º falla                                                     |
+| **Sub-shell**    | `        | `%60%60`    | Solo Linux/bash (en PowerShell el backtick es escape, no abre sub-shell)      |
+| **Sub-shell**    | $()      | `%24%28%29` | Linux/bash **y** Windows/PowerShell (subexpression operator; no en `cmd.exe`) |
 
 La forma de uso es siempre: *entrada esperada* (p. ej. una IP) + *operador* + *nuestro comando*. Sobre el `Host Checker`, el payload `127.0.0.1; whoami` produce en el back-end:
 
@@ -76,14 +74,14 @@ El procedimiento estándar: interceptar con [[02 - Interceptación de peticiones
 
 La idea de "metacarácter que rompe el contexto" es transversal a toda la familia de inyecciones, y por eso el mismo reflejo sirve para [[00 - Introducción a SQL Injection|SQLi]], [[00 - Introducción a XPath Injection|XPath Injection]] o `LDAP`. Una referencia rápida de qué caracteres prueban cada clase:
 
-| Tipo de inyección | Operadores típicos |
-| - | - |
-| OS Command Injection | `;` `&` `\|` `&&` `\|\|` |
-| [[00 - Introducción a SQL Injection\|SQL Injection]] | `'` `;` `--` `/* */` |
+| Tipo de inyección                                        | Operadores típicos               |
+| -------------------------------------------------------- | -------------------------------- |
+| OS Command Injection                                     | `;` `&` \| `&&` \|\|             |
+| [[00 - Introducción a SQL Injection\|SQL Injection]]     | `'` `;` `--` `/* */`             |
 | [[00 - Introducción a XPath Injection\|XPath Injection]] | `'` `or` `and` `not` `substring` |
-| LDAP Injection | `*` `(` `)` `&` `\|` |
-| Code Injection | `'` `;` `$()` `${}` `#{}` `%{}` |
-| Header Injection (`CRLF`) | `\n` `\r\n` `%0d` `%0a` `%09` |
+| LDAP Injection                                           | `*` `(` `)` `&` \|               |
+| Code Injection                                           | `'` `;` `$()` `${}` `#{}` `%{}`  |
+| Header Injection (`CRLF`)                                | `\n` `\r\n` `%0d` `%0a` `%09`    |
 
 La tabla es orientativa e incompleta —el entorno concreto manda—, pero entrena el ojo: ante un parámetro sospechoso, sabes qué carácter probar según dónde creas que termina la entrada.
 

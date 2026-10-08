@@ -10,9 +10,7 @@ Nota previa:
 Nota siguiente: "[[01 - Detección de SQL Injection]]"
 Area: "[[SQL Injection.base|SQL Injection]]"
 ---
----
-
-La `SQL injection` (SQLi) es la explotación de una consulta SQL que mezcla, sin separar, código y datos. Pese a ser una de las vulnerabilidades más antiguas y documentadas, sigue apareciendo —cada vez en sitios menos obvios— y su impacto va desde el volcado completo de la base de datos hasta la ejecución de comandos en el servidor. Dominar SQLi exige primero entender cómo una aplicación web habla con su base de datos; los [[Consultas y operadores SQL|fundamentos de SQL]] son el prerrequisito.
+La `SQL injection` (*SQLi*) es la **explotación de una consulta SQL que mezcla, sin separar, código y datos**. Pese a ser una de las vulnerabilidades más antiguas y documentadas, sigue apareciendo —cada vez en sitios menos obvios— y su impacto va desde el volcado completo de la base de datos hasta la ejecución de comandos en el servidor. Dominar SQLi exige primero entender cómo una aplicación web habla con su base de datos; los [[Consultas y operadores SQL|fundamentos de SQL]] son el prerrequisito.
 
 # Cómo las aplicaciones web usan SQL
 
@@ -36,7 +34,7 @@ $result = $conn->query($query);
 
 # Qué es una inyección
 
-<mark style="background: #ADCCFFA6;">Una inyección ocurre cuando una aplicación interpreta la entrada del usuario como código en lugar de como una simple cadena</mark>, alterando el flujo del programa y ejecutándolo. En SQLi, se logra escapando los límites del dato con un carácter especial —típicamente la comilla simple (`'`)— y escribiendo SQL a continuación. El mismo principio gobierna otras inyecciones sobre lenguajes de consulta, como la [[00 - Introducción a XPath Injection|Inyección XPath]] sobre documentos XML. Si la entrada no se **sanea** (eliminar o neutralizar los caracteres especiales que rompen la consulta), el código inyectado se ejecuta.
+<mark style="background: #ADCCFFA6;">Una inyección ocurre cuando una aplicación interpreta la entrada del usuario como código en lugar de como una simple cadena</mark>, alterando el flujo del programa y ejecutándolo. En SQLi, se logra escapando los límites del dato con un carácter especial —típicamente la comilla simple (`'`)— y escribiendo SQL a continuación. El mismo principio gobierna otras inyecciones sobre lenguajes de consulta, como la [[00 - Introducción a XPath Injection|Inyección XPath]] sobre documentos *XML*. Si la entrada no se **sanea** (eliminar o neutralizar los caracteres especiales que rompen la consulta), el código inyectado se ejecuta.
 
 # Anatomía de un SQL injection
 
@@ -76,4 +74,4 @@ Las SQLi se clasifican según **cómo y dónde** se recupera su salida:
 El impacto justifica el esfuerzo: <mark style="background: #FFB86CA6;">lectura y modificación de datos arbitrarios, bypass de autenticación, y —según privilegios— lectura/escritura de ficheros y ejecución de comandos en el host del DBMS</mark>. El siguiente paso es saber **detectarla** de forma metódica: [[01 - Detección de SQL Injection]].
 
 > [!info]+ Variante moderna — `text-to-SQL`
-> Cuando un LLM traduce lenguaje natural a SQL, el atacante no controla un valor dentro de la consulta: controla **la consulta entera**. Las sentencias preparadas dejan de aplicar, porque no hay plan fijo del que separar los datos. Ver [[02 - SQL injection a través del LLM]].
+> Cuando un LLM traduce lenguaje natural a SQL, el atacante no controla un valor dentro de la consulta: controla **la consulta entera**. Las sentencias preparadas dejan de aplicar, porque <mark style="background: #FF5582A6;">no hay plan fijo del que separar los datos</mark>. Ver [[02 - SQL injection a través del LLM]].
