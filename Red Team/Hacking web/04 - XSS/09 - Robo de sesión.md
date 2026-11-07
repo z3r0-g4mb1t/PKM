@@ -9,8 +9,6 @@ Nota previa: "[[08 - Phishing]]"
 Nota siguiente: "[[10 - Prevención de XSS]]"
 Area: "[[XSS.base|XSS]]"
 ---
----
-
 Las apps usan cookies para mantener la sesión: el usuario inicia sesión una vez y sigue autenticado en visitas posteriores. <mark style="background: #FFB86CA6;">Si robamos la cookie del navegador de la víctima, accedemos a su cuenta sin conocer su contraseña</mark>. Con XSS podemos ejecutar JavaScript que recoja esas cookies y nos las envíe — un `Session Hijacking` (o `Cookie Stealing`).
 
 # Detección de Blind XSS

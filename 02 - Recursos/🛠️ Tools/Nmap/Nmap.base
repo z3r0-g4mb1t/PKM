@@ -1,8 +1,7 @@
 views:
   - type: table
     name: Notas
-    filters:
-      Area == link("Nmap.base", "Nmap")
+    filters: Area == link("Nmap.base", "Nmap")
     order:
       - file.name
       - Descripción

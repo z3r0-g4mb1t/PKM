@@ -8,8 +8,6 @@ Nota previa: "[[02 - Módulos]]"
 Nota siguiente: "[[04 - Payloads en Metasploit]]"
 Area: "[[Metasploit.base|Metasploit]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">Un `target` es la variante concreta del objetivo para la que un exploit está preparado</mark>: una versión de sistema operativo, un *service pack*, un idioma, una arquitectura o incluso una versión específica del software vulnerable. Un mismo exploit puede traer varios targets porque **los detalles de bajo nivel cambian entre versiones**.
 
 # Ver y fijar el target
@@ -32,13 +30,13 @@ Por defecto suele venir seleccionado el target `0 – Automatic`, que intenta **
 
 # Automatic vs. manual
 
-<mark style="background: #FFB8EBA6;">El target automático es cómodo pero no infalible</mark>: si el fingerprinting de MSF se equivoca (por un banner alterado, una configuración atípica o un WAF de por medio), elige mal. Fijar el target **manualmente** cuando ya conoces la versión exacta del objetivo es más fiable.
+<mark style="background: #FFB8EBA6;">El target automático es cómodo pero no infalible</mark>: si el fingerprinting de [[01 - MSFconsole|MSF]] se equivoca (por un banner alterado, una configuración atípica o un WAF de por medio), elige mal. <mark style="background: #FF5582A6;">Fijar el target manualmente cuando ya conoces la versión exacta del objetivo</mark> es más fiable.
 
 # Por qué el target correcto es crítico
 
 Muchos exploits de memoria dependen de **offsets, direcciones y cadenas ROP** que son específicos de cada build:
 
-- <mark style="background: #FFB86CA6;">Un target equivocado no solo hace que el exploit falle: puede **corromper la memoria y tumbar el servicio o el host**</mark> (un `BSOD` en Windows, por ejemplo).
+- <mark style="background: #FFB86CA6;">Un target equivocado no solo hace que el exploit falle: puede corromper la memoria y tumbar el servicio o el host</mark> (un `BSOD` en Windows, por ejemplo).
 - El idioma del SO importa: los offsets de una edición en inglés y una en otro idioma pueden diferir.
 - El target también condiciona qué **arquitectura de payload** es compatible (`x86` vs `x64`) — enlaza con la elección de [[04 - Payloads en Metasploit|payload]].
 
@@ -58,6 +56,6 @@ msf6 > use exploit/windows/smb/ms17_010_eternalblue
 msf6 exploit(...) > set TARGET 2   # coherente con lo enumerado
 ```
 
-<mark style="background: #8000E1A6;">La disciplina es siempre la misma: enumerar → confirmar versión → elegir target → elegir payload compatible</mark>. Saltarse el primer paso y confiar ciegamente en `Automatic` es la causa nº1 de exploits que "no funcionan" o que crashean el objetivo.
+<mark style="background: #FF5582A6;">La disciplina es siempre la misma</mark>: <mark style="background: #ADCCFFA6;">enumerar → confirmar versión → elegir target → elegir payload compatible</mark>. Saltarse el primer paso y confiar ciegamente en `Automatic` es la causa nº1 de exploits que "no funcionan" o que crashean el objetivo.
 
 Con el módulo, su target y el objetivo claros, falta la pieza que nos entrega el acceso: el [[04 - Payloads en Metasploit|payload]].

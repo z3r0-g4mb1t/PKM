@@ -9,22 +9,20 @@ Nota previa: "[[01 - Host Discovery]]"
 Nota siguiente: "[[03 - Enumeración de servicios y versiones]]"
 Area: "[[Nmap.base|Nmap]]"
 ---
----
-
 Con los hosts vivos localizados ([[01 - Host Discovery]]), el siguiente paso es averiguar **qué puertos y servicios** exponen. Interpretar bien la salida exige entender cómo Nmap deduce el estado de cada puerto a partir de los paquetes de respuesta — repasa los fundamentos de TCP/IP en [[Introducción a los protocolos de red|Protocolos de red]] si el *three-way handshake* y los flags no te suenan de memoria.
 
 # Los 6 estados de un puerto
 
 <mark style="background: #ADCCFFA6;">Todo el resto del módulo se apoya en distinguir estos estados</mark>:
 
-| Estado | Significado |
-| --- | --- |
-| `open` | La conexión al puerto se estableció (TCP, datagrama UDP o asociación SCTP). Hay un servicio escuchando. |
-| `closed` | El objetivo respondió con un `RST`. El puerto es alcanzable pero no hay servicio. |
-| `filtered` | Nmap no puede determinar si está abierto o cerrado: sin respuesta o con un error. Casi siempre = firewall. |
-| `unfiltered` | Solo en el *ACK scan* (`-sA`): el puerto es alcanzable pero no se sabe si abierto o cerrado. |
-| `open\|filtered` | Sin respuesta. Nmap no puede distinguir abierto de filtrado (típico en UDP y escaneos FIN/NULL/Xmas). |
-| `closed\|filtered` | Solo en el *idle scan* (`-sI`): imposible saber si cerrado o filtrado. |
+| **Estado**           | **Significado**                                                                                                |
+| -------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `open`               | La conexión al puerto se estableció (TCP, datagrama UDP o asociación SCTP). Hay un servicio escuchando.        |
+| `closed`             | El objetivo respondió con un `RST`. El puerto es alcanzable pero no hay servicio.                              |
+| `filtered`           | Nmap no puede determinar si está abierto o cerrado: sin respuesta o con un error. **Casi siempre = firewall**. |
+| `unfiltered`         | Solo en el *ACK scan* (`-sA`): el puerto es alcanzable pero no se sabe si abierto o cerrado.                   |
+| `open`\|`filtered`   | **Sin respuesta**. Nmap no puede distinguir abierto de filtrado (típico en UDP y escaneos FIN/NULL/Xmas).      |
+| `closed`\|`filtered` | Solo en el *idle scan* (`-sI`): **imposible saber** si cerrado o filtrado.                                     |
 
 # Descubrir puertos TCP abiertos
 
@@ -52,14 +50,16 @@ PORT   STATE  SERVICE
 21/tcp closed ftp
 ```
 
-`SENT ... S` = enviamos un SYN; `RCVD ... RA` = el objetivo responde con `RST+ACK` (`RA`): el `ACK` acusa recibo y el `RST` cierra la sesión → puerto cerrado. Un `SA` (`SYN/ACK`) en su lugar significaría abierto.
+- `SENT ... S` = enviamos un *SYN*
+- `RCVD ... RA` = el objetivo responde con `RST+ACK` (`RA`): el `ACK` acusa recibo y el `RST` cierra la sesión → **puerto cerrado**. 
+	- Un `SA` (`SYN/ACK`) en su lugar significaría **abierto**.
 
 ## Connect scan (`-sT`)
 
-<mark style="background: #8000E1A6;">El *connect scan* completa el *three-way handshake* entero</mark>, así que es **el más preciso** para determinar el estado exacto — y **el menos sigiloso**: deja registro en los logs de casi cualquier servicio y lo detecta trivialmente cualquier IDS/IPS. Se usa cuando:
+<mark style="background: #ADCCFFA6;">El connect scan completa el three-way handshake entero</mark>, así que es **el más preciso para determinar el estado exacto** — y <mark style="background: #FF5582A6;">el menos sigiloso</mark>: deja registro en los logs de casi cualquier servicio y <mark style="background: #FF5582A6;">lo detecta trivialmente cualquier IDS/IPS</mark>. Se usa cuando:
 
-- No tienes `root` (es el único TCP scan sin privilegios).
-- La precisión prima sobre el sigilo.
+- No tienes `root` (es el único *TCP scan* sin privilegios).
+- La <mark style="background: #FFB8EBA6;">precisión prima sobre el sigilo</mark>.
 - Quieres ser "**educado**": al conectar como un cliente normal, es menos probable que desestabilices un servicio frágil que con escaneos más intrusivos.
 
 ```shell-session
@@ -71,10 +71,10 @@ PORT    STATE SERVICE REASON
 
 # Puertos filtrados: *drop* vs *reject*
 
-`filtered` no es un callejón sin salida: el **cómo** filtra el firewall es información. Hay dos comportamientos:
+`filtered`<mark style="background: #FF5582A6;"> no es un callejón sin salida</mark>: el **cómo** filtra el firewall es información. Hay dos comportamientos:
 
-- **Drop** (descarta en silencio): no llega respuesta. Nmap reintenta hasta `--max-retries` (10 por defecto) → el escaneo de ese puerto se **alarga** notablemente (~2 s vs ~0,05 s). Silencio prolongado = paquetes descartados.
-- **Reject** (rechaza activamente): el firewall responde con `ICMP type 3 code 3` (*port unreachable*).
+- **Drop** (descarta en silencio): <mark style="background: #ADCCFFA6;">no llega respuesta</mark>. Nmap reintenta hasta `--max-retries` (10 por defecto) → el escaneo de ese puerto se **alarga** notablemente (~2 s vs ~0,05 s). <mark style="background: #FFB86CA6;">Silencio prolongado = paquetes descartados</mark>.
+- **Reject** (<mark style="background: #ADCCFFA6;">rechaza activamente</mark>): el firewall responde con `ICMP type 3 code 3` (*port unreachable*).
 
 ```shell-session
 $ sudo nmap 10.129.2.28 -p 445 --packet-trace -n --disable-arp-ping -Pn
@@ -86,11 +86,11 @@ RCVD (0.0487s) ICMP 10.129.2.28 > 10.10.14.2 Port 445 unreachable (type=3/code=3
 ```
 
 > [!important]+ Un puerto rechazado por firewall es una pista, no un fin
-> Si sabes que el host está vivo y un puerto vuelve `filtered` con *reject* (ICMP unreachable), <mark style="background: #FF5582A6;">hay un firewall protegiendo activamente ese puerto</mark> — casi siempre porque detrás hay algo que merece la pena. Anótalo para revisitarlo (evasión, otro vector, pivoting). El `--reason` te confirma si fue `no-response` (drop) o `port-unreach` (reject).
+> Si sabes que el host está vivo y un puerto vuelve `filtered` con *reject* (ICMP unreachable), <mark style="background: #FF5582A6;">hay un firewall protegiendo activamente ese puerto</mark> — casi siempre porque detrás hay algo que merece la pena. Anótalo para revisitarlo (evasión, otro vector, pivoting). El `--reason` **te confirma si fue** `no-response` (drop) o `port-unreach` (reject).
 
 # Descubrir puertos UDP abiertos
 
-<mark style="background: #FFB8EBA6;">Muchos administradores filtran los TCP y se olvidan de los UDP</mark>. UDP es *stateless* y sin *handshake*: Nmap manda un datagrama y, si no hay respuesta, no sabe si llegó → *timeout* largo y escaneo `-sU` **mucho más lento** que TCP.
+<mark style="background: #FFB8EBA6;">Muchos administradores filtran los TCP y se olvidan de los UDP</mark>. UDP es *stateless* y sin *handshake*: Nmap manda un datagrama y, si no hay respuesta, no sabe si llegó → *timeout* largo y escaneo `-sU` **mucho más lento** que *TCP*.
 
 ```shell-session
 $ sudo nmap 10.129.2.28 -F -sU
@@ -103,14 +103,14 @@ PORT     STATE         SERVICE
 ... scanned in 98.07 seconds
 ```
 
-La lectura del estado UDP:
+La lectura del estado *UDP*:
 
 - **Respuesta UDP de la aplicación** → `open` (solo si el servicio está configurado para responder).
 - **`ICMP type 3 code 3`** (*port unreachable*) → `closed`.
 - **Otro `ICMP unreachable`** (códigos ≠ 3) → `filtered`; **silencio** tras reintentos → `open|filtered` (la ambigüedad más común en UDP).
 
 > [!warning]+ El UDP full-scan no es viable en tiempo real
-> Un `-sU -p-` puede tardar horas. En un engagement real se escanean solo los UDP que importan (`53,67,123,137,161,500,1900,5353`) con `-sU --top-ports 20`, o se delega el barrido masivo a herramientas dedicadas (`udp-proto-scanner`, `masscan`) — ver [[09 - Arsenal de herramientas de escaneo]]. Para acelerar sin perder demasiado, combínalo con timing agresivo de [[05 - Rendimiento y timing]].
+> Un `-sU -p-` <mark style="background: #FFB8EBA6;">puede tardar horas</mark>. En un engagement real <mark style="background: #ADCCFFA6;">se escanean solo los UDP que importan</mark> (`53,67,123,137,161,500,1900,5353`) con `-sU --top-ports 20`, o se delega el barrido masivo a herramientas dedicadas (`udp-proto-scanner`, `masscan`) — ver [[09 - Arsenal de herramientas de escaneo]]. Para acelerar sin perder demasiado, combínalo con timing agresivo de [[05 - Rendimiento y timing]].
 
 El flag `-sV` que aparece al final de estos escaneos abre la **enumeración de servicios y versiones**, que tratamos en [[03 - Enumeración de servicios y versiones]]. Referencia oficial de técnicas: [nmap.org/book/man-port-scanning-techniques.html](https://nmap.org/book/man-port-scanning-techniques.html).
 

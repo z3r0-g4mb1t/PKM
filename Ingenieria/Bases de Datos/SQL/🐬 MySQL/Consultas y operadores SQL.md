@@ -8,8 +8,6 @@ Nota previa: "[[💬 Sentencias SQL]]"
 Nota siguiente:
 Area: "[[Bases de Datos.base|Bases de Datos]]"
 ---
----
-
 Controlar *qué* registros devuelve una consulta y *en qué orden* es lo que hacen las cláusulas `WHERE`, `ORDER BY`, `LIMIT` y `LIKE` junto a los operadores lógicos. <mark style="background: #FFB8EBA6;">Son, con diferencia, las piezas que más se manipulan en una SQL injection</mark>: la condición `WHERE` es la que se subvierte para saltarse autenticación, `ORDER BY` la que se abusa para contar columnas, y la precedencia de operadores la que decide si un payload se ejecuta como esperamos. Esta nota cierra los fundamentos de [[💬 Sentencias SQL|SQL]] antes de pasar al ataque.
 
 # `WHERE` — filtrar registros

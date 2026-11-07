@@ -1,8 +1,7 @@
 views:
   - type: table
     name: Notas
-    filters:
-      Area == link("Bases de Datos.base", "Bases de Datos")
+    filters: Area == link("Bases de Datos.base", "Bases de Datos")
     order:
       - file.name
       - Descripción

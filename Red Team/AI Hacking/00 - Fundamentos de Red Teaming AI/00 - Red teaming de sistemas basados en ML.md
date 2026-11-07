@@ -15,11 +15,11 @@ Area: "[[Red Teaming AI.base|Red Teaming AI]]"
 
 # Los tres tipos de evaluación
 
-| Tipo | Qué hace | Duración típica |
-| - | - | - |
-| `Vulnerability Assessment` | Identifica, cataloga y prioriza vulnerabilidades **conocidas**, sin explotarlas. Escaneo automatizado con `Nessus` u `OpenVAS` | Días |
-| `Penetration Test` | Identifica y **explota** vulnerabilidades sobre un alcance definido, con proceso estructurado y ventana temporal acotada | 1-3 semanas |
-| `Red Team Assessment` | Simulación adversarial completa: replica TTPs de un atacante real, incluye personas y procesos, prioriza el sigilo y la persistencia frente al `blue team` | Semanas o meses |
+| **Tipo**                       | **Qué hace**                                                                                                                                                   | **Duración típica** |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `Vulnerability Assessment` | Identifica, cataloga y prioriza vulnerabilidades **conocidas**, sin explotarlas. Escaneo automatizado con `Nessus` u `OpenVAS`                             | Días            |
+| `Penetration Test`         | Identifica y **explota** vulnerabilidades sobre un alcance definido, con proceso estructurado y ventana temporal acotada                                   | 1-3 semanas     |
+| `Red Team Assessment`      | Simulación adversarial completa: replica TTPs de un atacante real, incluye personas y procesos, prioriza el sigilo y la persistencia frente al `blue team` | Semanas o meses |
 
 El detalle de las fases de un pentest está en [[00 - Qué es un pentest y tipos de evaluación]] y en las notas de `00 - Fases del Pentesting/`.
 

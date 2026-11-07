@@ -8,13 +8,11 @@ Nota previa: "[[01 - MSFconsole]]"
 Nota siguiente: "[[03 - Targets]]"
 Area: "[[Metasploit.base|Metasploit]]"
 ---
----
-
 Un `módulo` es cada pieza ejecutable de Metasploit. Entender su **taxonomía** y cómo **leer** uno es lo que convierte el framework de una caja negra en una herramienta que se maneja con criterio.
 
 # La nomenclatura: la ruta ES la descripción
 
-El nombre completo de un módulo codifica qué hace y contra qué:
+El <mark style="background: #ADCCFFA6;">nombre completo de un módulo codifica qué hace y contra qué</mark>:
 
 ```text
 exploit/windows/smb/ms17_010_eternalblue
@@ -25,23 +23,25 @@ exploit/windows/smb/ms17_010_eternalblue
    └── tipo de módulo
 ```
 
-<mark style="background: #8000E1A6;">Leer el nombre te dice de un vistazo si un módulo aplica</mark>: `auxiliary/scanner/ssh/ssh_login` es un escáner de login SSH; `post/windows/gather/hashdump` recolecta hashes en Windows tras el acceso.
+<mark style="background: #FFB8EBA6;">Leer el nombre te dice de un vistazo si un módulo aplica</mark>: 
+- `auxiliary/scanner/ssh/ssh_login` es un escáner de login *SSH*.
+- `post/windows/gather/hashdump` recolecta hashes en Windows tras el acceso.
 
 # Las categorías en la práctica
 
-| Tipo | Da shell | Ejemplos reales |
-| --- | --- | --- |
-| `exploit` | Sí | `windows/smb/ms17_010_eternalblue`, `multi/http/...` |
-| `auxiliary` | No | `scanner/smb/smb_version`, `scanner/ssh/ssh_login` (brute), `admin/...`, `dos/...` |
-| `post` | — (ya hay sesión) | `windows/gather/hashdump`, `multi/recon/local_exploit_suggester` |
-| `payload` | Es la shell | Ver [[04 - Payloads en Metasploit]] |
-| `encoder` | No | `x86/shikata_ga_nai` (adaptación de charset, no evasión) |
-| `nop` | No | Generadores de `NOP sleds` |
-| `evasion` | Genera artefacto | Intentos de payload anti-AV (con matices, ver [[12 - Detección y evasión]]) |
+| **Tipo**        | **Da shell**          | **Ejemplos reales**                                                                    |
+| ----------- | ----------------- | ---------------------------------------------------------------------------------- |
+| `exploit`   | Sí                | `windows/smb/ms17_010_eternalblue`, `multi/http/...`                               |
+| `auxiliary` | No                | `scanner/smb/smb_version`, `scanner/ssh/ssh_login` (brute), `admin/...`, `dos/...` |
+| `post`      | — (ya hay sesión) | `windows/gather/hashdump`, `multi/recon/local_exploit_suggester`                   |
+| `payload`   | Es la shell       | Ver [[04 - Payloads en Metasploit]]                                                |
+| `encoder`   | No                | `x86/shikata_ga_nai` (adaptación de charset, no evasión)                           |
+| `nop`       | No                | Generadores de `NOP sleds`                                                         |
+| `evasion`   | Genera artefacto  | Intentos de payload anti-AV (con matices, ver [[12 - Detección y evasión]])        |
 
 ## Auxiliary: el caballo de batalla infravalorado
 
-<mark style="background: #FF5582A6;">Los `auxiliary` no entregan shell, pero hacen gran parte del trabajo real</mark>: escanean versiones, hacen brute-force, capturan hashes, enumeran. Encajan directamente con la fase de [[00 - Principios y metodología de enumeración|enumeración]] y a menudo son la vía más rápida:
+<mark style="background: #FF5582A6;">Los `auxiliary` no entregan shell, pero hacen gran parte del trabajo real</mark>: escanean versiones, hacen brute-force, capturan hashes, enumeran. Encajan directamente con la fase de [[00 - Principios y metodología de enumeración|enumeración]] y <mark style="background: #FFB8EBA6;">a menudo son la vía más rápida</mark>:
 
 ```shell-session
 msf6 > use auxiliary/scanner/smb/smb_version
@@ -76,12 +76,12 @@ msf6 exploit(...) > show missing       # solo lo que falta por configurar
 
 Cada exploit declara cómo de fiable y seguro es. Es información de seguridad operacional, no un detalle:
 
-| Rank | Significado |
-| --- | --- |
-| `excellent` | No crashea el servicio. El ideal. |
-| `great` / `good` | Fiable, con objetivo autodetectado o por defecto razonable. |
-| `normal` / `average` | Funciona, fiabilidad media. |
-| `low` / `manual` | Difícil, poco fiable **o puede tumbar el objetivo**. |
+| **Rank**                 | **Significado**                                                 |
+| -------------------- | ----------------------------------------------------------- |
+| `excellent`          | No crashea el servicio. El ideal.                           |
+| `great` / `good`     | Fiable, con objetivo autodetectado o por defecto razonable. |
+| `normal` / `average` | Funciona, fiabilidad media.                                 |
+| `low` / `manual`     | Difícil, poco fiable **o puede tumbar el objetivo**.        |
 
 > [!warning]+ Rank bajo = riesgo de DoS
 > <mark style="background: #FFB86CA6;">Un exploit `low`/`manual` puede dejar el servicio caído</mark> si falla. En un engagement real eso es un incidente que interrumpe al cliente. Prioriza `excellent`/`great`, y si solo hay uno de rank bajo, coordina la ventana con el cliente antes de lanzarlo.

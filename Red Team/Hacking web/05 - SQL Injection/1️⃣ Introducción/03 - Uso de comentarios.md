@@ -15,11 +15,11 @@ Equilibrar comillas manualmente para que la consulta inyectada quede válida es 
 
 *MySQL* admite tres formas de comentario:
 
-| Sintaxis | Tipo     | Nota                                                                                             |
-| -------- | -------- | ------------------------------------------------------------------------------------------------ |
-| `-- `    | Línea    | **Requiere un espacio** tras los dos guiones.                                                    |
-| `#`      | Línea    | En URL hay que codificarlo como `%23`.                                                           |
-| `/* */`  | En línea | Poco usado en SQLi básica; clave para [[05 - Bypass de caracteres comunes\|evasión de filtros]]. |
+| **Sintaxis** | **Tipo** | **Nota**                                                                                         |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------ |
+| `-- `        | Línea    | Requiere un espacio tras los dos guiones.                                                        |
+| `#`          | Línea    | En URL hay que codificarlo como `%23`.                                                           |
+| `/* */`      | En línea | Poco usado en SQLi básica; clave para [[05 - Bypass de caracteres comunes\|evasión de filtros]]. |
 
 > [!warning]+
 > Dos guiones **no bastan** para iniciar un comentario en MySQL: <mark style="background: #FF5582A6;">tiene que haber un espacio después</mark> (`-- `). Como los espacios finales son invisibles y se pierden con facilidad, <mark style="background: #ADCCFFA6;">la convención es escribir</mark> `-- -`: <mark style="background: #FFB86CA6;">el guion final hace visible que hay un espacio</mark>. En una URL, ese espacio se codifica como `+` (`--+`) o se usa `-- -`. Y si el payload va en la barra del navegador, el `#` se interpreta como ancla de fragmento y **no llega al servidor**: <mark style="background: #FF5582A6;">hay que enviarlo como `%23`.</mark>

@@ -9,7 +9,7 @@ Nota previa: "[[01 - XSS Almacenado]]"
 Nota siguiente: "[[03 - XSS basado en DOM]]"
 Area: "[[XSS.base|XSS]]"
 ---
-Hay dos tipos de XSS **no persistente**: el `Reflected`, que procesa el servidor back-end, y el [[03 - XSS basado en DOM|DOM-based]], que se procesa entero en el cliente. <mark style="background: #FFB8EBA6;">Lo no persistente es temporal: no sobrevive a un refresco y solo afecta al usuario al que se dirige el ataque</mark>, no a todos los visitantes.
+Hay dos tipos de XSS **no persistente**: el `Reflected`, que <mark style="background: #FFB86CA6;">procesa el servidor back-end</mark>, y el [[03 - XSS basado en DOM|DOM-based]], que se <mark style="background: #FFB86CA6;">procesa entero en el cliente</mark>. **Lo no persistente es temporal**: <mark style="background: #FF5582A6;">no sobrevive a un refresco y solo afecta al usuario al que se dirige el ataque</mark>, no a todos los visitantes.
 
 <mark style="background: #ADCCFFA6;">El `Reflected XSS` ocurre cuando nuestra entrada llega al servidor y vuelve reflejada sin filtrar ni sanear</mark>. Es típico en mensajes de error o confirmación que repiten la entrada del usuario.
 
@@ -27,11 +27,11 @@ El `alert` salta. En el código fuente se ve el payload insertado dentro del men
 <div style="padding-left:25px">Task '<script>alert(window.origin)</script>' could not be added.</div>
 ```
 
-Si volvemos a visitar la página sin el payload, el error desaparece y nada se ejecuta: <mark style="background: #FFB8EBA6;">es no persistente</mark>.
+Si volvemos a visitar la página sin el payload, **el error desaparece y nada se ejecuta**: <mark style="background: #FFB8EBA6;">es no persistente</mark>.
 
 # ¿Cómo se ataca a una víctima?
 
-Aquí está la diferencia clave con el almacenado: si el payload no persiste, ¿cómo llega a la víctima? <mark style="background: #FFB86CA6;">Depende del método HTTP con que se envía la entrada</mark>. Lo compruebas en la pestaña **Network** de las DevTools (`CTRL+Shift+I`):
+Aquí está la diferencia clave con el almacenado: *si el payload no persiste, ¿cómo llega a la víctima?* <mark style="background: #FFB86CA6;">Depende del método HTTP con que se envía la entrada</mark>. Lo compruebas en la pestaña **Network** de las DevTools (`CTRL+Shift+I`):
 
 - **`GET`**: los parámetros viajan en la URL. <mark style="background: #FF5582A6;">Basta con enviar a la víctima una URL que contenga el payload</mark> — al visitarla, se ejecuta:
   ```text

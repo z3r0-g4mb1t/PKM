@@ -1,5 +1,5 @@
 formulas:
-  índice: 'file.name.replace(".base", "")'
+  índice: file.name.replace(".base", "")
   bloque: |
     if(file.folder.startsWith("02 - Recursos/🛠️ Tools"), "1 · Herramientas",
       if(file.folder.startsWith("02 - Recursos/Biblioteca"), "2 · Biblioteca",
@@ -34,12 +34,12 @@ views:
         - file.ext == "base"
         - file.folder.startsWith("02 - Recursos")
         - file.name != "Recursos.base"
-    order:
-      - formula.índice
-      - file.folder
     groupBy:
       property: formula.bloque
       direction: ASC
+    order:
+      - formula.índice
+      - file.folder
     sort:
       - property: file.name
         direction: ASC

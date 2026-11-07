@@ -9,8 +9,6 @@ Nota previa: "[[07 - Plugins y Mixins]]"
 Nota siguiente: "[[09 - Meterpreter]]"
 Area: "[[Metasploit.base|Metasploit]]"
 ---
----
-
 Cuando un exploit tiene éxito, la conexión resultante es una `session`. Cuando algo corre en segundo plano (un handler, un servidor), es un `job`. Gestionar ambos es lo que permite trabajar con varios objetivos a la vez sin perder el hilo.
 
 # Sesiones: las conexiones vivas
@@ -23,7 +21,7 @@ msf6 > sessions -k 1         # matar la sesión 1
 msf6 > sessions -K           # matar TODAS
 ```
 
-<mark style="background: #FFB8EBA6;">`background` es clave</mark>: deja la sesión viva mientras vuelves a la consola para lanzar otro módulo. `sessions -i` la retoma cuando quieras.
+<mark style="background: #FFB86CA6;">`background` es clave</mark>: <mark style="background: #FFB8EBA6;">deja la sesión viva mientras vuelves a la consola</mark> para lanzar otro módulo. `sessions -i` la retoma cuando quieras.
 
 # Upgrade de shell a Meterpreter
 
@@ -33,7 +31,7 @@ Una de las utilidades más prácticas: si tienes una shell "tonta" (de un `shell
 msf6 > sessions -u 1         # upgrade de la sesión 1 (shell → meterpreter)
 ```
 
-<mark style="background: #8000E1A6;">Es el equivalente en MSF al [[08 - Shells interactivas - upgrade a TTY|upgrade a TTY]]</mark> que hacíamos a mano en Shells & Payloads — aquí lo automatiza el framework, dándote además todas las capacidades de [[09 - Meterpreter|Meterpreter]].
+Es el equivalente en MSF al [[08 - Shells interactivas - upgrade a TTY|upgrade a TTY]] que hacíamos a mano en *Shells & Payloads* — aquí lo automatiza el framework, dándote además todas las capacidades de [[09 - Meterpreter|Meterpreter]].
 
 # Comandos sobre múltiples sesiones
 
@@ -46,7 +44,7 @@ msf6 > sessions -c "ipconfig" -i 3 # comando en una sesión concreta
 
 # Jobs: lo que corre en segundo plano
 
-Un `job` es un módulo ejecutándose en background — típicamente un **handler** esperando conexiones, o un servidor (SMB, HTTP) sirviendo un payload:
+Un `job` es un <mark style="background: #ADCCFFA6;">módulo ejecutándose en background</mark> — típicamente un **handler** esperando conexiones, o un servidor (SMB, HTTP) sirviendo un payload:
 
 ```shell-session
 msf6 > exploit -j            # lanza el módulo como job (no bloquea la consola)
@@ -58,14 +56,14 @@ msf6 > jobs -K               # matar todos
 <mark style="background: #FFB86CA6;">Un `multi/handler` lanzado con `exploit -j` queda escuchando en background</mark> mientras entregas el payload por otra vía — el patrón habitual para recibir shells de payloads generados con [[11 - MSFvenom|MSFvenom]].
 
 > [!important]+ Persistencia del handler
-> Si cierras msfconsole, los jobs mueren y pierdes las conexiones entrantes. Para handlers que deban sobrevivir, usa un [[01 - MSFconsole|resource script]] que los relance, o `exploit -j -z` (no interactúa automáticamente con la sesión al recibirla).
+> <mark style="background: #FF5582A6;">Si cierras msfconsole, los jobs mueren y pierdes las conexiones entrantes</mark>. Para handlers que deban sobrevivir, usa un [[01 - MSFconsole|resource script]] que los relance, o `exploit -j -z` (no interactúa automáticamente con la sesión al recibirla).
 
 # Pivoting a través de una sesión
 
-Las sesiones no solo dan acceso a un host: son la **puerta a su red interna**. Metasploit puede enrutar tráfico de otros módulos a través de una sesión comprometida:
+Las sesiones no solo dan acceso a un host: son la **puerta a su red interna**. <mark style="background: #ADCCFFA6;">Metasploit puede enrutar tráfico de otros módulos a través de una sesión comprometida</mark>:
 
 ```shell-session
-meterpreter > run autoroute -s 172.16.5.0/24    # añade ruta por esta sesión
+meterpreter > run autoroute -s 172.16.5.0/24     # añade ruta por esta sesión
 msf6 > use auxiliary/server/socks_proxy          # SOCKS para el resto de tools
 ```
 

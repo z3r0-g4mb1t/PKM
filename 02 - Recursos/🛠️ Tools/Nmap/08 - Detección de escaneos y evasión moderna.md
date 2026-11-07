@@ -10,8 +10,6 @@ Nota previa: "[[07 - Evasión de firewalls, IDS e IPS]]"
 Nota siguiente: "[[09 - Arsenal de herramientas de escaneo]]"
 Area: "[[Nmap.base|Nmap]]"
 ---
----
-
 Las técnicas de evasión de [[07 - Evasión de firewalls, IDS e IPS]] son de la era del IDS de firma simple. En un entorno de 2026 —con IDS que reensamblan, análisis de flujo en la nube y detección por comportamiento— la mayoría ya no cuela sola. Esta nota cubre **cómo se detecta un escaneo hoy** y **qué OPSEC funciona de verdad**. Es el estándar de calidad CPTS: salir a un pentest real sabiendo que enfrente hay telemetría que HTB ignora.
 
 > [!info]+ El marco defensivo: MITRE ATT&CK T1046
@@ -30,7 +28,7 @@ No hace falta un IDS clásico: la nube detecta escaneos desde los **logs de fluj
 - `Recon:EC2/Portscan` se dispara cuando **una instancia EC2 monitorizada escanea hacia fuera** — señal de que **esa** instancia ya está comprometida (post-explotación), **no** el atacante externo escaneando un target alojado en AWS.
 - `Recon:EC2/PortProbeUnprotectedPort` es el que aplica al escaneo **externo**: un puerto expuesto sondeado **desde una IP ya catalogada como maliciosa** en la *threat intel* de AWS. <mark style="background: #FFB8EBA6;">No dispara para los puertos 80 y 443</mark>, y **exige que tu IP figure como *known scanner/malicious*** — no salta por puro volumen.
 
-<mark style="background: #8000E1A6;">Consecuencia práctica: un pentester con una IP limpia escaneando un target en AWS probablemente no dispara ningún hallazgo EC2 de GuardDuty</mark>, sea cual sea el puerto — el riesgo real llega si operas desde una instancia ya comprometida o desde una IP con mala reputación. Azure Defender y GCP tienen equivalentes basados en logs de flujo.
+ práctica: un pentester con una IP limpia escaneando un target en AWS probablemente no dispara ningún hallazgo EC2 de GuardDuty, sea cual sea el puerto — el riesgo real llega si operas desde una instancia ya comprometida o desde una IP con mala reputación. Azure Defender y GCP tienen equivalentes basados en logs de flujo.
 
 ## Detección por comportamiento / IA
 
@@ -46,7 +44,7 @@ Aquí es donde la evasión clásica muere. Plataformas como **Darktrace** o **Ve
 
 ## 1. Recon pasivo primero (no toques el objetivo)
 
-La mejor evasión es **no escanear**. Antes de mandar un paquete: `Shodan`, `Censys`, `ZoomEye` y los *Certificate Transparency logs* ya tienen mapeados puertos, servicios, versiones y certificados de casi cualquier IP pública. <mark style="background: #8000E1A6;">Buena parte del "escaneo" moderno es OSINT: llegas al escaneo activo sabiendo ya qué buscar</mark>, reduciendo el ruido a lo mínimo. Herramientas en [[09 - Arsenal de herramientas de escaneo]].
+La mejor evasión es **no escanear**. Antes de mandar un paquete: `Shodan`, `Censys`, `ZoomEye` y los *Certificate Transparency logs* ya tienen mapeados puertos, servicios, versiones y certificados de casi cualquier IP pública. Buena parte del "escaneo" moderno es OSINT: llegas al escaneo activo sabiendo ya qué buscar, reduciendo el ruido a lo mínimo. Herramientas en [[09 - Arsenal de herramientas de escaneo]].
 
 ## 2. Low-and-slow
 

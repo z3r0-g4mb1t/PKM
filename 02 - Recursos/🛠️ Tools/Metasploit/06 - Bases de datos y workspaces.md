@@ -8,8 +8,6 @@ Nota previa: "[[05 - Encoders]]"
 Nota siguiente: "[[07 - Plugins y Mixins]]"
 Area: "[[Metasploit.base|Metasploit]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">Metasploit puede respaldarse en una base de datos `PostgreSQL` que registra todo lo descubierto durante el engagement</mark> — hosts, servicios, vulnerabilidades, credenciales y botín. En un pentest real con decenas de máquinas, es la diferencia entre trabajo organizado y caos.
 
 # Setup
@@ -46,7 +44,7 @@ msf6 > db_nmap -sV -sC 10.10.10.0/24
 msf6 > db_import scan.xml
 ```
 
-<mark style="background: #8000E1A6;">`db_import` acepta el XML de [[06 - Guardar y explotar resultados|Nmap]] (`-oX`) y de [[02 - Interpretar y exportar resultados|Nessus]]</mark>, entre muchos otros formatos — así el reconocimiento hecho fuera de MSF alimenta el framework sin repetir escaneos.
+`db_import` acepta el *XML* de [[06 - Guardar y explotar resultados|Nmap]] (`-oX`) y de [[02 - Interpretar y exportar resultados|Nessus]], entre muchos otros formatos — <mark style="background: #FFB86CA6;">así el reconocimiento hecho fuera de MSF alimenta el framework sin repetir escaneos</mark>.
 
 # Consultar lo recolectado
 
@@ -57,9 +55,12 @@ msf6 > vulns                     # vulnerabilidades asociadas
 msf6 > creds                     # credenciales capturadas
 msf6 > loot                      # ficheros/hashes exfiltrados
 msf6 > notes                     # anotaciones por host
+msf6 > analyze                   # SUGIERE módulos por host automáticamente
 ```
 
-Los módulos `auxiliary` de escaneo y los `post` de recolección **escriben** en estas tablas automáticamente: un `smb_login` exitoso deja las credenciales en `creds`, un `hashdump` deja los hashes en `loot`.
+Los módulos `auxiliary` de escaneo y los `post` de recolección **escriben** en estas tablas automáticamente: 
+- Un `smb_login`<mark style="background: #ADCCFFA6;"> exitoso deja las credenciales en </mark>`creds`.
+- Un `hashdump`<mark style="background: #ADCCFFA6;"> deja los hashes en </mark>`loot`.
 
 # Usarla para trabajar más rápido
 

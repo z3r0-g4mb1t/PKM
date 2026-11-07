@@ -13,15 +13,15 @@ Area: "[[Reconocimiento Web.base|Reconocimiento Web]]"
 
 # Qué contiene un registro WHOIS
 
-| Campo | Significado |
-| - | - |
-| `Domain Name` | El propio dominio (p. ej. `example.com`) |
-| `Registrar` | Empresa donde se registró el dominio (GoDaddy, Namecheap, Amazon…) |
-| `Registrant Contact` | Persona u organización que registró el dominio |
-| `Administrative Contact` | Responsable de la gestión del dominio |
-| `Technical Contact` | Responsable de incidencias técnicas |
-| `Creation / Expiry Date` | Fechas de alta y caducidad del registro |
-| `Name Servers` | Servidores DNS autoritativos que resuelven el dominio |
+| **Campo**                    | **Significado**                                                        |
+| ------------------------ | ------------------------------------------------------------------ |
+| `Domain Name`            | El propio dominio (p. ej. `example.com`)                           |
+| `Registrar`              | Empresa donde se registró el dominio (GoDaddy, Namecheap, Amazon…) |
+| `Registrant Contact`     | Persona u organización que registró el dominio                     |
+| `Administrative Contact` | Responsable de la gestión del dominio                              |
+| `Technical Contact`      | Responsable de incidencias técnicas                                |
+| `Creation / Expiry Date` | Fechas de alta y caducidad del registro                            |
+| `Name Servers`           | Servidores DNS autoritativos que resuelven el dominio              |
 
 Los <mark style="background: #ADCCFFA6;">campos de mayor valor ofensivo</mark> no son los contactos —casi siempre redactados hoy—, sino los `Name Servers`, las fechas y el `Registrar`: revelan **infraestructura** y permiten **pivotar** hacia otros activos del mismo dueño.
 

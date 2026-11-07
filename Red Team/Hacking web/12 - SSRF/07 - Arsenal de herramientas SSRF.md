@@ -11,8 +11,6 @@ Nota previa: "[[06 - Prevención de SSRF]]"
 Nota siguiente: ""
 Area: "[[SSRF.base|SSRF]]"
 ---
----
-
 Herramientas que cubren el ciclo de la SSRF: confirmación **OOB** → enumeración interna → explotación con `gopher://` → fuzzing de bypasses → DNS rebinding. <mark style="background: #FFB8EBA6;">El trabajo manual sigue mandando para confirmar y entender el contexto</mark>; las herramientas automatizan lo repetitivo. Estado verificado a 2026.
 
 # Confirmación OOB y enumeración
@@ -70,11 +68,11 @@ $ git clone https://github.com/nccgroup/singularity
 
 # Wordlists y payloads
 
-| Recurso | Uso |
-| - | - |
+| **Recurso**                                                                                                                          | **Uso**                                                                 |
+| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | [PayloadsAllTheThings — SSRF](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Request%20Forgery) | Payloads de bypass (IP encodings, parser confusion, cloud metadata) |
-| SecLists — `Fuzzing/` + `Discovery/Web-Content` | Puertos, endpoints internos, parámetros |
-| Rutas de metadata por proveedor (AWS/GCP/Azure) | Exfiltración de credenciales |
+| SecLists — `Fuzzing/` + `Discovery/Web-Content`                                                                                  | Puertos, endpoints internos, parámetros                             |
+| Rutas de metadata por proveedor (AWS/GCP/Azure)                                                                                  | Exfiltración de credenciales                                        |
 
 # Estado de mantenimiento (2026)
 

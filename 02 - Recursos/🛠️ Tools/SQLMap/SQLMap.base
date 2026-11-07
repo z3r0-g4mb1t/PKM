@@ -1,8 +1,7 @@
 views:
   - type: table
     name: Notas
-    filters:
-      Area == link("SQLMap.base", "SQLMap")
+    filters: Area == link("SQLMap.base", "SQLMap")
     order:
       - file.name
       - Descripción

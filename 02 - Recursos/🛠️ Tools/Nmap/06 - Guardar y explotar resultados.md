@@ -9,18 +9,16 @@ Nota previa: "[[05 - Rendimiento y timing]]"
 Nota siguiente: "[[07 - Evasión de firewalls, IDS e IPS]]"
 Area: "[[Nmap.base|Nmap]]"
 ---
----
-
 <mark style="background: #FF5582A6;">Guardar cada escaneo no es opcional en un engagement</mark>: sirve para comparar técnicas, alimentar otras herramientas y, sobre todo, aportar **evidencia** en el informe. Un hallazgo sin el output que lo respalda no existe de cara al cliente. Nmap escribe en tres formatos, cada uno con su propósito.
 
 # Los tres formatos
 
-| Flag | Extensión | Para qué |
-| --- | --- | --- |
-| `-oN` | `.nmap` | *Normal*: legible por humanos, igual que la salida en pantalla. |
-| `-oG` | `.gnmap` | *Greppable*: una línea por host, ideal para `grep`/`awk`. |
-| `-oX` | `.xml` | *XML*: formato máquina, el que consumen otras herramientas. |
-| `-oA` | los tres | Guarda en todos a la vez con un prefijo común. |
+| **Flag** | **Extensión** | **Para qué**                                                    |
+| -------- | ------------- | --------------------------------------------------------------- |
+| `-oN`    | `.nmap`       | *Normal*: legible por humanos, igual que la salida en pantalla. |
+| `-oG`    | `.gnmap`      | *Greppable*: una línea por host, ideal para `grep`/`awk`.       |
+| `-oX`    | `.xml`        | *XML*: formato máquina, el que consumen otras herramientas.     |
+| `-oA`    | **los tres**  | Guarda en todos a la vez con un prefijo común.                  |
 
 ```shell-session
 $ sudo nmap 10.129.2.28 -p- -oA target

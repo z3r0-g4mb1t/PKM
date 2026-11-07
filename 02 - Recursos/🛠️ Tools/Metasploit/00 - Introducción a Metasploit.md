@@ -10,8 +10,6 @@ Nota previa:
 Nota siguiente: "[[01 - MSFconsole]]"
 Area: "[[Metasploit.base|Metasploit]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">`Metasploit Framework` (MSF) es una plataforma modular de desarrollo y ejecución de exploits escrita en `Ruby`</mark>, mantenida por Rapid7. Reúne en un solo entorno miles de exploits, módulos auxiliares, payloads y herramientas de post-explotación, y automatiza el ciclo *elegir exploit → configurar → lanzar → recibir sesión*. Es la navaja suiza de la explotación en pentest — y, por lo mismo, una de las herramientas **más vigiladas** por los defensores.
 
 > [!info]+ Origen y versión
@@ -19,11 +17,11 @@ Area: "[[Metasploit.base|Metasploit]]"
 
 # Framework vs. Pro
 
-| | Metasploit Framework | Metasploit Pro |
-| --- | --- | --- |
-| Licencia | Open source, gratis | Comercial (Rapid7) |
-| Interfaz | CLI (`msfconsole`) | GUI web + CLI |
-| Uso | El estándar en pentest/CTF | Automatización, phishing, reporting empresarial |
+|          | **Metasploit Framework**       | **Metasploit Pro**                                  |
+| -------- | -------------------------- | ----------------------------------------------- |
+| Licencia | Open source, gratis        | Comercial (Rapid7)                              |
+| Interfaz | CLI (`msfconsole`)         | GUI web + CLI                                   |
+| Uso      | El estándar en pentest/CTF | Automatización, phishing, reporting empresarial |
 
 Esta carpeta cubre el **Framework** (`msfconsole`), que es lo que se usa en la práctica diaria.
 
@@ -57,15 +55,15 @@ flowchart TD
 
 <mark style="background: #FFB8EBA6;">Todo en MSF es un módulo</mark>. Conocer las categorías es la base para moverse por el framework:
 
-| Módulo | Función |
-| --- | --- |
-| `exploits` | Código que abusa una vulnerabilidad para ejecutar un payload |
-| `auxiliary` | Escáneres, fuzzers, sniffers, brute-force — todo lo que **no** entrega shell |
-| `payloads` | El código que se ejecuta tras el exploit (la [[04 - Payloads en Metasploit\|shell]]) |
-| `post` | Post-explotación: enumerar, pivotar, robar credenciales |
-| `encoders` | Recodifican el payload para adaptarlo a un charset (ya **no** para evadir AV) |
-| `nops` | Generan `NOP sleds` para estabilizar exploits |
-| `evasion` | Intentan generar payloads que evadan AV (con matices — ver [[12 - Detección y evasión]]) |
+| **Módulo**      | **Función**                                                                                  |
+| ----------- | ---------------------------------------------------------------------------------------- |
+| `exploits`  | Código que abusa una vulnerabilidad para ejecutar un payload                             |
+| `auxiliary` | Escáneres, fuzzers, sniffers, brute-force — todo lo que **no** entrega shell             |
+| `payloads`  | El código que se ejecuta tras el exploit (la [[04 - Payloads en Metasploit\|shell]])     |
+| `post`      | Post-explotación: enumerar, pivotar, robar credenciales                                  |
+| `encoders`  | Recodifican el payload para adaptarlo a un charset (ya **no** para evadir AV)            |
+| `nops`      | Generan `NOP sleds` para estabilizar exploits                                            |
+| `evasion`   | Intentan generar payloads que evadan AV (con matices — ver [[12 - Detección y evasión]]) |
 
 Cada categoría se explora a fondo en su nota. La estructura en disco (`/usr/share/metasploit-framework/modules/`) replica exactamente estas carpetas.
 

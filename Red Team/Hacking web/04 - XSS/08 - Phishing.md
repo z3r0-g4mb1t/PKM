@@ -9,8 +9,6 @@ Nota previa: "[[07 - Defacing]]"
 Nota siguiente: "[[09 - Robo de sesión]]"
 Area: "[[XSS.base|XSS]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">El phishing con XSS inyecta un formulario de login falso en una página legítima para que la víctima envíe sus credenciales al servidor del atacante</mark>. En un pentest también sirve como ejercicio de concienciación: mide cuánto confían los empleados en una aplicación interna que no esperan que les haga daño.
 
 # Descubrir el punto de inyección

@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "5af9ae6b688c62df",
+        "id": "8a7d54673fc615ad",
         "type": "tabs",
         "children": [
           {
-            "id": "f34d0e7d6a7c918a",
+            "id": "ee87216cf59c7b81",
             "type": "leaf",
             "pinned": true,
             "state": {
@@ -22,8 +22,23 @@
               "icon": "lucide-file",
               "title": "🏡 Home"
             }
+          },
+          {
+            "id": "7dbb703a5e5cb559",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "02 - Recursos/🛠️ Tools/Nmap/08 - Detección de escaneos y evasión moderna.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "08 - Detección de escaneos y evasión moderna"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -114,7 +129,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "🏡 Home.md",
+                "file": "Red Team/Hacking web/02 - Reconocimiento Web/03 - Enumeración DNS con dig.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -177,8 +192,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "lucide-ghost",
-              "title": "calendar"
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
             }
           }
         ]
@@ -202,44 +217,47 @@
       "homepage:Open homepage": false
     }
   },
-  "active": "f34d0e7d6a7c918a",
+  "active": "7dbb703a5e5cb559",
   "lastOpenFiles": [
-    "Red Team/Hacking web/05 - SQL Injection/1️⃣ Introducción/01 - Detección de SQL Injection.md",
-    "Red Team/Hacking web/05 - SQL Injection/1️⃣ Introducción/03 - Uso de comentarios.md",
-    "Plan-de-Bug-Bounty.md",
+    "02 - Recursos/🛠️ Tools/Nmap/01 - Host Discovery.md",
     "🏡 Home.md",
-    "plan-bug-bounty-profesional.md",
-    "Red Team/Hacking web/05 - SQL Injection/1️⃣ Introducción/00 - Introducción a SQL Injection.md",
-    "Red Team/Hacking web/05 - SQL Injection/1️⃣ Introducción/04 - La cláusula UNION.md",
-    "Red Team/Hacking web/05 - SQL Injection/1️⃣ Introducción/05 - Inyección UNION.md",
-    "Red Team/Hacking web/05 - SQL Injection/1️⃣ Introducción/02 - Subvertir la lógica de consulta.md",
-    "Red Team/Hacking web/10 - Authentication/00 - Introducción a la autenticación.md",
-    "Red Team/Hacking web/10 - Authentication/Authentication.base",
-    "Red Team/AI Hacking/02 - LLM Output Attacks/02 - SQL injection a través del LLM.md",
-    "Games/BDO/Road to 30B por semana.md",
-    "Red Team/Hacking web/06 - Command Injection/03 - Identificación de filtros y defensas.md",
-    "Red Team/Hacking web/06 - Command Injection/05 - Bypass de caracteres en blacklist.md",
-    "Red Team/Hacking web/06 - Command Injection/08 - Herramientas de evasión y ofuscación.md",
-    "Red Team/Hacking web/06 - Command Injection/07 - Ofuscación avanzada de comandos.md",
-    "Red Team/Hacking web/06 - Command Injection/06 - Bypass de comandos en blacklist.md",
-    "Red Team/Proyectos/18 - Constructor de escapes de plantillas.md",
-    "Red Team/Evasión de defensas/03 - Callbacks de kernel/09 - Manipulación de la imagen de proceso.md",
+    "02 - Recursos/🛠️ Tools/Nmap/03 - Enumeración de servicios y versiones.md",
+    "02 - Recursos/🛠️ Tools/Nmap/02 - Escaneo de puertos y hosts.md",
+    "03 - Archivos/Images/Nmap/Nmap_hosts_combination.png",
+    "03 - Archivos/Images/Nmap/nmap_hosts_probes.png",
+    "03 - Archivos/Images/Nmap",
+    "03 - Archivos/Images/Nueva carpeta",
+    "02 - Recursos/🛠️ Tools/Nmap/07 - Evasión de firewalls, IDS e IPS.md",
+    "Red Team/Proyectos/16 - Planificador de presupuesto de cracking.md",
+    "02 - Recursos/🛠️ Tools/Nmap/05 - Rendimiento y timing.md",
+    "02 - Recursos/🛠️ Tools/Nmap/06 - Guardar y explotar resultados.md",
+    "02 - Recursos/🛠️ Tools/Nmap/00 - Introducción a Nmap.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/00 - Introducción a Metasploit.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/09 - Meterpreter.md",
+    "📋 Temario.md",
+    "02 - Recursos/🛠️ Tools/SQLMap/SQLMap.base",
+    "02 - Recursos/🛠️ Tools/Metasploit/08 - Sesiones y Jobs.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/07 - Plugins y Mixins.md",
+    "Red Team/Pentesting/04 - Shells y Payloads/08 - Shells interactivas - upgrade a TTY.md",
+    "Red Team/Pentesting/04 - Shells y Payloads/07 - Shells en Linux-Unix.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/13 - Arsenal - automatización y alternativas.md",
+    "02 - Recursos/🛠️ Tools/Nmap/04 - Nmap Scripting Engine (NSE).md",
+    "12 - Arsenal de herramientas Shells & Payloads.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/12 - Detección y evasión.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/11 - MSFvenom.md",
+    "IAs para hacking.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/04 - Payloads en Metasploit.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/10 - Escritura e importación de módulos.md",
+    "Red Team/Proyectos/11 - Auditor de visibilidad de EDR.md",
+    "02 - Recursos/🛠️ Tools/Metasploit/06 - Bases de datos y workspaces.md",
     "Red Team/Red-Team.base",
-    "Red Team/Hacking web/06 - Command Injection/02 - Operadores de inyección de comandos.md",
-    "Red Team/Hacking web/06 - Command Injection/01 - Detección de Command Injection.md",
-    "Red Team/Hacking web/04 - XSS/00 - Introducción a XSS.md",
-    "Red Team/Hacking web/04 - XSS/02 - XSS Reflejado.md",
-    "Red Team/Hacking web/06 - Command Injection/Command Injection.base",
-    "Red Team/Hacking web/Web Pentesting.base",
-    "Games/RAID/Progreso.md",
-    "Games/SWGoH",
-    "Games/BDO",
-    "Games",
-    "Games/RAID",
-    "Red Team/Hacking web/06 - Command Injection/00 - Introducción a Command Injection.md",
-    "Red Team/Hacking web/04 - XSS/XSS.base",
-    "Red Team/Hacking web/04 - XSS/01 - XSS Almacenado.md",
-    "Red Team/Evasión de defensas/Evasión de defensas.base",
+    "Red Team/Hacking Wi-Fi/Wi-Fi Pentesting.base",
+    "Red Team/Hacking web/09 - Brute Forcing/Brute Forcing.base",
+    "02 - Recursos/🛠️ Tools/Nmap/Nmap.base",
+    "Ingenieria/Bases de Datos/Bases de Datos.base",
+    "Ingenieria/Ingenieria.base",
+    "02 - Recursos/🛠️ Tools/Wireshark/Wireshark.base",
+    "03 - Archivos/Images/Web-Pentesting/XSS/xss_risk_chart_1.jpg",
     "Agent-skills-TFG.png",
     "03 - Archivos/Images/Optimización/arranque.png",
     "Pasted image 20260725110756.png",
@@ -247,9 +265,6 @@
     "03 - Archivos/Images/Web-Pentesting/Brute-Force/taxonomia_brute_force.png",
     "03 - Archivos/Images/Brute-Force/taxonomia_brute_force.png",
     "03 - Archivos/Images/Biblioteca/Windows Security Internals.jpg",
-    "03 - Archivos/Images/Biblioteca/Real-World Bug Hunting.jpg",
-    "03 - Archivos/Images/Biblioteca/Ethical Hacking.jpg",
-    "03 - Archivos/Images/Biblioteca/Evading EDR.jpg",
     "SO's/Logs y eventos/Sin título.canvas",
     "Sin título.canvas",
     "Enumeración/Sin título.canvas"

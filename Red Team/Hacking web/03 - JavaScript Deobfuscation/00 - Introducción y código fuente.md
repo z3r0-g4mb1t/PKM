@@ -11,9 +11,7 @@ Nota previa:
 Nota siguiente: "[[01 - Ofuscación de código JavaScript]]"
 Area: "[[JavaScript Deobfuscation.base|JavaScript Deobfuscation]]"
 ---
----
-
-<mark style="background: #ADCCFFA6;">La **desofuscación de código** es la habilidad de revertir código deliberadamente vuelto ilegible para entender qué hace</mark>. Es una destreza central del análisis de código y la ingeniería inversa: en ejercicios red/blue team te topas constantemente con JavaScript ofuscado que esconde su función real —el caso típico es el *malware* que ofusca su JS para descargar el *payload* principal sin que se vea—. Sin desofuscarlo, no sabes qué hace ni puedes neutralizarlo o replicarlo.
+<mark style="background: #ADCCFFA6;">La desofuscación de código es la habilidad de revertir código deliberadamente vuelto ilegible para entender qué hace</mark>. Es una destreza central del análisis de código y la ingeniería inversa: en ejercicios red/blue team te topas constantemente con JavaScript ofuscado que esconde su función real —el caso típico es el *malware* que ofusca su JS para descargar el *payload* principal sin que se vea—. Sin desofuscarlo, no sabes qué hace ni puedes neutralizarlo o replicarlo.
 
 # Dónde aparece la ofuscación
 

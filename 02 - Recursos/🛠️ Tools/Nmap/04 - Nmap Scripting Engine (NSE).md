@@ -9,30 +9,28 @@ Nota previa: "[[03 - Enumeración de servicios y versiones]]"
 Nota siguiente: "[[05 - Rendimiento y timing]]"
 Area: "[[Nmap.base|Nmap]]"
 ---
----
-
-<mark style="background: #ADCCFFA6;">El *Nmap Scripting Engine* (NSE) permite ejecutar scripts en Lua que interactúan con los servicios detectados</mark>: desde leer un banner hasta hacer *brute force*, comprobar CVEs o explotar un fallo conocido. Convierte a Nmap de un escáner de puertos en una navaja suiza de enumeración. Los scripts (`.nse`) viven en `/usr/share/nmap/scripts/`, y `--script-help <nombre>` documenta cualquiera.
+<mark style="background: #ADCCFFA6;">El Nmap Scripting Engine (NSE) permite ejecutar scripts en Lua que interactúan con los servicios detectados</mark>: desde leer un banner hasta hacer *brute force*, comprobar CVEs o explotar un fallo conocido. Convierte a Nmap de un escáner de puertos en una navaja suiza de enumeración. Los scripts (`.nse`) viven en `/usr/share/nmap/scripts/`, y `--script-help <nombre>` documenta cualquiera.
 
 # Las 14 categorías
 
 Cada script pertenece a una o varias categorías. Conocerlas evita disparar algo destructivo por accidente:
 
-| Categoría | Qué hace |
-| --- | --- |
-| `auth` | Trata credenciales de autenticación. |
-| `broadcast` | Descubre hosts por *broadcast* y los añade al escaneo. |
-| `brute` | Fuerza credenciales contra el servicio. |
-| `default` | Los que ejecuta `-sC`. |
-| `discovery` | Evalúa servicios accesibles (extrae info). |
-| `dos` | Prueba *denial of service* — **daña el servicio**, casi nunca se usa. |
-| `exploit` | Intenta explotar vulnerabilidades conocidas. |
-| `external` | Usa servicios externos (ej. bases de datos online). |
-| `fuzzer` | Envía campos malformados buscando fallos — lento. |
-| `intrusive` | Puede afectar negativamente al sistema objetivo. |
-| `malware` | Detecta si el objetivo está infectado. |
-| `safe` | Defensivos, no intrusivos ni destructivos. |
-| `version` | Extensión de la detección de versión. |
-| `vuln` | Identifica vulnerabilidades concretas. |
+| **Categoría**   | **Qué hace**                                                              |
+| ----------- | --------------------------------------------------------------------- |
+| `auth`      | Trata credenciales de autenticación.                                  |
+| `broadcast` | Descubre hosts por *broadcast* y los añade al escaneo.                |
+| `brute`     | Fuerza credenciales contra el servicio.                               |
+| `default`   | Los que ejecuta `-sC`.                                                |
+| `discovery` | Evalúa servicios accesibles (extrae info).                            |
+| `dos`       | Prueba *denial of service* — **daña el servicio**, casi nunca se usa. |
+| `exploit`   | Intenta explotar vulnerabilidades conocidas.                          |
+| `external`  | Usa servicios externos (ej. bases de datos online).                   |
+| `fuzzer`    | Envía campos malformados buscando fallos — lento.                     |
+| `intrusive` | Puede afectar negativamente al sistema objetivo.                      |
+| `malware`   | Detecta si el objetivo está infectado.                                |
+| `safe`      | Defensivos, no intrusivos ni destructivos.                            |
+| `version`   | Extensión de la detección de versión.                                 |
+| `vuln`      | Identifica vulnerabilidades concretas.                                |
 
 # Cómo invocar scripts
 

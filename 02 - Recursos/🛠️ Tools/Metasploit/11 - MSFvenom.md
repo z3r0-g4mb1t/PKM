@@ -9,8 +9,6 @@ Nota previa: "[[10 - Escritura e importación de módulos]]"
 Nota siguiente: "[[12 - Detección y evasión]]"
 Area: "[[Metasploit.base|Metasploit]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">`MSFvenom` es el generador de payloads autónomo de Metasploit</mark>: produce el payload como un fichero independiente (`.exe`, `.elf`, `.dll`, script…) para entregarlo por cualquier vía y recibir la sesión con un `multi/handler`. Fusiona los antiguos `msfpayload` y `msfencode` (unificados en 2015). Ya lo usamos en [[05 - Payloads con Metasploit y MSFvenom|Shells & Payloads]]; aquí, la referencia completa.
 
 # Sintaxis y flags
@@ -19,29 +17,29 @@ Area: "[[Metasploit.base|Metasploit]]"
 $ msfvenom -p <payload> LHOST=<ip> LPORT=<puerto> -f <formato> -o <archivo>
 ```
 
-| Flag | Función |
-| --- | --- |
-| `-p` | Payload (`-p -` lee de stdin) |
-| `-f` | Formato de salida |
-| `-o` | Fichero de salida |
-| `-a` / `--platform` | Arquitectura / plataforma |
-| `-e` | [[05 - Encoders\|Encoder]] |
-| `-b` | Bad chars a evitar (`'\x00\x0a'`) |
-| `-i` | Iteraciones de encoding |
-| `-x` | *Template*: binario base donde inyectar |
-| `-k` | *Keep*: preservar la funcionalidad del template |
-| `-n` | Tamaño del `NOP sled` |
-| `-l` | Listar (payloads/encoders/formats) |
+| **Flag**                | **Función**                                         |
+| ------------------- | ----------------------------------------------- |
+| `-p`                | Payload (`-p -` lee de stdin)                   |
+| `-f`                | Formato de salida                               |
+| `-o`                | Fichero de salida                               |
+| `-a` / `--platform` | Arquitectura / plataforma                       |
+| `-e`                | [[05 - Encoders\|Encoder]]                      |
+| `-b`                | Bad chars a evitar (`'\x00\x0a'`)               |
+| `-i`                | Iteraciones de encoding                         |
+| `-x`                | *Template*: binario base donde inyectar         |
+| `-k`                | *Keep*: preservar la funcionalidad del template |
+| `-n`                | Tamaño del `NOP sled`                           |
+| `-l`                | Listar (payloads/encoders/formats)              |
 
 # Formatos de salida (`-f`)
 
 Se agrupan en tres familias:
 
-| Familia | Ejemplos | Uso |
-| --- | --- | --- |
-| **Ejecutables** | `exe`, `elf`, `dll`, `msi`, `war`, `apk`, `macho` | Subir y ejecutar directamente |
-| **Transformación** | `raw`, `hex`, `base64`, `c`, `python`, `powershell` | Shellcode para *loaders* o inyección |
-| **Web/script** | `asp`, `aspx`, `jsp`, `php`, `psh` | [[09 - Introducción a web shells\|Web shells]] y scripts |
+| **Familia**      | **Ejemplos**                                        | **Uso**                                                  |
+| ---------------- | --------------------------------------------------- | -------------------------------------------------------- |
+| *Ejecutables*    | `exe`, `elf`, `dll`, `msi`, `war`, `apk`, `macho`   | Subir y ejecutar directamente                            |
+| *Transformación* | `raw`, `hex`, `base64`, `c`, `python`, `powershell` | Shellcode para *loaders* o inyección                     |
+| *Web/script*     | `asp`, `aspx`, `jsp`, `php`, `psh`                  | [[09 - Introducción a web shells\|Web shells]] y scripts |
 
 ```shell-session
 # Ejecutable Windows con transporte cifrado (mejor OPSEC)

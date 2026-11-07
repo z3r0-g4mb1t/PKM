@@ -10,9 +10,7 @@ Nota previa: "[[09 - Robo de sesión]]"
 Nota siguiente:
 Area: "[[XSS.base|XSS]]"
 ---
----
-
-La XSS se ancla en dos puntos: un [[03 - XSS basado en DOM|`Source`]] (la entrada del usuario) y un `Sink` (donde se muestra). <mark style="background: #ADCCFFA6;">Prevenirla es asegurar ambos, en front-end **y** back-end</mark>. La pieza central es el **output encoding por contexto** (más sanitización con `DOMPurify` cuando hay que permitir HTML); la validación de entrada y el resto son capas que refuerzan.
+La XSS se ancla en dos puntos: un [[03 - XSS basado en DOM|Source]] (la entrada del usuario) y un `Sink` (donde se muestra). <mark style="background: #ADCCFFA6;">Prevenirla es asegurar ambos, en front-end y back-end</mark>. La pieza central es el **output encoding por contexto** (más sanitización con `DOMPurify` cuando hay que permitir *HTML*); la **validación de entrada** y el resto son capas que refuerzan.
 
 # Front-end
 
@@ -46,8 +44,8 @@ Ninguna capa basta por sí sola. Sobre el servidor:
 - **WAF**: detecta y bloquea inyecciones en las peticiones (aunque es evadible — ver la [[05 - Evasión y ofuscación de XSS|ofuscación de payloads]]).
 
 > [!important]+ El modelo mental: capas, no balas de plata
-> <mark style="background: #8000E1A6;">La seguridad frente a XSS es defensa en profundidad</mark>: validar → sanitizar/codificar por contexto → CSP → cookies `HttpOnly` → WAF. Si una capa falla, otra contiene el daño. Como pentester, tu trabajo es encontrar el hueco entre capas; como defensor, no confiar en una sola. Practicar ambos lados —ofensivo y defensivo— es lo que da una protección fiable.
+> La seguridad frente a XSS es defensa en profundidad: <mark style="background: #ADCCFFA6;">validar → sanitizar/codificar por contexto → CSP → cookies `HttpOnly` → WAF</mark>. Si una capa falla, otra contiene el daño. Como pentester, tu trabajo es encontrar el hueco entre capas; como defensor, no confiar en una sola. Practicar ambos lados —ofensivo y defensivo— es lo que da una protección fiable.
 
 ---
 
-Con esto cerramos XSS: <mark style="background: #8000E1A6;">qué es, sus tres tipos ([[01 - XSS Almacenado|almacenado]], [[02 - XSS Reflejado|reflejado]], [[03 - XSS basado en DOM|DOM]]), cómo descubrirla, explotarla (defacing, phishing, robo de sesión) y prevenirla</mark>. El primitivo —ejecución de JavaScript arbitrario en el navegador de la víctima— es simple, pero su impacto, bien encadenado, llega al *Account Takeover* completo y al [[00 - Introducción a la explotación XSS avanzada|pivote a la red interna de la víctima]]. La lectura de payloads ofuscados que aparecen en estos ataques se apoya en la [[00 - Introducción y código fuente|desofuscación de JavaScript]].
+Con esto cerramos XSS: qué es, sus tres tipos ([[01 - XSS Almacenado|almacenado]], [[02 - XSS Reflejado|reflejado]], [[03 - XSS basado en DOM|DOM]]), cómo descubrirla, explotarla (defacing, phishing, robo de sesión) y prevenirla. El primitivo —ejecución de JavaScript arbitrario en el navegador de la víctima— es simple, pero su impacto, bien encadenado, llega al *Account Takeover* completo y al [[00 - Introducción a la explotación XSS avanzada|pivote a la red interna de la víctima]]. La lectura de payloads ofuscados que aparecen en estos ataques se apoya en la [[00 - Introducción y código fuente|desofuscación de JavaScript]].

@@ -9,13 +9,11 @@ Nota previa: "[[02 - Escaneo de puertos y hosts]]"
 Nota siguiente: "[[04 - Nmap Scripting Engine (NSE)]]"
 Area: "[[Nmap.base|Nmap]]"
 ---
----
-
 Saber que el puerto 80 está abierto vale poco; saber que corre <mark style="background: #ADCCFFA6;">`Apache httpd 2.4.29`</mark> lo cambia todo. <mark style="background: #FFB86CA6;">La versión exacta de un servicio es la que te permite buscar el exploit preciso</mark>, revisar el código fuente de esa versión y descartar falsos positivos. La detección de servicio y versión (`-sV`) es el puente entre "hay algo escuchando" y "sé qué atacar".
 
 # `-sV`: detección de servicio y versión
 
-El flujo recomendado en un objetivo real es en **dos tiempos** para no generar ruido innecesario: un escaneo rápido de puertos primero (poco tráfico, menos probable que salte una alarma), y luego `-sV` dirigido solo a los puertos abiertos. En paralelo puedes lanzar un `-p-` de fondo.
+El flujo recomendado en un objetivo real es en **dos tiempos** para no generar ruido innecesario: <mark style="background: #ADCCFFA6;">un escaneo rápido de puertos primero</mark> (poco tráfico, menos probable que salte una alarma), y luego `-sV` <mark style="background: #FFB86CA6;">dirigido solo a los puertos abiertos</mark>. En paralelo puedes lanzar un `-p-` de fondo.
 
 ```shell-session
 $ sudo nmap 10.129.2.28 -p- -sV
@@ -33,6 +31,13 @@ Service Info: Host: inlane; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 La línea `Service Info` regala el **hostname**, el **SO** y el **CPE** — este último es el identificador estandarizado que luego usarás para cruzar contra bases de CVE (ver [[01 - Evaluación de vulnerabilidades|Evaluación de vulnerabilidades]]).
 
+> [!info]+ Qué es el CPE?
+> Tiene el formato `cpe:/<part>:<vendor>:<product>:<version>`, donde:
+> - **Part**: Indica si es una aplicación (`a`), hardware (`h`) o sistema operativo (`o`).
+> - **Vendor/Product/Version**: Especifican el fabricante, el nombre del producto y la versión detectada.
+>  
+>  Aunque en la salida por consola se muestra principalmente para el sistema operativo (ej. `OS CPE`), los CPE de aplicaciones se incluyen internamente en la salida XML para ser usados por scripts como `vulners` o `vulscan`.
+
 ## Ver el progreso de un escaneo largo
 
 Un `-p- -sV` puede tardar minutos. Tres formas de no quedarte a ciegas:
@@ -43,7 +48,7 @@ Un `-p- -sV` puede tardar minutos. Tres formas de no quedarte a ciegas:
 
 ## Cómo deduce Nmap la versión
 
-<mark style="background: #FFB8EBA6;">Primero lee el *banner*</mark> que el servicio anuncia al conectar; si el banner no basta para identificarlo, pasa a un sistema de *matching* por firmas que envía sondas específicas — más preciso pero **más lento**. El detalle fino de la agresividad se controla con `--version-intensity <0-9>`: **por defecto es 7** (ya bastante agresivo — un `-sV` a secas no es un modo ligero), `0` = solo banners ligeros, `9` = todas las sondas. `--version-all` es el atajo a `9`; `--version-light`, a `2` (menos ruido).
+<mark style="background: #FFB8EBA6;">Primero lee el banner</mark> que el servicio anuncia al conectar; si el banner no basta para identificarlo, pasa a un sistema de *matching* por firmas que envía sondas específicas — más preciso pero **más lento**. El detalle fino de la agresividad se controla con `--version-intensity <0-9>`: **por defecto es 7** (ya bastante agresivo — un `-sV` a secas no es un modo ligero), `0` = solo banners ligeros, `9` = todas las sondas. `--version-all` es el atajo a `9`; `--version-light`, a `2` (menos ruido).
 
 # El gotcha: Nmap se deja información
 

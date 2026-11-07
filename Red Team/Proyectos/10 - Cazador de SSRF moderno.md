@@ -34,14 +34,14 @@ Una navaja especializada en la clase SSRF —no un DAST generalista— con tres 
 
 # Funcionalidades principales
 
-| Funcionalidad | Por qué importa |
-| --- | --- |
-| Perfilado de la primitiva | Decide qué es alcanzable antes de disparar; menos tráfico, más señal, y un "no alcanzable" honesto |
-| Cobertura cloud actualizada | AWS IMDSv1/v2 *method-aware*, GCP (`Metadata-Flavor`), Azure — cada uno con su requisito real, no una URL genérica |
-| Bypasses por *parser differential* | Ataca la divergencia validador↔cliente, que es donde viven los filtros rotos de verdad |
-| DNS rebinding integrado | Resolver propio con TTL corto para saltarse el filtro que valida el nombre y luego reconecta |
-| OOB correlacionado por payload | Convierte el SSRF ciego en confirmado, y dice **qué** payload lo logró, no solo que "algo" llegó |
-| Escaneo interno con presupuesto | Si la primitiva permite sondear puertos internos, con cadencia controlada — nunca un barrido a discreción |
+| **Funcionalidad**                  | **Por qué importa**                                                                                                |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Perfilado de la primitiva          | Decide qué es alcanzable antes de disparar; menos tráfico, más señal, y un "no alcanzable" honesto                 |
+| Cobertura cloud actualizada        | AWS IMDSv1/v2 *method-aware*, GCP (`Metadata-Flavor`), Azure — cada uno con su requisito real, no una URL genérica |
+| Bypasses por *parser differential* | Ataca la divergencia validador↔cliente, que es donde viven los filtros rotos de verdad                             |
+| DNS rebinding integrado            | Resolver propio con TTL corto para saltarse el filtro que valida el nombre y luego reconecta                       |
+| OOB correlacionado por payload     | Convierte el SSRF ciego en confirmado, y dice **qué** payload lo logró, no solo que "algo" llegó                   |
+| Escaneo interno con presupuesto    | Si la primitiva permite sondear puertos internos, con cadencia controlada —> nunca un barrido a discreción         |
 
 # Qué existe ya y dónde se queda corto
 

@@ -49,14 +49,14 @@ app-tier02   87% de las rutas al segmento 10.20.50.0/24 pasan por aquí
 
 # Funcionalidades principales
 
-| Funcionalidad | Detalle |
-| --- | --- |
-| Inventario pasivo primero | Rutas, ARP, conexiones y DNS de cada agente antes de sondear nada |
-| Sondeo con presupuesto | Cadencia y volumen controlados; nunca un barrido a discreción |
-| Grafo incremental persistente | El mapa se construye y sobrevive entre sesiones; reanudable |
-| Detección de cuellos de botella | Centralidad sobre el grafo para hallar el host de corte |
-| Deduplicación de escaneos | No repetir lo ya sabido; el modelo recuerda qué se probó y cuándo |
-| Exportación a Graphviz y JSON | El mapa entra directo en el informe como figura de topología |
+| **Funcionalidad**                   | **Detalle**                                                           |
+| ------------------------------- | ----------------------------------------------------------------- |
+| Inventario pasivo primero       | Rutas, ARP, conexiones y DNS de cada agente antes de sondear nada |
+| Sondeo con presupuesto          | Cadencia y volumen controlados; nunca un barrido a discreción     |
+| Grafo incremental persistente   | El mapa se construye y sobrevive entre sesiones; reanudable       |
+| Detección de cuellos de botella | Centralidad sobre el grafo para hallar el host de corte           |
+| Deduplicación de escaneos       | No repetir lo ya sabido; el modelo recuerda qué se probó y cuándo |
+| Exportación a Graphviz y JSON   | El mapa entra directo en el informe como figura de topología      |
 
 # Qué existe ya y dónde se queda corto
 

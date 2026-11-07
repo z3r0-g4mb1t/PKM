@@ -365,7 +365,7 @@
         "name": "",
         "active": true,
         "type": "FILES",
-        "pattern": "Red Team/Desarrollo ofensivo/Desarrollo ofensivo.base",
+        "pattern": "Red Team/Desarrollo ofensivo (GO)/Desarrollo ofensivo.base",
         "patternType": "STRICT"
       },
       {
@@ -387,6 +387,27 @@
         "active": true,
         "type": "FILES",
         "pattern": "Plan-de-Bug-Bounty.md",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "Red Team/Pentesting/01 - Footprinting/Footprinting.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "02 - Recursos/🛠️ Tools/Metasploit/Metasploit.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "02 - Recursos/🛠️ Tools/Nmap/Nmap.base",
         "patternType": "STRICT"
       }
     ],

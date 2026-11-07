@@ -1,8 +1,7 @@
 views:
   - type: table
     name: Notas
-    filters:
-      Area == link("Wireshark.base", "Wireshark")
+    filters: Area == link("Wireshark.base", "Wireshark")
     order:
       - file.name
       - Descripción

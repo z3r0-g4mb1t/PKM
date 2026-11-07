@@ -34,13 +34,13 @@ Tres piezas:
 
 # Funcionalidades principales
 
-| Funcionalidad | Por qué importa |
-| --- | --- |
-| Evaluación de Deny ACE en orden canónico | Es exactamente lo que BloodHound no hace; una Deny bien colocada invalida la ruta, y saberlo evita perseguir fantasmas |
-| Resolución de herencia deshabilitada | Un objeto con `SE_DACL_PROTECTED` no hereda: la arista que BloodHound asume por herencia no existe |
-| Manejo de `ObjectType` en la ACE | Un `GenericWrite` acotado a una clase concreta no es el `GenericWrite` total que BloodHound pinta — precisión que cambia la explotabilidad |
-| Expansión real de grupos anidados | El acceso efectivo depende de la membresía transitiva del principal; resolverla bien evita falsos negativos |
-| Grafo reconciliado (podar/confirmar/añadir) | Devuelve un grafo *fiable*: menos rutas, pero las que quedan funcionan — el valor operativo entero |
+| **Funcionalidad**                               | **Por qué importa**                                                                                                                            |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Evaluación de Deny ACE en orden canónico    | Es exactamente lo que BloodHound no hace; una Deny bien colocada invalida la ruta, y saberlo evita perseguir fantasmas                     |
+| Resolución de herencia deshabilitada        | Un objeto con `SE_DACL_PROTECTED` no hereda: la arista que BloodHound asume por herencia no existe                                         |
+| Manejo de `ObjectType` en la ACE            | Un `GenericWrite` acotado a una clase concreta no es el `GenericWrite` total que BloodHound pinta — precisión que cambia la explotabilidad |
+| Expansión real de grupos anidados           | El acceso efectivo depende de la membresía transitiva del principal; resolverla bien evita falsos negativos                                |
+| Grafo reconciliado (podar/confirmar/añadir) | Devuelve un grafo *fiable*: menos rutas, pero las que quedan funcionan — el valor operativo entero                                         |
 
 # Funcionalidades secundarias
 
@@ -89,13 +89,13 @@ Decisión de ingeniería: el motor se valida con una **suite de vectores canóni
 
 # Stack de implementación (Python)
 
-| Capa | Librería | Por qué (fundamento senior) | Alternativa descartada |
-| --- | --- | --- | --- |
-| LDAP + descriptores | `impacket` | *La* implementación que parsea `nTSecurityDescriptor` y estructuras de ACE fuera de .NET; reescribir eso sería reimplementar medio Impacket | Parsear el binario a mano — enorme y propenso a error |
-| Lectura de atributos | `ldap3` | Complementa la lectura de UAC, SPNs y membresías con una API cómoda | Solo Impacket — más verboso para consultas simples |
-| Grafo | `networkx` | Reconciliación, expansión transitiva de grupos y diff temporal como operaciones de grafo | Estructuras ad-hoc — la transitividad se complica |
-| Interop | JSON de BloodHound CE | Entrada/salida estándar → se integra con el flujo existente sin acoplarse | Formato propio — aísla la herramienta |
-| Test | `pytest` (vectores canónicos) | El motor de acceso efectivo se construye por TDD contra casos conocidos; es la garantía de corrección | Probar solo en un lab — no cubre las esquinas |
+| **Capa**                 | **Librería**                      | **Por qué (fundamento senior)**                                                                                                                 | **Alternativa descartada**                                |
+| -------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| LDAP + descriptores  | `impacket`                    | *La* implementación que parsea `nTSecurityDescriptor` y estructuras de ACE fuera de .NET; reescribir eso sería reimplementar medio Impacket | Parsear el binario a mano — enorme y propenso a error |
+| Lectura de atributos | `ldap3`                       | Complementa la lectura de UAC, SPNs y membresías con una API cómoda                                                                         | Solo Impacket — más verboso para consultas simples    |
+| Grafo                | `networkx`                    | Reconciliación, expansión transitiva de grupos y diff temporal como operaciones de grafo                                                    | Estructuras ad-hoc — la transitividad se complica     |
+| Interop              | JSON de BloodHound CE         | Entrada/salida estándar → se integra con el flujo existente sin acoplarse                                                                   | Formato propio — aísla la herramienta                 |
+| Test                 | `pytest` (vectores canónicos) | El motor de acceso efectivo se construye por TDD contra casos conocidos; es la garantía de corrección                                       | Probar solo en un lab — no cubre las esquinas         |
 
 > **Transversal**: `uv`, `ruff`, `mypy --strict`, `rich`/`structlog`, `uv tool`/`pipx` (detalle en [[16 - Planificador de presupuesto de cracking]]).
 

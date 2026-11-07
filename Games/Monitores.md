@@ -1,0 +1,3 @@
+- [Gigabyte MO27Q28G](https://monitorgarage.com/monitor/gigabyte-mo27q28g/#mg-fiche-4771-1criterio) -> *579*$ | **8.8**
+- [Gigabyte GO27Q24G](https://monitorgarage.com/monitor/gigabyte-go27q24g/) -> *345*$ | **9**
+- [ASUS ROG XG27AQWMG](https://monitorgarage.com/monitor/asus-rog-xg27aqwmg/) -> *539*$ | **9.3**

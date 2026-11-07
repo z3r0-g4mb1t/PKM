@@ -27,7 +27,7 @@ Area: "[[Reconocimiento Web.base|Reconocimiento Web]]"
 
 # Herramientas
 
-| Herramienta  | Descripción                                                                                                                 |
+| **Herramienta**  | **Descripción**                                                                                                                 |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------- |
 | `Wappalyzer` | Extensión/servicio que perfila tecnologías web (CMS, frameworks, analítica)                                                 |
 | `BuiltWith`  | Perfilador con informes detallados del stack                                                                                |

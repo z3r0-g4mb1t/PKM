@@ -8,11 +8,9 @@ Fecha de actualización: 2025-07-30
 Nota siguiente: "[[Uso avanzado de Wireshark]]"
 Area: "[[Wireshark.base|Wireshark]]"
 ---
----
-
 `Wireshark` es un analizador de [[Análisis del tráfico de red | tráfico de red]] gratuito y de código abierto muy parecido a [[Tcpdump]] pero con una interfaz gráfica. Wireshark es multiplataforma y capaz de capturar datos en vivo desde muchos tipos de interfaces diferentes (incluidos *WiFi*, *USB* y *Bluetooth*) y guardar el tráfico en varios formatos diferentes. Permite al usuario profundizar mucho más en la inspección de paquetes de red que otras herramientas. Lo que hace que Wireshark sea verdaderamente poderoso es la capacidad de análisis que proporciona, brindando una visión detallada del tráfico.
 
-> [!attention]
+> [!attention]+
 > Dependiendo del host que estemos usando, es posible que no siempre tengamos una GUI para utilizar Wireshark tradicional. Por suerte para nosotros, hay variantes que nos permiten utilizarlo desde la línea de comandos.
 
 # Características y capacidades
@@ -133,9 +131,9 @@ Tres paneles principales: 
 El siguiente gif mostrará los pasos.
 
 ### Pasos para iniciar una captura
-![GIF que muestra las opciones de captura.](https://academy.hackthebox.com/storage/modules/81/first-capture-ws.gif)
+![GIF que muestra las opciones de captura](https://academy.hackthebox.com/storage/modules/81/first-capture-ws.gif)
 
-> [!danger]
+> [!danger]+
 > Cada vez que cambiemos las opciones de captura, Wireshark reiniciará el seguimiento. Wireshark tiene opciones de filtro de captura y visualización que se pueden utilizar.
 
 ---

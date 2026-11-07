@@ -8,8 +8,6 @@ Nota previa: "[[09 - Meterpreter]]"
 Nota siguiente: "[[11 - MSFvenom]]"
 Area: "[[Metasploit.base|Metasploit]]"
 ---
----
-
 Metasploit trae miles de exploits, pero <mark style="background: #FFB8EBA6;">un CVE recién publicado o un 0day no están todavía en el framework</mark>. Adaptar un exploit público al formato de MSF —o importarlo— te da toda su maquinaria (handlers, payloads, sesiones, base de datos) sobre tu propio código.
 
 # La anatomía de un módulo
@@ -46,14 +44,14 @@ end
 
 Las partes clave:
 
-| Elemento | Papel |
-| --- | --- |
-| `include <Mixin>` | Reutiliza lógica de protocolo ([[07 - Plugins y Mixins\|Tcp, HttpClient, SMB]]) |
-| `initialize` | Metadatos: nombre, refs (**CVE**), targets, opciones |
-| `check` | Comprueba vulnerabilidad **sin** explotar — buena práctica y educado con el cliente |
-| `exploit` / `run` | La lógica que entrega el payload (exploit) o hace la tarea (auxiliary) |
+| **Elemento**          | **Papel**                                                                               |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| `include <Mixin>` | Reutiliza lógica de protocolo ([[07 - Plugins y Mixins\|Tcp, HttpClient, SMB]])     |
+| `initialize`      | Metadatos: nombre, refs (**CVE**), targets, opciones                                |
+| `check`           | Comprueba vulnerabilidad **sin** explotar — buena práctica y educado con el cliente |
+| `exploit` / `run` | La lógica que entrega el payload (exploit) o hace la tarea (auxiliary)              |
 
-<mark style="background: #8000E1A6;">Escribir un módulo es, en gran parte, elegir los mixins correctos y rellenar `check` y `exploit`</mark> — la fontanería (sockets, payloads, sesiones) la pone el framework.
+<mark style="background: #FFB8EBA6;">Escribir un módulo es, en gran parte, elegir los mixins correctos y rellenar `check` y `exploit`</mark> — la fontanería (sockets, payloads, sesiones) la pone el framework.
 
 # Importar un módulo externo
 

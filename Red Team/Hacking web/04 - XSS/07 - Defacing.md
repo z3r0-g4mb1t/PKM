@@ -15,12 +15,12 @@ El ataque más simple sobre una [[01 - XSS Almacenado|XSS almacenada]] es el `de
 
 Con JavaScript inyectado podemos dar a la página el aspecto que queramos. Cuatro propiedades cubren casi todo:
 
-| Elemento | Propiedad |
-| - | - |
-| Color de fondo | `document.body.style.background` |
-| Imagen de fondo | `document.body.background` |
-| Título de la página | `document.title` |
-| Texto de la página | `DOM.innerHTML` |
+| **Elemento**            | **Propiedad**                        |
+| ------------------- | -------------------------------- |
+| Color de fondo      | `document.body.style.background` |
+| Imagen de fondo     | `document.body.background`       |
+| Título de la página | `document.title`                 |
+| Texto de la página  | `DOM.innerHTML`                  |
 
 # Los payloads
 

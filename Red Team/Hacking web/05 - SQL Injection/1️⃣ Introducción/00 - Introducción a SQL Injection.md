@@ -10,7 +10,7 @@ Nota previa:
 Nota siguiente: "[[01 - Detección de SQL Injection]]"
 Area: "[[SQL Injection.base|SQL Injection]]"
 ---
-La `SQL injection` (*SQLi*) es la **explotación de una consulta SQL que mezcla, sin separar, código y datos**. Pese a ser una de las vulnerabilidades más antiguas y documentadas, sigue apareciendo —cada vez en sitios menos obvios— y su impacto va desde el volcado completo de la base de datos hasta la ejecución de comandos en el servidor. Dominar SQLi exige primero entender cómo una aplicación web habla con su base de datos; los [[Consultas y operadores SQL|fundamentos de SQL]] son el prerrequisito.
+					La `SQL injection` (*SQLi*) es la **explotación de una consulta SQL que mezcla, sin separar, código y datos**. Pese a ser una de las vulnerabilidades más antiguas y documentadas, sigue apareciendo —cada vez en sitios menos obvios— y su impacto va desde el volcado completo de la base de datos hasta la ejecución de comandos en el servidor. Dominar SQLi exige primero entender cómo una aplicación web habla con su base de datos; los [[Consultas y operadores SQL|fundamentos de SQL]] son el prerrequisito.
 
 # Cómo las aplicaciones web usan SQL
 

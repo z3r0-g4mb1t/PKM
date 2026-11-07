@@ -38,14 +38,14 @@ Módulos de auditoría:
 
 # Funcionalidades principales
 
-| Funcionalidad | Por qué importa |
-| --- | --- |
-| Conformidad con la spec *stateless* | Un escáner atado a la versión vieja da un veredicto falso. La conformidad se comprueba contra la spec vigente, y la versión soportada se declara |
-| Heurística determinista de descripciones | Reproducible en CI y auditable: cada alerta dice qué patrón la disparó, no "un modelo pensó que era sospechoso" |
-| Baseline firmado y diff entre pasadas | Convierte el rug-pull, invisible en una sola foto, en una diferencia detectable entre dos |
-| Auditoría del flujo OAuth | Cubre la mitad de la superficie que el análisis de *tool poisoning* ignora |
-| Operación offline | Usable durante un engagement sin exfiltrar las herramientas del cliente a una API externa |
-| Salida priorizada con razones | Puntuación por hallazgo con su justificación; el operador decide, la herramienta no veta |
+| **Funcionalidad**                        | **Por qué importa**                                                                                                                              |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Conformidad con la spec *stateless*      | Un escáner atado a la versión vieja da un veredicto falso. La conformidad se comprueba contra la spec vigente, y la versión soportada se declara |
+| Heurística determinista de descripciones | Reproducible en CI y auditable: cada alerta dice qué patrón la disparó, no "un modelo pensó que era sospechoso"                                  |
+| Baseline firmado y diff entre pasadas    | Convierte el rug-pull, invisible en una sola foto, en una diferencia detectable entre dos                                                        |
+| Auditoría del flujo OAuth                | Cubre la mitad de la superficie que el análisis de *tool poisoning* ignora                                                                       |
+| Operación offline                        | Usable durante un engagement sin exfiltrar las herramientas del cliente a una API externa                                                        |
+| Salida priorizada con razones            | Puntuación por hallazgo con su justificación; el operador decide, la herramienta no veta                                                         |
 
 # Qué existe ya y dónde se queda corto
 

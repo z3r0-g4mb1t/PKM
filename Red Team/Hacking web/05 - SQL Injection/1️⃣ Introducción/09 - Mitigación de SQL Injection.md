@@ -10,8 +10,6 @@ Nota previa: "[[08 - Escritura de archivos]]"
 Nota siguiente:
 Area: "[[SQL Injection.base|SQL Injection]]"
 ---
----
-
 Conocer las defensas no es solo cosa de desarrolladores: para un atacante, entender exactamente qué detiene una SQLi —y qué no— es lo que permite [[05 - Bypass de caracteres comunes|evadirlas]]. Esta es la nota de referencia de mitigación para todo el tema; los módulos avanzados ([[01 - Introducción a Blind SQL Injection|Blind]], avanzado) remiten aquí y añaden solo matices propios. Las defensas se ordenan de la más efectiva a la complementaria.
 
 # Consultas parametrizadas (prepared statements) — la defensa real
@@ -25,10 +23,10 @@ mysqli_stmt_bind_param($stmt, 'ss', $username, $password);
 mysqli_stmt_execute($stmt);
 ```
 
-El driver escapa y tipa los valores; una comilla inyectada se trata como el carácter literal `'`, no como delimitador. <mark style="background: #8000E1A6;">Bien aplicado, esto elimina la SQLi de raíz</mark>, no la mitiga: el dato nunca se interpreta como código.
+El driver escapa y tipa los valores; una comilla inyectada se trata como el carácter literal `'`, no como delimitador. <mark style="background: #FFB8EBA6;">Bien aplicado, esto elimina la SQLi de raíz</mark>, no la mitiga: el dato nunca se interpreta como código.
 
 > [!warning]+
-> El punto ciego que un atacante explota: <mark style="background: #FF5582A6;">los prepared statements **no pueden parametrizar identificadores**</mark> —nombres de tabla/columna, `ORDER BY`, `LIMIT`, dirección de orden—. Esas partes se siguen construyendo concatenando, y son donde [[Consultas y operadores SQL|sobrevive la SQLi]] en aplicaciones modernas que, por lo demás, parametrizan todo. Los ORMs (Hibernate, Sequelize, Django ORM) parametrizan por defecto, pero exponen métodos de *raw query* y construcción dinámica de `ORDER BY` que reintroducen el fallo.
+> El punto ciego que un atacante explota: <mark style="background: #FF5582A6;">los prepared statements no pueden parametrizar identificadores</mark> —nombres de tabla/columna, `ORDER BY`, `LIMIT`, dirección de orden—. Esas partes se siguen construyendo concatenando, y son donde [[Consultas y operadores SQL|sobrevive la SQLi]] en aplicaciones modernas que, por lo demás, parametrizan todo. Los ORMs (Hibernate, Sequelize, Django ORM) parametrizan por defecto, pero exponen métodos de *raw query* y construcción dinámica de `ORDER BY` que reintroducen el fallo.
 
 # Validación de entrada (allowlist)
 
@@ -63,7 +61,7 @@ CREATE USER 'reader'@'localhost' IDENTIFIED BY 'p@ssw0Rd!!';
 GRANT SELECT ON ilfreight.ports TO 'reader'@'localhost';
 ```
 
-Así, aunque exista una SQLi, el atacante no podrá leer otras tablas (`SELECT command denied`), ni [[07 - Lectura de archivos|leer]]/[[08 - Escritura de archivos|escribir ficheros]] (sin privilegio `FILE`), ni tocar `INFORMATION_SCHEMA` completo. <mark style="background: #8000E1A6;">No previene la inyección, pero reduce drásticamente su impacto</mark> —convierte un compromiso total en una fuga acotada—.
+Así, aunque exista una SQLi, el atacante no podrá leer otras tablas (`SELECT command denied`), ni [[07 - Lectura de archivos|leer]]/[[08 - Escritura de archivos|escribir ficheros]] (sin privilegio `FILE`), ni tocar `INFORMATION_SCHEMA` completo. <mark style="background: #ADCCFFA6;">No previene la inyección, pero reduce drásticamente su impacto</mark> —convierte un compromiso total en una fuga acotada—.
 
 # WAF — capa perimetral, no solución
 

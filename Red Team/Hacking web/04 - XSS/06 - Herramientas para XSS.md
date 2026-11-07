@@ -9,8 +9,6 @@ Nota previa: "[[05 - Evasión y ofuscación de XSS]]"
 Nota siguiente: "[[07 - Defacing]]"
 Area: "[[XSS.base|XSS]]"
 ---
----
-
 Buscar XSS a mano en un programa con miles de endpoints no escala. <mark style="background: #ADCCFFA6;">El hunting moderno de XSS es un *pipeline*: mapear la superficie → filtrar qué parámetros reflejan → confirmar ejecución → cubrir DOM y blind</mark>. Cada fase tiene su herramienta. Esta nota es el set que usarás en bug bounty real; las técnicas que automatizan ya las viste en [[04 - Descubrimiento de XSS]] y [[05 - Evasión y ofuscación de XSS]].
 
 # 1. Mapear la superficie de ataque
@@ -56,7 +54,7 @@ $ cat reflected.txt | dalfox pipe --waf-evasion --skip-bav
 $ dalfox url "https://target.htb/search?q=FUZZ" -b https://tu-colaborador.htb
 ```
 
-<mark style="background: #FFB86CA6;">`Dalfox`</mark> ([hahwul/dalfox](https://github.com/hahwul/dalfox)) es hoy el escáner XSS de facto en bug bounty: analiza el contexto del reflejo, prueba payloads adaptados, verifica la ejecución y trae un *blind XSS callback* integrado (`-b`). El flag `--waf-evasion` aplica las codificaciones de [[05 - Evasión y ofuscación de XSS|evasión]] automáticamente.
+`Dalfox` ([hahwul/dalfox](https://github.com/hahwul/dalfox)) es hoy el escáner XSS de facto en bug bounty: analiza el contexto del reflejo, prueba payloads adaptados, verifica la ejecución y trae un *blind XSS callback* integrado (`-b`). El flag `--waf-evasion` aplica las codificaciones de [[05 - Evasión y ofuscación de XSS|evasión]] automáticamente.
 
 > [!warning]+ Ningún escáner sustituye la verificación manual
 > Un escáner reporta el payload reflejado y *cree* que ejecuta, pero genera **falsos positivos** (se cuela en el HTML sin dispararse) y **falsos negativos** (no entiende un contexto raro o un WAF lo bloquea). Confirma siempre a mano antes de reportar — un `Impact: high` sin PoC ejecutable se cierra como *informational*.
@@ -65,7 +63,7 @@ $ dalfox url "https://target.htb/search?q=FUZZ" -b https://tu-colaborador.htb
 
 El XSS basado en DOM no aparece en el HTML del servidor, así que los escáneres de reflejo lo pierden. Necesita herramientas que sigan el flujo `source` → `sink` en el JavaScript del cliente:
 
-- **`DOM Invader`**: integrado en el navegador de Burp Suite. <mark style="background: #8000E1A6;">Instrumenta el DOM y rastrea automáticamente de dónde viene la entrada hasta qué `sink` la ejecuta</mark>, encontrando en segundos lo que a mano es tedioso. Es la mejor herramienta para DOM XSS hoy.
+- **`DOM Invader`**: integrado en el navegador de Burp Suite. Instrumenta el DOM y rastrea automáticamente de dónde viene la entrada hasta qué `sink` la ejecuta, encontrando en segundos lo que a mano es tedioso. Es la mejor herramienta para DOM XSS hoy.
 - Para revisión estática del JS, búsqueda de sinks (`innerHTML`, `eval`, `document.write`) con `grep`/LinkFinder sobre los bundles descargados con `katana`.
 
 # 5. Blind XSS

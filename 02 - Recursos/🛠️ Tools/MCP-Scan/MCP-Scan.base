@@ -1,8 +1,7 @@
 views:
   - type: table
     name: Notas
-    filters:
-      Area == link("MCP-Scan.base", "MCP-Scan")
+    filters: Area == link("MCP-Scan.base", "MCP-Scan")
     order:
       - file.name
       - Descripción

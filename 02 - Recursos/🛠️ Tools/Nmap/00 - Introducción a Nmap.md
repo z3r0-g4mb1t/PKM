@@ -10,9 +10,7 @@ Nota previa:
 Nota siguiente: "[[01 - Host Discovery]]"
 Area: "[[Nmap.base|Nmap]]"
 ---
----
-
-<mark style="background: #ADCCFFA6;">`Nmap` (*Network Mapper*) es un escáner de red y herramienta de auditoría de seguridad open-source</mark>, escrito en C, C++, Python y Lua. Envía paquetes crudos (*raw packets*) para averiguar qué hosts están vivos, qué puertos y servicios exponen, qué versión corre cada uno y —cuando puede— qué sistema operativo. Es el estándar de facto de la fase de enumeración de infraestructura y el punto de partida de casi cualquier pentest de red.
+<mark style="background: #ADCCFFA6;">`Nmap` (Network Mapper) es un escáner de red y herramienta de auditoría de seguridad open-source</mark>, escrito en C, C++, Python y Lua. Envía paquetes crudos (*raw packets*) para averiguar qué hosts están vivos, qué puertos y servicios exponen, qué versión corre cada uno y —cuando puede— qué sistema operativo. Es el estándar de facto de la fase de enumeración de infraestructura y el punto de partida de casi cualquier pentest de red.
 
 > [!info]+ Origen y versión
 > Creado por Gordon Lyon (*Fyodor*) y presentado en **Phrack #51 (1997)**. Hoy va por la rama **7.9x** (`7.99`, marzo 2026 — verifica la última en [nmap.org](https://nmap.org)). El paquete de los repos del sistema suele ir **atrasado**; en un engagement, usa la build de `nmap.org` o una distro de seguridad al día. Referencia canónica: el libro *Nmap Network Scanning* del propio Lyon (parte disponible libre en [nmap.org/book](https://nmap.org/book/)).
@@ -25,7 +23,7 @@ La **metodología** completa de enumeración (principios, orden, qué mirar en c
 
 # Casos de uso
 
-Administradores y equipos de seguridad lo usan para auditar redes, simular pentests, comprobar reglas de firewall/IDS, mapear la topología, identificar puertos abiertos y como base de un *vulnerability assessment* (ver [[01 - Evaluación de vulnerabilidades|Evaluación de vulnerabilidades]]). En un test de intrusión es la primera pieza tras el descubrimiento de rango.
+Administradores y equipos de seguridad lo usan para auditar redes, simular pentests, comprobar reglas de firewall/[[IDS-IPS|IDS]], mapear la topología, identificar puertos abiertos y como base de un *vulnerability assessment* (ver [[01 - Evaluación de vulnerabilidades|Evaluación de vulnerabilidades]]). En un test de intrusión es la primera pieza tras el descubrimiento de rango.
 
 # Arquitectura: las cinco capacidades
 
@@ -49,19 +47,19 @@ $ nmap <tipos de escaneo> <opciones> <objetivo>
 
 Se listan todas con `nmap --help`. Las que de verdad se usan en un pentest:
 
-| Flag | Técnica | Uso típico |
-| --- | --- | --- |
-| `-sS` | TCP SYN (*half-open*) | Por defecto con root. Rápido, algo más sigiloso. |
-| `-sT` | TCP connect | Sin root, o cuando la pila lo exige. Ruidoso (deja logs). |
-| `-sU` | UDP | Servicios UDP (DNS, SNMP, IKE…). Lento — combinar con `--top-ports`. |
-| `-sA` | TCP ACK | Mapear reglas de firewall (distingue *filtered* de *unfiltered*). |
-| `-sN`/`-sF`/`-sX` | Null / FIN / Xmas | Evasión de filtros simples y detección de pilas no estándar. |
-| `-sI` | Idle (*zombie*) | Escaneo con IP de un tercero — atribución falsa. |
-| `-sO` | Protocolos IP | Qué protocolos (TCP/UDP/ICMP/SCTP…) admite el host. |
+| **Flag**          | **Técnica**           | **Uso típico**                                                       |
+| ----------------- | --------------------- | -------------------------------------------------------------------- |
+| `-sS`             | TCP SYN (*half-open*) | Por defecto con root. Rápido, algo más sigiloso.                     |
+| `-sT`             | TCP connect           | Sin root, o cuando la pila lo exige. Ruidoso (deja logs).            |
+| `-sU`             | UDP                   | Servicios UDP (DNS, SNMP, IKE…). Lento — combinar con `--top-ports`. |
+| `-sA`             | TCP ACK               | Mapear reglas de firewall (distingue *filtered* de *unfiltered*).    |
+| `-sN`/`-sF`/`-sX` | Null / FIN / Xmas     | Evasión de filtros simples y detección de pilas no estándar.         |
+| `-sI`             | Idle (*zombie*)       | Escaneo con *IP* de un tercero -> atribución falsa.                  |
+| `-sO`             | Protocolos IP         | Qué protocolos (TCP/UDP/ICMP/SCTP…) admite el host.                  |
 
 # El escaneo por defecto: TCP SYN (`-sS`)
 
-Con privilegios, `-sS` es el escaneo por defecto. Envía un paquete con el flag `SYN` y **nunca completa** el *three-way handshake* (por eso se llama *half-open*), lo que evita establecer una conexión TCP completa y permite <mark style="background: #FFB86CA6;">escanear miles de puertos por segundo</mark>. La lectura del estado del puerto se hace por la respuesta:
+Con privilegios, `-sS` es el escaneo por defecto. Envía un paquete con el flag `SYN` y **nunca completa** el *three-way handshake* (por eso se llama *half-open*), lo que evita establecer una conexión *TCP* completa y permite <mark style="background: #FFB86CA6;">escanear miles de puertos por segundo</mark>. La lectura del estado del puerto se hace por la respuesta:
 
 ```mermaid
 sequenceDiagram
@@ -102,7 +100,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.18 seconds
 Cada línea es `puerto/protocolo`, `estado` y `servicio`. La distinción entre `open`, `closed` y `filtered` es la base de todo lo demás y se detalla en [[02 - Escaneo de puertos y hosts]].
 
 > [!warning]+ Sigiloso ≠ indetectable
-> El SYN scan se llamaba "*stealth scan*" cuando los IDS solo miraban conexiones completas. <mark style="background: #8000E1A6;">En 2026 eso ya no es cierto</mark>: cualquier IDS/IPS moderno (Suricata, Zeek, Snort) detecta el patrón de medio-open contra muchos puertos como *portscan* trivial. La evasión real se trabaja en [[07 - Evasión de firewalls, IDS e IPS]] y [[08 - Detección de escaneos y evasión moderna]].
+> El SYN scan se llamaba "*stealth scan*" cuando los IDS solo miraban conexiones completas. <mark style="background: #FF5582A6;">En 2026 eso ya no es cierto</mark>: <mark style="background: #ADCCFFA6;">cualquier IDS/IPS moderno (Suricata, Zeek, Snort) detecta el patrón de medio-open contra muchos puertos como portscan trivial</mark>. La evasión real se trabaja en [[07 - Evasión de firewalls, IDS e IPS]] y [[08 - Detección de escaneos y evasión moderna]].
 
 # Nmap en el flujo profesional actual
 

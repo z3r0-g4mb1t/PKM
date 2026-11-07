@@ -9,8 +9,6 @@ Nota previa: "[[08 - Bypass de autenticación - acceso directo]]"
 Nota siguiente: "[[10 - Ataques a tokens de sesión]]"
 Area: "[[Authentication.base|Authentication]]"
 ---
----
-
 La autenticación está rota cuando <mark style="background: #ADCCFFA6;">depende de la presencia o el valor de un parámetro HTTP que el cliente controla</mark>. Si el estado de "quién soy" o "qué privilegios tengo" viaja en un parámetro en vez de atarse a la sesión server-side, se manipula.
 
 # El caso: un parámetro que decide el acceso
@@ -31,7 +29,7 @@ Si `user_id` identifica al usuario y puedes <mark style="background: #FFB86CA6;"
 
 `user_id` es un caso; el patrón es "el servidor cree lo que dice el cliente". Parámetros que suelen gobernar acceso indebidamente:
 
-| Parámetro | Manipulación |
+| **Parámetro** | **Manipulación** |
 | - | - |
 | `role=user` / `isAdmin=false` | → `role=admin` / `isAdmin=true` |
 | `admin=0` / `authenticated=false` | → `admin=1` / `authenticated=true` |
@@ -47,7 +45,7 @@ Si `user_id` identifica al usuario y puedes <mark style="background: #FFB86CA6;"
 
 La modificación de parámetros es el caso simple. La misma idea —saltarse la autenticación manipulando entrada— escala con técnicas que tienen su propio sub-tema:
 
-- **Type juggling** (`==` laxo en PHP, `0e123` == `0`) → bypass en comparaciones de contraseña/hash. Whitebox.
+- **Type juggling** (`X == Y` laxo en PHP, `0e123 == 0`) → bypass en comparaciones de contraseña/hash. Whitebox.
 - **Inyección** que altera la consulta de login: `' OR 1=1 -- ` en [[02 - Subvertir la lógica de consulta|SQLi]].
 - **Manipulación de tokens firmados** mal validados → [[01 - Introducción a JWT|JWT]] y la sesión, en [[10 - Ataques a tokens de sesión|la siguiente nota]].
 

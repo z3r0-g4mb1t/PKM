@@ -36,13 +36,13 @@ Una herramienta CLI + librería con tres piezas:
 
 # Funcionalidades principales
 
-| Funcionalidad | Por qué importa |
-| --- | --- |
-| Plan de ataque escalonado | Emite la secuencia `wordlist → best64 → OneRule → híbrido → máscara`, cada paso con ETA y rendimiento esperado acumulado, para saber cuándo parar |
-| Comparador de modos | El mismo plan sobre NTLM vs bcrypt vs WPA2 deja ver de un vistazo qué es tratable y qué es fantasía dentro del presupuesto |
-| Punto de corte por presupuesto | Dado "tengo 12 horas", marca hasta qué ataque llegas y descarta lo que no cabe, en vez de dejarte una máscara de 10 días a medias |
-| Incorporación de la política | Si conoces la `password policy` (longitud mínima, complejidad), poda el keyspace de las máscaras a lo que la política permite — reduce el espacio de forma legítima |
-| Coste marginal | Ordena por contraseñas nuevas esperadas por hora, no por ETA: un ataque lento que saca el 40% va antes que uno rápido que saca el 2% |
+| Funcionalidad                  | Por qué importa                                                                                                                                                     |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Plan de ataque escalonado      | Emite la secuencia `wordlist → best64 → OneRule → híbrido → máscara`, cada paso con ETA y rendimiento esperado acumulado, para saber cuándo parar                   |
+| Comparador de modos            | El mismo plan sobre NTLM vs bcrypt vs WPA2 deja ver de un vistazo qué es tratable y qué es fantasía dentro del presupuesto                                          |
+| Punto de corte por presupuesto | Dado "tengo 12 horas", marca hasta qué ataque llegas y descarta lo que no cabe, en vez de dejarte una máscara de 10 días a medias                                   |
+| Incorporación de la política   | Si conoces la `password policy` (longitud mínima, complejidad), poda el keyspace de las máscaras a lo que la política permite — reduce el espacio de forma legítima |
+| Coste marginal                 | Ordena por contraseñas nuevas esperadas por hora, no por ETA: un ataque lento que saca el 40% va antes que uno rápido que saca el 2%                                |
 
 # Funcionalidades secundarias
 

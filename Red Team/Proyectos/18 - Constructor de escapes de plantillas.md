@@ -38,13 +38,13 @@ Emite la cadena de escape, o un veredicto honesto de que bajo esa política no h
 
 # Funcionalidades principales
 
-| Funcionalidad | Por qué importa |
-| --- | --- |
-| Búsqueda de caminos en el grafo de objetos | Deriva el escape para *esta* config en vez de probar una lista; encuentra gadgets que no están en ningún payload público |
-| Evaluación de la política real del sandbox | Aplica `is_safe_attribute`/`is_safe_callable` en cada arista: distingue lo prohibido de lo alcanzable, no adivina |
-| Fingerprint de versión y restricciones | Sondas mínimas identifican qué Jinja2 y qué reglas hay activas, para elegir la réplica correcta |
-| Veredicto de "no explotable" con prueba | Si no hay camino, lo dice y muestra qué aristas cortan — un negativo fundamentado vale para el informe tanto como un positivo |
-| Cadena mínima | Entre varios caminos, elige el más corto y sigiloso (menos llamadas, menos ruido en logs de sandbox-escape) |
+| **Funcionalidad**                              | **Por qué importa**                                                                                                               |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| Búsqueda de caminos en el grafo de objetos | Deriva el escape para *esta* config en vez de probar una lista; encuentra gadgets que no están en ningún payload público      |
+| Evaluación de la política real del sandbox | Aplica `is_safe_attribute`/`is_safe_callable` en cada arista: distingue lo prohibido de lo alcanzable, no adivina             |
+| Fingerprint de versión y restricciones     | Sondas mínimas identifican qué Jinja2 y qué reglas hay activas, para elegir la réplica correcta                               |
+| Veredicto de "no explotable" con prueba    | Si no hay camino, lo dice y muestra qué aristas cortan — un negativo fundamentado vale para el informe tanto como un positivo |
+| Cadena mínima                              | Entre varios caminos, elige el más corto y sigiloso (menos llamadas, menos ruido en logs de sandbox-escape)                   |
 
 # Funcionalidades secundarias
 

@@ -41,7 +41,7 @@ En pentest web es una herramienta de trabajo constante: cuando un servidor sirve
 
 # Zonas y zone files
 
-<mark style="background: #ADCCFFA6;">Una **zona** es la parte del espacio de nombres que gestiona una entidad concreta</mark> —`example.com` y sus subdominios suelen pertenecer a la misma zona—. El **`zone file`** es el fichero de texto en el servidor autoritativo que define los `resource records` de esa zona:
+<mark style="background: #ADCCFFA6;">Una zona es la parte del espacio de nombres que gestiona una entidad concreta</mark> —`example.com` y sus subdominios suelen pertenecer a la misma zona—. El **`zone file`** es el fichero de texto en el servidor autoritativo que define los `resource records` de esa zona:
 
 ```text
 $TTL 3600 ; TTL por defecto (1 hora)
@@ -63,29 +63,29 @@ Este fichero declara los servidores de nombres (`NS`), el de correo (`MX`) y las
 
 # Conceptos clave
 
-| Concepto | Descripción |
-| - | - |
-| `Domain Name` | Etiqueta legible de un recurso (`www.example.com`) |
-| `IP Address` | Identificador numérico único de un dispositivo (`192.0.2.1`) |
-| `DNS Resolver` | Servidor que traduce nombres a IPs (el del ISP, o `8.8.8.8`) |
+| **Concepto**           | **Descripción**                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `Domain Name`      | Etiqueta legible de un recurso (`www.example.com`)                                                                  |
+| `IP Address`       | Identificador numérico único de un dispositivo (`192.0.2.1`)                                                        |
+| `DNS Resolver`     | Servidor que traduce nombres a IPs (el del ISP, o `8.8.8.8`)                                                        |
 | `Root Name Server` | Cima de la jerarquía: 13 *identidades* (`a`–`m`), cada una replicada en cientos de instancias físicas vía `anycast` |
-| `TLD Name Server` | Responsable de un dominio de primer nivel (`.com`, `.org`) |
-| `Authoritative NS` | Servidor que guarda la IP real del dominio |
-| `Record Types` | Tipos de información almacenada (A, AAAA, CNAME, MX, NS, TXT…) |
+| `TLD Name Server`  | Responsable de un dominio de primer nivel (`.com`, `.org`)                                                          |
+| `Authoritative NS` | Servidor que guarda la IP real del dominio                                                                          |
+| `Record Types`     | Tipos de información almacenada (A, AAAA, CNAME, MX, NS, TXT…)                                                      |
 
 # Tipos de registro
 
-| Tipo | Nombre | Para qué sirve | Ejemplo |
-| - | - | - | - |
-| `A` | Address | Mapea un host a su IPv4 | `www IN A 192.0.2.1` |
-| `AAAA` | IPv6 Address | Mapea un host a su IPv6 | `www IN AAAA 2001:db8::7334` |
-| `CNAME` | Canonical Name | Alias que apunta a otro nombre | `blog IN CNAME web.example.net.` |
-| `MX` | Mail Exchange | Servidor(es) de correo del dominio | `example.com. IN MX 10 mail...` |
-| `NS` | Name Server | Delega la zona a un servidor autoritativo | `example.com. IN NS ns1...` |
-| `TXT` | Text | Texto arbitrario (verificación, políticas) | `IN TXT "v=spf1 mx -all"` |
-| `SOA` | Start of Authority | Datos administrativos de la zona | `IN SOA ns1... admin...` |
-| `SRV` | Service | Host y puerto de un servicio | `_sip._udp IN SRV 10 5 5060 sip...` |
-| `PTR` | Pointer | DNS inverso: IP → nombre | `1.2.0.192.in-addr.arpa. IN PTR www...` |
+| **Tipo**    | **Nombre**             | **Para qué sirve**                             | **Ejemplo**                                 |
+| ------- | ------------------ | ------------------------------------------ | --------------------------------------- |
+| `A`     | Address            | Mapea un host a su IPv4                    | `www IN A 192.0.2.1`                    |
+| `AAAA`  | IPv6 Address       | Mapea un host a su IPv6                    | `www IN AAAA 2001:db8::7334`            |
+| `CNAME` | Canonical Name     | Alias que apunta a otro nombre             | `blog IN CNAME web.example.net.`        |
+| `MX`    | Mail Exchange      | Servidor(es) de correo del dominio         | `example.com. IN MX 10 mail...`         |
+| `NS`    | Name Server        | Delega la zona a un servidor autoritativo  | `example.com. IN NS ns1...`             |
+| `TXT`   | Text               | Texto arbitrario (verificación, políticas) | `IN TXT "v=spf1 mx -all"`               |
+| `SOA`   | Start of Authority | Datos administrativos de la zona           | `IN SOA ns1... admin...`                |
+| `SRV`   | Service            | Host y puerto de un servicio               | `_sip._udp IN SRV 10 5 5060 sip...`     |
+| `PTR`   | Pointer            | DNS inverso: IP → nombre                   | `1.2.0.192.in-addr.arpa. IN PTR www...` |
 
 > [!info]+ La clase `IN`
 > El `IN` que <mark style="background: #FFB86CA6;">precede al tipo significa "Internet"</mark> — el campo de clase del registro. Existen otras clases (`CH` Chaosnet, `HS` Hesiod), pero en el DNS moderno verás `IN` casi siempre.

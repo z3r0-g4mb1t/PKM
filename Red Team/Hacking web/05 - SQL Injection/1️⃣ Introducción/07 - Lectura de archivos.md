@@ -9,8 +9,6 @@ Nota previa: "[[06 - Enumeración de la base de datos]]"
 Nota siguiente: "[[08 - Escritura de archivos]]"
 Area: "[[SQL Injection.base|SQL Injection]]"
 ---
----
-
 Una SQL injection no se limita a leer la base de datos: con los privilegios adecuados puede leer ficheros del servidor —incluido el código fuente de la propia aplicación— y, como veremos en la [[08 - Escritura de archivos|siguiente nota]], escribir una web shell. La lectura de ficheros es más común que la escritura, pero en DBMS modernos ya exige privilegios elevados.
 
 # Privilegios necesarios

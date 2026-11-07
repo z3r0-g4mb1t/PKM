@@ -9,21 +9,19 @@ Nota previa: "[[04 - Descubrimiento de XSS]]"
 Nota siguiente: "[[06 - Herramientas para XSS]]"
 Area: "[[XSS.base|XSS]]"
 ---
----
-
-Un payload reflejado no es un payload ejecutado. Entre que la entrada se refleja y que el JavaScript corre hay dos obstáculos: el **contexto de inyección** donde aterriza tu entrada y los **filtros** (validación, blacklist, WAF) que la aplicación interpone. <mark style="background: #ADCCFFA6;">Evadir es adaptar el payload a ese contexto y a esos filtros para que el navegador acabe ejecutando tu código</mark>. Esta nota cubre los fundamentos; la evasión contra defensas modernas (WAF comerciales, `mXSS`, bypass de `DOMPurify`) se trata en [[06 - Evasión de filtros XSS y ofuscación]] del nivel avanzado.
+Un payload reflejado no es un payload ejecutado. Entre que la entrada se refleja y que el JavaScript corre hay dos obstáculos: el **contexto de inyección** donde aterriza tu entrada y los **filtros** (validación, blacklist, WAF) que la aplicación interpone. <mark style="background: #ADCCFFA6;">Evadir es adaptar el payload a ese contexto y a esos filtros para que el navegador acabe ejecutando tu código</mark>. Esta nota cubre los fundamentos; la evasión contra defensas modernas (*WAF* comerciales, `mXSS`, bypass de `DOMPurify`) se trata en [[06 - Evasión de filtros XSS y ofuscación]] del nivel avanzado.
 
 # El contexto de inyección lo determina todo
 
-El mismo payload funciona o falla según **dónde** se inserta tu entrada en la respuesta. Antes de escribir nada, localiza el reflejo en el código fuente (`CTRL+U`) o en el DOM renderizado (`CTRL+SHIFT+C`) e identifica el contexto:
+El mismo payload funciona o falla según **dónde** se inserta tu entrada en la respuesta. Antes de escribir nada, localiza el reflejo en el código fuente (`CTRL+U`) o en el *DOM* renderizado (`CTRL+SHIFT+C`) e identifica el contexto:
 
-| Contexto | Tu entrada aterriza en… | Para ejecutar hay que… |
-| - | - | - |
-| Cuerpo HTML | `<div>AQUÍ</div>` | Inyectar una etiqueta directamente (`<svg onload>`) |
-| Atributo | `<input value="AQUÍ">` | Cerrar la comilla y la etiqueta: `"><svg onload=...>` |
-| String de JavaScript | `var x = 'AQUÍ'` | Cerrar el string: `';alert(1)//` o `</script>` |
-| URL / `href` | `<a href="AQUÍ">` | Usar el pseudo-protocolo `javascript:` |
-| Comentario HTML | `<!-- AQUÍ -->` | Cerrar el comentario: `--><svg onload=...>` |
+| **Contexto**         | **Tu entrada aterriza en…** | **Para ejecutar hay que…**                            |
+| -------------------- | --------------------------- | ----------------------------------------------------- |
+| Cuerpo HTML          | `<div>AQUÍ</div>`           | Inyectar una etiqueta directamente (`<svg onload>`)   |
+| Atributo             | `<input value="AQUÍ">`      | Cerrar la comilla y la etiqueta: `"><svg onload=...>` |
+| String de JavaScript | `var x = 'AQUÍ'`            | Cerrar el string: `';alert(1)//` o `</script>`        |
+| URL / `href`         | `<a href="AQUÍ">`           | Usar el pseudo-protocolo `javascript:`                |
+| Comentario HTML      | `<!-- AQUÍ -->`             | Cerrar el comentario: `--><svg onload=...>`           |
 
 <mark style="background: #FF5582A6;">El primer paso de cualquier explotación es escapar del contexto actual</mark>: si tu entrada cae dentro de un atributo entre comillas dobles, ningún `<script>` ejecutará hasta que cierres ese `"` y la etiqueta que lo contiene. Lo confirmas mirando exactamente cómo se renderiza tu input y contando las comillas/corchetes que hay que cerrar.
 
@@ -93,11 +91,11 @@ Un `polyglot` es un único payload diseñado para ejecutar en **varios contextos
 jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */oNcliCk=alert() )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert()//>\x3e
 ```
 
-<mark style="background: #FFB8EBA6;">Un polyglot es ruidoso y fácil de detectar para un WAF</mark>; sirve para confirmar rápido que algo ejecuta, pero para un payload final discreto conviene un payload a medida del contexto real. PayloadsAllTheThings ([XSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection)) mantiene polyglots y rompe-contextos actualizados por la comunidad.
+<mark style="background: #FFB8EBA6;">Un polyglot es ruidoso y fácil de detectar para un WAF</mark>; sirve para confirmar rápido que algo ejecuta, pero para un payload final discreto conviene un payload a medida del contexto real. *PayloadsAllTheThings* ([XSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection)) mantiene polyglots y rompe-contextos actualizados por la comunidad.
 
 # WAF: la última capa
 
-Un `Web Application Firewall` inspecciona las peticiones y bloquea las que coinciden con firmas de XSS conocidas (`<script>`, `onerror=`, `javascript:`). Es una capa de defensa, no una solución: <mark style="background: #FFB86CA6;">al trabajar con patrones, un WAF es evadible reescribiendo el payload para que no coincida con la firma pero siga siendo válido para el navegador</mark> — exactamente las técnicas de arriba (case, encoding, etiquetas y eventos poco comunes), más explotar las diferencias entre cómo parsea el WAF y cómo parsea el navegador. La evasión de WAFs comerciales modernos (Cloudflare, Akamai, Imperva), el `mutation XSS` y los bypass de sanitizadores como `DOMPurify` se desarrollan en [[06 - Evasión de filtros XSS y ofuscación]] del nivel avanzado.
+Un `Web Application Firewall` inspecciona las peticiones y bloquea las que coinciden con firmas de XSS conocidas (`<script>`, `onerror=`, `javascript:`). Es una capa de defensa, no una solución: <mark style="background: #FFB86CA6;">al trabajar con patrones, un WAF es evadible reescribiendo el payload para que no coincida con la firma pero siga siendo válido para el navegador</mark> — exactamente las técnicas de arriba (case, encoding, etiquetas y eventos poco comunes), más explotar las diferencias entre cómo parsea el *WAF* y cómo parsea el navegador. La evasión de WAFs comerciales modernos (*Cloudflare*, *Akamai*, *Imperva*), el `mutation XSS` y los bypass de sanitizadores como `DOMPurify` se desarrollan en [[06 - Evasión de filtros XSS y ofuscación]] del nivel avanzado.
 
 Con el payload capaz de atravesar contexto y filtros, el siguiente paso es **automatizar** su descubrimiento y validación con el instrumental adecuado: [[06 - Herramientas para XSS]].
 

@@ -13,33 +13,33 @@ Con la teoría del [[02 - DNS - fundamentos|DNS]] clara, toca interrogarlo. La <
 
 # Herramientas de enumeración DNS
 
-| Herramienta | Características | Uso típico |
-| - | - | - |
-| `dig` | Consultas de cualquier tipo (A, MX, NS, TXT…), salida detallada | Consultas manuales, *zone transfers*, análisis a fondo |
-| `nslookup` | Más simple, sobre todo A/AAAA/MX | Comprobaciones rápidas de resolución |
-| `host` | Salida concisa | Chequeo rápido de A/AAAA/MX |
-| `dnsenum` | Enumeración automatizada, diccionario, *brute-force*, AXFR | Descubrir subdominios eficientemente |
-| `fierce` | Recon con búsqueda recursiva y detección de *wildcard* | Enumeración amigable de subdominios |
-| `dnsrecon` | Combina varias técnicas, varios formatos de salida | Enumeración exhaustiva y exportable |
-| `theHarvester` | OSINT multi-fuente (incluye correos vía DNS) | Correos, empleados y datos asociados al dominio |
+| **Herramienta** | **Características**                                             | **Uso típico**                                         |
+| --------------- | --------------------------------------------------------------- | ------------------------------------------------------ |
+| `dig`           | Consultas de cualquier tipo (A, MX, NS, TXT…), salida detallada | Consultas manuales, *zone transfers*, análisis a fondo |
+| `nslookup`      | Más simple, sobre todo A/AAAA/MX                                | Comprobaciones rápidas de resolución                   |
+| `host`          | Salida concisa                                                  | Chequeo rápido de A/AAAA/MX                            |
+| `dnsenum`       | Enumeración automatizada, diccionario, *brute-force*, AXFR      | Descubrir subdominios eficientemente                   |
+| `fierce`        | Recon con búsqueda recursiva y detección de *wildcard*          | Enumeración amigable de subdominios                    |
+| `dnsrecon`      | Combina varias técnicas, varios formatos de salida              | Enumeración exhaustiva y exportable                    |
+| `theHarvester`  | OSINT multi-fuente (incluye correos vía DNS)                    | Correos, empleados y datos asociados al dominio        |
 
 # `dig`: el bisturí del DNS
 
 `dig` (*Domain Information Groper*) es la utilidad de referencia: <mark style="background: #ADCCFFA6;">consulta cualquier tipo de registro contra cualquier servidor y devuelve una salida completa y personalizable</mark>.
 
-| Comando | Qué hace |
-| - | - |
-| `dig domain.com` | Consulta `A` por defecto |
-| `dig domain.com MX` | Servidores de correo |
-| `dig domain.com NS` | Servidores de nombres autoritativos |
-| `dig domain.com TXT` | Registros `TXT` (SPF, verificaciones…) |
-| `dig domain.com SOA` | Registro `SOA` de la zona |
-| `dig @1.1.1.1 domain.com` | Consulta a un resolver concreto (`1.1.1.1`) |
-| `dig +trace domain.com` | Muestra la ruta completa de resolución (delegación) |
-| `dig -x 192.168.1.1` | *Reverse lookup* (PTR): IP → nombre |
-| `dig +short domain.com` | Respuesta escueta (solo el dato) |
-| `dig +noall +answer domain.com` | Solo la sección *answer* |
-| `dig domain.com ANY` | Todos los registros (a menudo ignorado, ver abajo) |
+| **Comando**                         | **Qué hace**                                            |
+| ------------------------------- | --------------------------------------------------- |
+| `dig domain.com`                | Consulta `A` por defecto                            |
+| `dig domain.com MX`             | Servidores de correo                                |
+| `dig domain.com NS`             | Servidores de nombres autoritativos                 |
+| `dig domain.com TXT`            | Registros `TXT` (SPF, verificaciones…)              |
+| `dig domain.com SOA`            | Registro `SOA` de la zona                           |
+| `dig @1.1.1.1 domain.com`       | Consulta a un resolver concreto (`1.1.1.1`)         |
+| `dig +trace domain.com`         | Muestra la ruta completa de resolución (delegación) |
+| `dig -x 192.168.1.1`            | *Reverse lookup* (PTR): IP → nombre                 |
+| `dig +short domain.com`         | Respuesta escueta (solo el dato)                    |
+| `dig +noall +answer domain.com` | Solo la sección *answer*                            |
+| `dig domain.com ANY`            | Todos los registros (a menudo ignorado, ver abajo)  |
 
 # Anatomía de una respuesta
 
@@ -70,6 +70,7 @@ Para *scripting* y pipelines, `+short` <mark style="background: #FFB8EBA6;">devu
 
 ```bash
 $ dig +short hackthebox.com
+
 104.18.20.126
 104.18.21.126
 ```

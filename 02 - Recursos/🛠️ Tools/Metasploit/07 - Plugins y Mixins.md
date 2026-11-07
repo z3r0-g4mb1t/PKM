@@ -8,9 +8,7 @@ Nota previa: "[[06 - Bases de datos y workspaces]]"
 Nota siguiente: "[[08 - Sesiones y Jobs]]"
 Area: "[[Metasploit.base|Metasploit]]"
 ---
----
-
-`Plugins` y `mixins` suenan parecido pero son cosas distintas y para públicos distintos: <mark style="background: #ADCCFFA6;">los **plugins** extienden la consola para el usuario; los **mixins** reutilizan código para el desarrollador de módulos</mark>.
+`Plugins` y `mixins` suenan parecido pero son cosas distintas y para públicos distintos: <mark style="background: #ADCCFFA6;">los plugins extienden la consola para el usuario; los mixins reutilizan código para el desarrollador de módulos</mark>.
 
 # Plugins: extender la consola
 
@@ -31,7 +29,7 @@ msf6 > unload nessus        # descargar
 
 # Mixins: los bloques del desarrollador
 
-Un `mixin` es un concepto de **Ruby**: un módulo de código que se "mezcla" (*mix in*) dentro de una clase para darle métodos ya hechos. <mark style="background: #8000E1A6;">Los módulos de Metasploit no reinventan cómo hablar TCP o HTTP: heredan esa lógica de mixins</mark>.
+Un `mixin` es un concepto de **Ruby**: un módulo de código que se "mezcla" (*mix in*) dentro de una clase para darle métodos ya hechos. Los <mark style="background: #FFB86CA6;">módulos de Metasploit no reinventan cómo hablar TCP o HTTP</mark>: heredan esa lógica de mixins.
 
 ```ruby
 class MetasploitModule < Msf::Exploit::Remote
@@ -43,22 +41,22 @@ end
 
 Mixins comunes:
 
-| Mixin | Aporta |
-| --- | --- |
-| `Msf::Exploit::Remote::Tcp` | Conexión y E/S sobre TCP |
-| `Msf::Exploit::Remote::HttpClient` | Cliente HTTP (peticiones, cookies) |
-| `Msf::Exploit::Remote::SMB` | Diálogo con SMB |
-| `Msf::Auxiliary::Scanner` | Bucle de escaneo sobre `RHOSTS` |
-| `Msf::Auxiliary::Report` | Escribir hallazgos en la base de datos |
+| **Mixin**                              | **Aporta**                                 |
+| ---------------------------------- | -------------------------------------- |
+| `Msf::Exploit::Remote::Tcp`        | Conexión y E/S sobre TCP               |
+| `Msf::Exploit::Remote::HttpClient` | Cliente HTTP (peticiones, cookies)     |
+| `Msf::Exploit::Remote::SMB`        | Diálogo con SMB                        |
+| `Msf::Auxiliary::Scanner`          | Bucle de escaneo sobre `RHOSTS`        |
+| `Msf::Auxiliary::Report`           | Escribir hallazgos en la base de datos |
 
-<mark style="background: #FFB8EBA6;">Entender los mixins es requisito para [[10 - Escritura e importación de módulos|escribir o adaptar módulos]]</mark>: casi todo el trabajo consiste en elegir los mixins correctos y rellenar la lógica específica.
+Entender los mixins es requisito para [[10 - Escritura e importación de módulos|escribir o adaptar módulos]]: <mark style="background: #FFB8EBA6;">casi todo el trabajo consiste en elegir los mixins correctos y rellenar la lógica específica</mark>.
 
 # La diferencia, en una línea
 
-| | Plugin | Mixin |
-| --- | --- | --- |
-| Para | El **usuario** de la consola | El **desarrollador** de módulos |
-| Qué hace | Añade comandos/automatización a `msfconsole` | Aporta métodos reutilizables a un módulo Ruby |
-| Cómo se usa | `load <plugin>` | `include <Mixin>` en el código |
+|             | **Plugin**                                       | **Mixin**                                         |
+| ----------- | -------------------------------------------- | --------------------------------------------- |
+| Para        | El **usuario** de la consola                 | El **desarrollador** de módulos               |
+| Qué hace    | Añade comandos/automatización a `msfconsole` | Aporta métodos reutilizables a un módulo Ruby |
+| Cómo se usa | `load <plugin>`                              | `include <Mixin>` en el código                |
 
 Con el framework extendido, toca gestionar lo que producen los exploits: las [[08 - Sesiones y Jobs|sesiones y jobs]].

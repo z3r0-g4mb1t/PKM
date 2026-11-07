@@ -9,8 +9,6 @@ Nota previa: "[[04 - Nmap Scripting Engine (NSE)]]"
 Nota siguiente: "[[06 - Guardar y explotar resultados]]"
 Area: "[[Nmap.base|Nmap]]"
 ---
----
-
 El rendimiento importa cuando escaneas una red grande o con poco ancho de banda. Nmap deja controlar cada palanca del tiempo: agresividad global (`-T <0-5>`), paralelismo (`--min-parallelism`), *timeouts* (`--max-rtt-timeout`), tasa de paquetes (`--min-rate`) y reintentos (`--max-retries`). <mark style="background: #FF5582A6;">Todo ajuste de velocidad es un intercambio: más rápido casi siempre significa menos preciso o más ruidoso</mark>.
 
 # Timeouts (RTT)

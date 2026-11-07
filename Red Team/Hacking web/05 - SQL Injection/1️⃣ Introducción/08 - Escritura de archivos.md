@@ -9,8 +9,6 @@ Nota previa: "[[07 - Lectura de archivos]]"
 Nota siguiente: "[[09 - Mitigación de SQL Injection]]"
 Area: "[[SQL Injection.base|SQL Injection]]"
 ---
----
-
 Escribir ficheros es la escalada máxima de una SQL injection: permite dejar una **web shell** en el webroot y obtener ejecución de comandos en el servidor. Por eso los DBMS modernos lo restringen mucho más que la [[07 - Lectura de archivos|lectura]]. Conviene entender bien las condiciones, porque son precisamente las que explican por qué este vector casi no funciona en stacks actuales.
 
 # Requisitos para escribir
@@ -31,7 +29,7 @@ En MySQL hacen falta **tres** condiciones simultáneas:
 | Una ruta (p. ej. `/var/lib/mysql-files`) | Solo dentro de ese directorio. |
 | `NULL` | Lectura/escritura **deshabilitada** por completo. |
 
-<mark style="background: #8000E1A6;">Aquí está la clave de por qué la escritura vía SQLi apenas funciona hoy</mark>: MariaDB deja `secure_file_priv` vacío por defecto (permisivo), pero **MySQL (5.7+) usa `/var/lib/mysql-files`** —fuera del webroot, así que no sirve para una web shell— y muchas configuraciones endurecidas lo ponen a `NULL`, bloqueando toda escritura. (MySQL 5.6 y anteriores lo dejaban vacío, como MariaDB.) Se consulta vía `INFORMATION_SCHEMA`:
+Aquí está la <mark style="background: #FFB86CA6;">clave de por qué la escritura vía SQLi apenas funciona hoy</mark>: *MariaDB* deja `secure_file_priv` vacío por defecto (permisivo), pero **MySQL (5.7+) usa `/var/lib/mysql-files`** —fuera del webroot, así que no sirve para una web shell— y muchas configuraciones endurecidas lo ponen a `NULL`, bloqueando toda escritura. (MySQL 5.6 y anteriores lo dejaban vacío, como MariaDB.) Se consulta vía `INFORMATION_SCHEMA`:
 
 ```sql
 -- válido en toda versión:

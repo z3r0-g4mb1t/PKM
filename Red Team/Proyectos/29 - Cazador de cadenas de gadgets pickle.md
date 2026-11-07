@@ -8,7 +8,7 @@ tags:
 Descripción: "Busca cadenas de gadgets alcanzables para pickle deserialization en el árbol de dependencias real del objetivo mediante análisis estático, descubriendo primitivas que los scanners de firma no ven"
 Fecha de actualización: 2026-09-21
 Nota previa: "[[28 - Diferenciador de parseo WAF ↔ aplicación]]"
-Nota siguiente: ""
+Nota siguiente: "[[30 - Explotador unificado de inyección SQL y NoSQL]]"
 Area: "[[Proyectos ofensivos.base|Proyectos ofensivos]]"
 Estado: Idea
 Dificultad: 5
@@ -35,13 +35,13 @@ Tres piezas:
 
 # Funcionalidades principales
 
-| Funcionalidad | Por qué importa |
-| --- | --- |
+| Funcionalidad                                 | Por qué importa                                                                                                                      |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | Descubrimiento de gadgets sobre el árbol real | Encuentra las primitivas alcanzables en *este* entorno, no en una lista de gadgets públicos — cadenas nuevas que nadie ha catalogado |
-| Modelado de alcanzabilidad y encadenamiento | Un gadget aislado no basta; modelar cómo `REDUCE`/`GLOBAL`/`BUILD` los encadenan hasta la primitiva es el núcleo técnico |
-| Evaluación contra scanners de firma | Medir la tasa de bypass contra picklescan/ModelScan es el hallazgo que importa: cuantifica el hueco de las defensas actuales |
-| Construcción del pickle de prueba | Genera el pickle explotable (en sandbox) para validar la cadena de verdad, no solo en teoría |
-| Priorización por sigilo | Entre varias cadenas, prefiere la que menos scanners detectan y menos imports raros usa |
+| Modelado de alcanzabilidad y encadenamiento   | Un gadget aislado no basta; modelar cómo `REDUCE`/`GLOBAL`/`BUILD` los encadenan hasta la primitiva es el núcleo técnico             |
+| Evaluación contra scanners de firma           | Medir la tasa de bypass contra picklescan/ModelScan es el hallazgo que importa: cuantifica el hueco de las defensas actuales         |
+| Construcción del pickle de prueba             | Genera el pickle explotable (en sandbox) para validar la cadena de verdad, no solo en teoría                                         |
+| Priorización por sigilo                       | Entre varias cadenas, prefiere la que menos scanners detectan y menos imports raros usa                                              |
 
 # Funcionalidades secundarias
 
@@ -116,7 +116,7 @@ Decisión de ingeniería (de seguridad, no opcional): la validación deserializa
 > Validar una cadena implica deserializar el pickle construido, que ejecuta la primitiva. Hacerlo SIEMPRE en un sandbox aislado y desechable (contenedor sin red, sin credenciales, efímero). Un fallo aquí ejecuta RCE en tu propia máquina de análisis. Y las cadenas descubiertas son armas: tratarlas con la disciplina de divulgación responsable si afectan a librerías públicas.
 
 - **El espacio de gadgets es enorme.** Con cientos de dependencias, la búsqueda ingenua explota. Necesita poda agresiva: priorizar callables con firmas peligrosas (`os.system`, `subprocess`, `eval`, `__import__`, cargadores dinámicos) y modelar alcanzabilidad, no fuerza bruta.
-- **El análisis estático tiene límites.** Callables construidos dinámicamente, `getattr` sobre strings, indirección: parte del grafo no se ve estáticamente. Ser honesto sobre la cobertura y complementar con ejecución controlada donde haga falta.
+- **El análisis estático tiene límites.** Callables construidos dinámicamente, `getattr` sobre *strings*, indirección: parte del grafo no se ve estáticamente. Ser honesto sobre la cobertura y complementar con ejecución controlada donde haga falta.
 - **`weights_only=True` y safetensors cambian el panorama.** PyTorch y el ecosistema empujan hacia formatos seguros; el proyecto debe distinguir el entorno vulnerable (pickle sin restricción) del endurecido, y reportarlo como parte del riesgo.
 - **Divulgación responsable.** Si `picklechain` encuentra una cadena nueva en una librería popular, es una vulnerabilidad de supply chain real. El flujo correcto es reportar al mantenedor, no publicar el arma.
 
