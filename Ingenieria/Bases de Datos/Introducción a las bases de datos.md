@@ -73,7 +73,7 @@ Una base de datos no-relacional (o `NoSQL`) prescinde de tablas, filas, columnas
 Recuerda a un diccionario de Python o PHP (`{'clave': 'valor'}`). El ejemplo más conocido es MongoDB.
 
 > [!info]+
-> Las bases NoSQL tienen su propia familia de ataques, las `NoSQL injection`, **completamente distintas** de las SQLi clásicas: no se inyecta sintaxis SQL sino operadores del motor (p. ej. `$ne`, `$gt` en MongoDB) o JavaScript del lado servidor. Se tratan en [[NoSQL Injection|su propio tema]].
+> Las bases NoSQL tienen su propia familia de ataques, las `NoSQL injection`, **completamente distintas** de las SQLi clásicas: no se inyecta sintaxis SQL sino operadores del motor (p. ej. `$ne`, `$gt` en MongoDB) o JavaScript del lado servidor. Se tratan en [[NoSQL Injection.base|su propio tema]].
 
 # Por qué esto importa para SQL injection
 

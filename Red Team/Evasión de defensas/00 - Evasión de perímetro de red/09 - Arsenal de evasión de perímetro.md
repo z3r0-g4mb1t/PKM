@@ -26,7 +26,7 @@ Saber qué tienes delante antes de decidir la evasión:
 
 # 2 · Crafting de paquete (diagnóstico y nicho)
 
-- **[[🔨📦 Scapy|Scapy]]** — control total del paquete byte a byte: solapamientos a medida, secuencias de flags no estándar, campos manipulados. La herramienta cuando los flags de Nmap no llegan.
+- **[[00 - Introducción a Scapy|Scapy]]** — control total del paquete byte a byte: solapamientos a medida, secuencias de flags no estándar, campos manipulados. La herramienta cuando los flags de Nmap no llegan.
 - **`nping`** (suite Nmap) — genera paquetes a medida sin escribir código; útil para pruebas de TTL, source-port y respuesta del perímetro.
 - `fragroute`/`fragrouter` — la referencia clásica del paper de Ptacek; **archivada**, su función la hace hoy Scapy. Ver [[04 - Fragmentación y evasión a nivel IP y TCP|fragmentación]].
 

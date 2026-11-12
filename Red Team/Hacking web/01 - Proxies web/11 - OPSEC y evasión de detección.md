@@ -5,7 +5,7 @@ tags:
   - Proxies
   - Tipo/Deteccion
 Descripción: "Un proxy es ruidoso por defecto. Tu tráfico de Burp/ZAP deja huellas que los WAF y los SOC fingerprintean y bloquean, aunque falsees lo obvio"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-08
 Nota previa: "[[10 - Extensiones y BApp Store]]"
 Nota siguiente: "[[12 - Proxying de apps móviles]]"
 Area: "[[Proxies web.base|Proxies web]]"
@@ -42,7 +42,7 @@ Aquí está el trabajo de verdad. Para que tu JA3/JA4 parezca el de un navegador
 | Herramienta | Qué hace |
 | - | - |
 | <mark style="background: #FFB86CA6;">**Burp Awesome TLS**</mark> ([sleeyax](https://github.com/sleeyax/burp-awesome-tls)) | Extensión que secuestra el stack TLS de Burp y suplanta el JA3 de cualquier navegador — evade Cloudflare/Akamai/DataDome desde dentro de Burp |
-| **curl-impersonate** ([repo](https://github.com/lwthiker/curl-impersonate)) / **curl_cffi** | `curl` recompilado que imita el TLS de Chrome/Firefox; ideal para scripts |
+| **curl-impersonate** ([lexiforest](https://github.com/lexiforest/curl-impersonate), fork vivo — el original de `lwthiker` está parado) / **curl_cffi** | `curl` recompilado que imita el TLS de Chrome/Firefox; ideal para scripts |
 | **tls-client** ([bogdanfinn](https://github.com/bogdanfinn/tls-client)) · **uTLS** | Clientes Go que controlan el `ClientHello` (JA3, orden de cabeceras, HTTP/2) |
 
 La regla: si el objetivo está tras Cloudflare/Akamai y recibes `403` pese a un UA perfecto, sospecha del JA3 y enruta por uno de estos.
@@ -58,4 +58,4 @@ La regla: si el objetivo está tras Cloudflare/Akamai y recibes `403` pese a un 
 
 > [!info]+ Fuentes
 > - [Cloudflare — JA3/JA4 fingerprint](https://developers.cloudflare.com/bots/additional-configurations/ja3-ja4-fingerprint/) · [JA4+ (FoxIO)](https://github.com/FoxIO-LLC/ja4)
-> - [Burp Awesome TLS](https://github.com/sleeyax/burp-awesome-tls) · [curl-impersonate](https://github.com/lwthiker/curl-impersonate) · [tls-client](https://github.com/bogdanfinn/tls-client)
+> - [Burp Awesome TLS](https://github.com/sleeyax/burp-awesome-tls) · [curl-impersonate (lexiforest)](https://github.com/lexiforest/curl-impersonate) · [curl_cffi](https://github.com/lexiforest/curl_cffi) · [tls-client](https://github.com/bogdanfinn/tls-client)

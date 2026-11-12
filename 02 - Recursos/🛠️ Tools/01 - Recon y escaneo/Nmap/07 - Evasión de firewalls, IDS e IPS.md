@@ -1,0 +1,108 @@
+---
+tags:
+  - Pentesting/Enumeracion
+  - Escaneo/Redes
+  - Linux
+Descripción: "Cuando entre tú y el objetivo hay un firewall y un IDS/IPS, el escaneo directo se topa con puertos filtered y, si eres ruidoso, con un bloqueo de tu IP. Nmap trae varias…"
+Fecha de actualización: 2026-07-18
+Nota previa: "[[06 - Guardar y explotar resultados]]"
+Nota siguiente: "[[08 - Detección de escaneos y evasión moderna]]"
+Area: "[[Nmap.base|Nmap]]"
+---
+Cuando entre tú y el objetivo hay un firewall y un IDS/IPS, el escaneo directo se topa con puertos `filtered` y, si eres ruidoso, con un **bloqueo de tu IP**. <mark style="background: #FFB8EBA6;">Nmap trae varias palancas nativas para leer las reglas del firewall y disfrazar el origen del tráfico</mark>. Aquí van esas técnicas y por qué funcionan; lo que de verdad esquiva las defensas **modernas** (NGFW, EDR, IDS con reensamblado) se trabaja en [[08 - Detección de escaneos y evasión moderna]].
+
+# Firewall vs IDS/IPS
+
+- Un **firewall** <mark style="background: #ADCCFFA6;">decide</mark> si cada paquete pasa, se descarta (*drop*) o se rechaza (*reject*), según reglas.
+- Un **IDS** (*Intrusion Detection System*) <mark style="background: #ADCCFFA6;">monitoriza</mark> pasivamente y **alerta** ante patrones/firmas conocidas (p. ej. un *service scan*).
+- Un **IPS** complementa al IDS **actuando**: <mark style="background: #ADCCFFA6;">bloquea</mark> la conexión sospechosa automáticamente.
+
+# Leer las reglas del firewall: el ACK scan (`-sA`)
+
+<mark style="background: #ADCCFFA6;">El ACK scan (`-sA`) es mucho más difícil de filtrar que un SYN o un Connect</mark>: envía un paquete solo con el flag `ACK`. Un firewall suele bloquear los `SYN` entrantes (intentos de conexión desde fuera), pero deja pasar los `ACK` porque <mark style="background: #FF5582A6;">no puede saber si pertenecen a una conexión iniciada desde dentro</mark>. Comparando SYN vs ACK sobre los mismos puertos se deduce la política:
+
+```shell-session
+$ sudo nmap 10.129.2.28 -p 21,22,25 -sA --packet-trace -Pn -n --disable-arp-ping
+
+SENT ... 10.129.2.28:22 A ...
+RCVD ... 10.129.2.28:22 > ... R ...        # RST → puerto NO filtrado
+
+21/tcp filtered   ftp
+22/tcp unfiltered ssh
+25/tcp filtered   smtp
+```
+
+- Un `RST` de vuelta = puerto `unfiltered` (<mark style="background: #ADCCFFA6;">el ACK llegó al host → el firewall no lo bloquea</mark>). 
+- Silencio = `filtered`. El ACK scan <mark style="background: #FFB8EBA6;">no dice si el puerto está abierto</mark>, pero **sí revela qué deja pasar el firewall**.
+
+## Drop vs reject
+
+Recordando de [[02 - Escaneo de puertos y hosts]]: un firewall que **descarta** no responde (silencio, escaneo lento por reintentos); uno que **rechaza** devuelve un error explícito — `RST` en TCP, o un `ICMP` con distintos códigos que delatan la regla:
+
+`Net/Host/Port/Proto Unreachable`, `Net Prohibited`, `Host Prohibited`. Cada uno te dice *cómo* está filtrando, información útil para elegir la evasión.
+
+# Detectar el IDS/IPS
+
+Los IDS/IPS son pasivos → **no se detectan directamente**, se infieren. La técnica: escanear desde varios **VPS con IPs distintas** y provocar deliberadamente (p. ej. un escaneo agresivo de un solo puerto). <mark style="background: #FFB8EBA6;">Si en algún momento uno de esos hosts pierde el acceso al objetivo, el administrador ha activado una contramedida</mark> → hay IPS, y toca ser mucho más silencioso (y quemar ese VPS).
+
+> [!warning]+ Que te bloqueen es caro
+> Cuando un IPS bloquea tu IP, no solo pierdes acceso: <mark style="background: #FF5582A6;">en un caso real puede escalar a que contacten a tu ISP</mark>. Por eso el <mark style="background: #ADCCFFA6;">descubrimiento de defensas se hace con infraestructura sacrificable y con la mínima agresividad necesaria</mark>.
+
+# Disfrazar el origen
+
+## Decoys (`-D`)
+
+`-D RND:5` genera 5 IPs aleatorias en la cabecera IP; tu IP real se coloca al azar entre ellas. <mark style="background: #FFB86CA6;">Al objetivo le llegan 6 orígenes y no sabe cuál es el real</mark>:
+
+```shell-session
+$ sudo nmap 10.129.2.28 -p 80 -sS -D RND:5 --packet-trace -Pn -n
+
+SENT ... 102.52.161.59:59289  > 10.129.2.28:80 S ...   # decoy
+SENT ... 10.10.14.2:59289     > 10.129.2.28:80 S ...   # ← nuestra IP real
+SENT ... 210.120.38.29:59289  > 10.129.2.28:80 S ...   # decoy
+```
+
+<mark style="background: #FFB8EBA6;">Los decoys deben estar vivos</mark>, o los mecanismos anti *SYN-flood* pueden dejar inalcanzable el servicio. Además, los <mark style="background: #FF5582A6;">ISPs suelen filtrar paquetes con IP de origen falsa, así que su eficacia real es limitada</mark>.
+
+## Source IP e interfaz (`-S`, `-e`)
+
+<mark style="background: #ADCCFFA6;">Si solo ciertas subredes tienen acceso</mark>, se puede fijar la IP de origen (`-S`) y la interfaz de salida (`-e`). En el ejemplo, el puerto 445 salía `filtered` desde nuestra IP, pero `open` cambiando el origen:
+
+```shell-session
+$ sudo nmap 10.129.2.28 -p 445 -O -S 10.129.2.200 -e tun0 -n -Pn
+445/tcp open microsoft-ds
+```
+
+## Source port (`--source-port`) — el truco que más funciona
+
+Muchos firewalls **confían** en el tráfico que viene de puertos "de servicio" como el `53` ([[DNS]]), `20` ([[📂🔄 FTP|FTP-data]]) o `88` (*Kerberos*). <mark style="background: #ADCCFFA6;">Si el admin no filtra bien el IDS/IPS, mandar desde ese puerto de origen pasa el filtro</mark>:
+
+```shell-session
+$ sudo nmap 10.129.2.28 -p 50000 -sS -Pn -n --source-port 53
+50000/tcp open ibm-db2        # ¡el mismo puerto salía 'filtered' sin --source-port!
+```
+
+Confirmado que el firewall se fía del puerto 53, <mark style="background: #FFB86CA6;">puedes incluso conectarte al servicio con el mismo truco</mark>:
+
+```shell-session
+$ ncat -nv --source-port 53 10.129.2.28 50000
+220 ProFTPd
+```
+
+## DNS proxying (`--dns-servers`)
+
+Nmap resuelve por DNS por defecto. En una **DMZ**, los <mark style="background: #FFB8EBA6;">servidores DNS internos son más confiables que los de Internet</mark>; `--dns-servers <ns1,ns2,...>` (en **plural**, admite lista separada por comas) fuerza tus consultas a través de ellos, <mark style="background: #ADCCFFA6;">útil para interactuar con hosts de la red interna desde una posición de confianza</mark>.
+
+# Fragmentación y otros knobs
+
+HTB lo menciona de pasada, pero forma parte del arsenal nativo:
+
+- **`-f` / `-f -f` / `--mtu <n>`**:<mark style="background: #ADCCFFA6;"> fragmenta los paquetes para partir la firma que busca el IDS</mark>. `-f` = **8 bytes fijos**; `-f -f` (repetido) = **16 bytes fijos**; `--mtu <n>` fija un tamaño propio (**múltiplo de 8**). `-f`/`-f -f` y `--mtu` son excluyentes. (`-ff` concatenado suele funcionar por cómo Nmap agrupa los flags cortos, pero la forma documentada es `-f -f`.)
+- **`--data-length <n>`**: añade *padding* aleatorio para alterar el tamaño característico de las sondas de Nmap.
+- **`--spoof-mac <mac>`**: falsifica la MAC de origen (<mark style="background: #FF5582A6;">solo útil en la misma L2</mark>).
+- **`--scan-delay <t>` / `-T0`/`-T1`**: espacia las sondas para diluir el patrón temporal de *portscan* (ver [[05 - Rendimiento y timing]]).
+- **`--badsum`**: envía un *checksum* TCP/UDP inválido. Los stacks reales descartan el paquete, pero muchos IDS/firewalls que **no** validan el checksum sí responden — <mark style="background: #ADCCFFA6;">sirve para distinguir un host real de un dispositivo de inspección</mark>.
+- **`-6`**: escanea por **IPv6**. En redes *dual-stack* es <mark style="background: #FFB86CA6;">frecuente que el firewall filtre IPv4 a conciencia y deje IPv6 mucho más abierto</mark> — un vector de evasión real, no exótico.
+
+> [!important]+ La mayoría de esto ya no basta en 2026
+> Fragmentación, decoys y `--badsum` funcionaban contra IDS de firma simple. <mark style="background: #FF5582A6;">Los NGFW e IDS modernos reensamblan paquetes, hacen análisis de flujo y correlacionan por comportamiento</mark>, así que estas técnicas por sí solas rara vez esquivan una defensa seria hoy. Lo que de verdad se usa en pentest actual —*low-and-slow*, blending con tráfico legítimo, alternativas a Nmap, OPSEC de infraestructura— está en [[08 - Detección de escaneos y evasión moderna]]. Para mapear ACLs de firewall a fondo, la técnica dedicada es el [[00 - Firewalking - mapear ACLs con TTL|firewalking]], que hoy se ejecuta con el propio NSE de Nmap ([[01 - Implementaciones vivas del firewalking]]). Y la doctrina completa de perímetro —perfilarlo, egress filtering, DPI, rotación de origen— vive en [[00 - El perímetro moderno - firewall, NGFW, IDS-IPS, NDR y WAF]].

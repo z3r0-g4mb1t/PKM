@@ -400,14 +400,14 @@
         "name": "",
         "active": true,
         "type": "FILES",
-        "pattern": "02 - Recursos/🛠️ Tools/Metasploit/Metasploit.base",
+        "pattern": "02 - Recursos/🛠️ Tools/06 - Explotación/Metasploit/Metasploit.base",
         "patternType": "STRICT"
       },
       {
         "name": "",
         "active": true,
         "type": "FILES",
-        "pattern": "02 - Recursos/🛠️ Tools/Nmap/Nmap.base",
+        "pattern": "02 - Recursos/🛠️ Tools/01 - Recon y escaneo/Nmap/Nmap.base",
         "patternType": "STRICT"
       }
     ],

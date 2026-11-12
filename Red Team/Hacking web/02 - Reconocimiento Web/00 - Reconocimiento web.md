@@ -5,12 +5,15 @@ tags:
   - Recon
   - Tipo/Introduccion
 Descripción: El reconocimiento web (web reconnaissance) es la recopilación sistemática y metódica de información sobre un sitio o aplicación web objetivo
-Fecha de actualización: 2026-06-02
+Fecha de actualización: 2026-11-08
 Nota previa:
 Nota siguiente: "[[01 - WHOIS]]"
 Area: "[[Reconocimiento Web.base|Reconocimiento Web]]"
 ---
 <mark style="background: #ADCCFFA6;">El reconocimiento web (`web reconnaissance`) es la recopilación sistemática y metódica de información sobre un sitio o aplicación web objetivo</mark>. Es la fase preparatoria que precede a cualquier análisis o explotación: define **qué** vas a atacar antes de plantearte el **cómo**. En la metodología del pentest se encuadra dentro de la fase `Information Gathering`, y en bug bounty es —sin discusión— la actividad que más separa a un cazador mediocre de uno rentable: <mark style="background: #FF5582A6;">cada activo que el objetivo expuso por descuido y olvidó es un punto de entrada que el resto de cazadores aún no ha mirado</mark>.
+
+> [!info]+ Recon web ≠ OSINT como disciplina
+> Esta área cubre el recon **técnico de web**. La disciplina **OSINT** completa —personas, SOCMINT, empresas, brechas, GEOINT, dark web, OPSEC del investigador— vive en su propia área: [[OSINT.base|OSINT]]. Se cruzan (el [[OSINT de infraestructura.base|OSINT de infraestructura]] enlaza aquí), pero el grueso del OSINT humano/social no es web.
 
 ![Diagrama del proceso de pentesting con la fase de Information Gathering dentro del ciclo](https://academy.hackthebox.com/storage/modules/144/PT-process.png)
 
@@ -33,7 +36,7 @@ El reconocimiento se divide en dos metodologías con un compromiso fundamental e
 
 | **Técnica**              | **Descripción**                                                     | **Ejemplo**                                                              | **Herramientas**                 | **Riesgo de detección**                                          |
 | ------------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------- | ---------------------------------------------------------------- |
-| `Port Scanning`          | Identificar puertos y servicios abiertos                            | Escanear con `nmap` los puertos 80 (HTTP) y 443 (HTTPS)                  | `nmap`, `masscan`, `unicornscan` | Alto: la interacción directa puede disparar IDS y firewalls      |
+| `Port Scanning`          | Identificar puertos y servicios abiertos                            | Escanear con `nmap` los puertos 80 (HTTP) y 443 (HTTPS)                  | `nmap`, `masscan`, `RustScan` | Alto: la interacción directa puede disparar IDS y firewalls      |
 | `Vulnerability Scanning` | Probar vulnerabilidades conocidas (software obsoleto, *misconfigs*) | Lanzar Nessus contra una app buscando `SQLi` o `XSS`                     | Nessus, OpenVAS, `nikto`         | Alto: los escáneres envían *payloads* de explotación detectables |
 | `Network Mapping`        | Mapear la topología de red y sus relaciones                         | `traceroute` para revelar saltos e infraestructura                       | `traceroute`, `nmap`             | Medio-Alto: el tráfico inusual levanta sospechas                 |
 | `Banner Grabbing`        | Leer los *banners* de los servicios                                 | Conectar al puerto 80 y leer el banner HTTP para identificar el servidor | `netcat`, `curl`                 | Bajo: interacción mínima, pero registrable                       |

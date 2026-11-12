@@ -12,20 +12,20 @@ Area: "[[Privacidad en IA.base|Privacidad en IA]]"
 ---
 ---
 
-El estudiante entrena sobre los datos públicos con las pseudo-etiquetas generadas por la votación ruidosa, con entrenamiento supervisado corriente. <mark style="background: #ADCCFFA6;">Como nunca toca los datos sensibles, su entrenamiento **no consume presupuesto de privacidad**: se puede entrenar 30 épocas o 300, reiniciar, cambiar de arquitectura o reajustar hiperparámetros sin afectar a la garantía</mark>, que se gastó entera en la fase de etiquetado.
+El estudiante entrena sobre los datos públicos con las pseudo-etiquetas generadas por la votación ruidosa, con entrenamiento supervisado corriente. <mark style="background: #ADCCFFA6;">Como nunca toca los datos sensibles, su entrenamiento no consume presupuesto de privacidad: se puede entrenar 30 épocas o 300, reiniciar, cambiar de arquitectura o reajustar hiperparámetros sin afectar a la garantía</mark>, que se gastó entera en la fase de etiquetado.
 
 # Destilación con etiquetas duras
 
 PATE es destilación de conocimiento con una diferencia importante. La destilación clásica transfiere **distribuciones de probabilidad blandas**, que dan más señal de entrenamiento. PATE usa **etiquetas duras** (el `argmax` de los votos ruidosos) porque las probabilidades blandas filtrarían mucho más: revelarían las confianzas del ensemble y, con ellas, información sobre los datos de entrenamiento de los profesores.
 
-Resultados sobre MNIST: ensemble limpio ~92 %, estudiante ~88 %. **Unos 4 puntos de coste**, muy por debajo de los 9-14 de [[07 - El compromiso privacidad-utilidad de DP-SGD|DP-SGD]] sobre CIFAR-10 (tareas distintas, así que la comparación es indicativa, no directa).
+Resultados sobre MNIST: ensemble limpio ~92 %, estudiante ~88 %. **Unos 4 puntos de coste**, muy por debajo de los 9-14 de [[07 - El compromiso privacidad-utilidad de DP-SGD|DP-SGD]] sobre *CIFAR-10* (tareas distintas, así que la comparación es indicativa, no directa).
 
 ## Por qué el ruido de etiquetas no lo rompe
 
 Dos razones, y la segunda es más general de lo que parece:
 
 1. **El ruido no se reparte por igual.** Las muestras con consenso alto reciben etiquetas correctas casi siempre porque el margen es enorme. Solo se voltean las que los profesores ya discutían. El estudiante recibe **supervisión limpia en los casos claros** y ruidosa en los genuinamente ambiguos — y los claros dominan el aprendizaje porque dan gradientes consistentes.
-2. **Las redes toleran ruido aleatorio de etiquetas.** Entrenadas con SGD aguantan un 20-40 % de etiquetas corrompidas siempre que la corrupción sea **aleatoria y no sistemática**. <mark style="background: #8000E1A6;">El ruido de PATE cumple exactamente esa condición: una muestra no recibe etiqueta errónea por sus features, sino porque una extracción laplaciana concreta volteó la votación.</mark> Al no correlacionar con los datos, el modelo no puede aprender a explotar el patrón de ruido.
+2. **Las redes toleran ruido aleatorio de etiquetas.** Entrenadas con SGD aguantan un 20-40 % de etiquetas corrompidas siempre que la corrupción sea **aleatoria y no sistemática**. El ruido de PATE cumple exactamente esa condición: una muestra no recibe etiqueta errónea por sus features, sino porque una extracción laplaciana concreta volteó la votación. Al no correlacionar con los datos, el modelo no puede aprender a explotar el patrón de ruido.
 
 ## Inferencia ilimitada
 
@@ -35,15 +35,15 @@ A diferencia de las técnicas que añaden ruido **en inferencia**, el estudiante
 
 No todas las pseudo-etiquetas valen lo mismo. Con 250 profesores sobre 10 clases:
 
-| Consenso | Votos máximos | Precisión limpia | Efecto del ruido |
-| - | - | - | - |
-| **Alto** | ≥ 200 (80 %) | ~98 % | Tasa de volteo ≈ 0 |
-| **Medio** | 150-199 (60-80 %) | ~85 % | Volteos ocasionales |
-| **Bajo** | < 150 | ~65 % | El ruido domina |
+| **Consenso** | **Votos máximos** | **Precisión limpia** | **Efecto del ruido** |
+| ------------ | ----------------- | -------------------- | -------------------- |
+| *Alto*       | ≥ 200 (80 %)      | ~98 %                | Tasa de volteo ≈ 0   |
+| *Medio*      | 150-199 (60-80 %) | ~85 %                | Volteos ocasionales  |
+| *Bajo*       | < 150             | ~65 %                | El ruido domina      |
 
 El patrón refleja la correlación confianza-corrección: cuando 200+ profesores coinciden en un dígito, casi siempre aciertan. Las muestras de consenso bajo son dígitos genuinamente ambiguos (3 frente a 8, 4 frente a 9) donde ni un ensemble experto se pone de acuerdo.
 
-<mark style="background: #FFB8EBA6;">La implicación práctica: las muestras de consenso bajo aportan señal débil **incluso antes** de añadir ruido.</mark> Después del ruido son casi inútiles — pero han gastado exactamente el mismo presupuesto de privacidad que las buenas.
+<mark style="background: #FFB8EBA6;">La implicación práctica: las muestras de consenso bajo aportan señal débil incluso antes de añadir ruido.</mark> Después del ruido son casi inútiles — pero han gastado exactamente el mismo presupuesto de privacidad que las buenas.
 
 En el montaje del módulo la distribución está muy sesgada hacia el consenso alto (la mayoría de muestras en el rango 230-250 votos de 250), que es la razón por la que la escala de ruido 20 apenas voltea nada y el coste de privacidad en el etiquetado sale por debajo de 1 punto.
 
@@ -76,25 +76,25 @@ Con esa corrección, la agregación confiada sigue siendo una buena idea: mejora
 
 # El compromiso de la escala de ruido
 
-| Escala | $\epsilon_0$ por consulta | Precisión de etiqueta |
-| - | - | - |
-| 5 | 0,40 | ~95 % |
-| 10 | 0,20 | ~92 % |
-| **20** | **0,10** | **~87 %** |
-| 40 | 0,05 | ~78 % |
-| 80 | 0,025 | ~65 % |
+| **Escala** | **$\epsilon_0$ por consulta** | **Precisión de etiqueta** |
+| ------ | ------------------------- | --------------------- |
+| 5      | 0,40                      | ~95 %                 |
+| 10     | 0,20                      | ~92 %                 |
+| **20** | **0,10**                  | **~87 %**             |
+| 40     | 0,05                      | ~78 %                 |
+| 80     | 0,025                     | ~65 %                 |
 
-La asimetría es la información útil: pasar de 5 a 20 mejora muchísimo la privacidad (el $\varepsilon$ total baja de ~35 a ~9) con un coste modesto (95 % → 87 %). Pasar de 20 a 80 da rendimientos decrecientes en privacidad mientras la precisión se hunde al 65 %. <mark style="background: #8000E1A6;">La escala 20 está en el codo de la curva</mark>; el rango operativo útil va de 10 a 40.
+La asimetría es la información útil: pasar de 5 a 20 mejora muchísimo la privacidad (el $\varepsilon$ total baja de ~35 a ~9) con un coste modesto (95 % → 87 %). Pasar de 20 a 80 da rendimientos decrecientes en privacidad mientras la precisión se hunde al 65 %. La escala 20 está en el codo de la curva; el rango operativo útil va de 10 a 40.
 
 # Estrategias de despliegue
 
 Según qué esté fijado por el contexto:
 
-| Restricción | Estrategia |
-| - | - |
-| **Presupuesto $\varepsilon$ fijo** (regulatorio) | Maximizar etiquetas dentro del presupuesto: búsqueda binaria sobre el número de consultas que caben |
-| **Número de etiquetas fijo** | Minimizar el coste de privacidad para ese objetivo: consultar `objetivo / tasa_aceptación` |
-| **Datos públicos abundantes** | Muestreo iterativo: consultar hasta acumular N muestras de consenso alto (con 85 % de aceptación y objetivo 5000, ~5900 consultas) |
+| **Restricción**                                | **Estrategia**                                                                                                                     |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| *Presupuesto $\varepsilon$ fijo* (regulatorio) | Maximizar etiquetas dentro del presupuesto: búsqueda binaria sobre el número de consultas que caben                                |
+| *Número de etiquetas fijo*                     | Minimizar el coste de privacidad para ese objetivo: consultar `objetivo / tasa_aceptación`                                         |
+| *Datos públicos abundantes*                    | Muestreo iterativo: consultar hasta acumular N muestras de consenso alto (con 85 % de aceptación y objetivo 5000, ~5900 consultas) |
 
 En la práctica, la segunda es la natural: normalmente se sabe cuántas muestras de entrenamiento necesita el estudiante.
 

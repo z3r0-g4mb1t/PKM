@@ -79,7 +79,7 @@ Raíz PARA + carpetas temáticas:
 03 - Archivos/          (imágenes y adjuntos, también Escalidraw)
 04 - PENDIENTES/        (inbox, no usado por el flujo de extracción HTB)
 Ingenieria/             (fundamentos y conocimientos relacionados con la ingeniería de software, bases de datos, criptografía, Inteligencia Artificial, etc. · Level 0: Ingenieria.base)
-Red Team/               (todo el contenido ofensivo: Hacking web + Pentesting/CPTS + Active Directory + AI Hacking + Evasión de defensas + Desarrollo ofensivo + Wi-Fi + Doctrina pentesting + Hacking de protocolos · Level 0: Red-Team.base)
+Red Team/               (todo el contenido ofensivo: Hacking web + Pentesting/CPTS + Active Directory + AI Hacking + Evasión de defensas + Desarrollo ofensivo + Wi-Fi + Doctrina pentesting + Hacking de protocolos + OSINT (con Google Dorking) · Level 0: Red-Team.base)
 Blue Team/              (defensivo: SOC analyst, analisis de malware y redes, IA aplicada a la defensa, etc. · Level 0: Blue-Team.base)
 Redes/                  (fundamentos de redes, utilidades, protocolos, etc. Interesante para Pentesting y Bug Bounty · Level 0: Redes.base)
 ```
@@ -94,7 +94,7 @@ El contenido se integra por **tema/área** (no por módulo HTB). Todo lo web va 
 
 Las certis/áreas futuras (no solo web) siguen esta receta — evita re-improvisar de cero cada vez:
 
-1. **Ubicar por *tema/área*, no por módulo.** El conocimiento va a su área de la raíz (`Red Team/`, `Blue Team/`, `Redes/`, `Ingenieria/`). Las **herramientas** siempre a `02 - Recursos/🛠️ Tools/` con su `.base` Level 2 propio (patrón `Nmap.base` / `SQLMap.base`), **nunca** bajo el área temática.
+1. **Ubicar por *tema/área*, no por módulo.** El conocimiento va a su área de la raíz (`Red Team/`, `Blue Team/`, `Redes/`, `Ingenieria/`). Las **herramientas** siempre a `02 - Recursos/🛠️ Tools/`, dentro de la **subcarpeta de función** que les toque (`01 - Recon y escaneo` … `10 - Seguridad de IA`, ADR 026), con su `.base` Level 2 propio (patrón `Nmap.base` / `SQLMap.base`), **nunca** bajo el área temática.
 2. **Reutilizar antes de crear.** Una certi nueva suele solaparse con lo ya hecho (los módulos web de CPTS se reutilizan tal cual). Mapear primero qué módulos ya están cubiertos y cuáles son net-new.
 3. **Fundamentos ≠ ofensiva.** "Cómo funciona" (protocolo, motor BBDD, lenguaje) → `Redes/` o `Ingenieria/`; "cómo enumerar/atacar" → el área ofensiva. Cross-linkear ambos (patrón Footprinting ↔ `Redes/Protocolos/`).
 4. **Aplicar los 3 ejes** (detección · evasión · arsenal + fuentes + gráficos — ver "Estándares de calidad" arriba) a cada módulo net-new.
@@ -369,7 +369,7 @@ Antes de crear una carpeta nueva, **siempre verificar** con `ls` o `Glob` que no
 - **Huecos del libro cubiertos como net-new**: **IPv6 completo** (no se menciona en las 340 páginas, y `mitm6` es hoy el vector MITM más rentable en redes Windows), **Frida**, **Kaitai Struct**, **use-after-free/confusión de tipos**, **fuzzing guiado por cobertura y con estado** (AFL++/AFLNet/`libdesock`), **sanitizers** y **mitigaciones post-2010** (CFI/CFG/XFG, Intel CET shadow stack+IBT, ARM PAC/BTI/MTE, RELRO).
 - **El cap. 10 del libro se queda en DEP/ASLR/canarios** (estado de ~2010). Verificado a 2026: CET **existe pero no está activo por defecto** (glibc decidió no activarlo para no romper compatibilidad; hay que pedirlo con `GLIBC_TUNABLES=glibc.cpu.hwcaps=SHSTK`). No asumirlo en un objetivo — comprobar con `readelf -n`.
 - **Caso real que valida el cap. 3**: **CVE-2026-55200** (`libssh2` ≤ 1.11.1, CVSS 4.0 **9,2**, junio 2026) es una escritura fuera de límites en `ssh2_transport_read()` por **no acotar superiormente `packet_length`** — exactamente el patrón «campo de longitud sin cota» del libro, ocho años después, en una librería madura y dentro de `curl`, `git` y PHP.
-- **Deuda detectada**: `02 - Recursos/🛠️ Tools/Scapy/🔨📦 Scapy.md` estaba a **0 bytes** y `Firewalk/👣🏰 Firewalk.md` a 131. Scapy se rellenó y recibió `.base` (ADR 009 lo había descartado *por ser stub*, condición que deja de aplicar); **Firewalk sigue siendo un stub pendiente**. Ambos conservan nombre con emoji — inconsistencia histórica no resuelta, se mantuvo para no romper backlinks.
+- **Deuda detectada**: `02 - Recursos/🛠️ Tools/Scapy/🔨📦 Scapy.md` estaba a **0 bytes** y `Firewalk/👣🏰 Firewalk.md` a 131. Scapy se rellenó y recibió `.base` (ADR 009 lo había descartado *por ser stub*, condición que deja de aplicar); Firewalk se rehízo después (ADR 022), y **ambos nombres-nota con emoji se normalizaron a la convención `00 - …` en la limpieza de ADR 026** (renombre vía API, backlinks reescritos).
 - **`iptables` sigue funcionando pero es `iptables-nft`**: en Debian 10+, RHEL 8+ y Ubuntu 20.10+ es una capa de traducción sobre `nftables`, que Netfilter tiene en mantenimiento legado. Las notas usan sintaxis `nft` nativa con tabla de equivalencias.
 
 ##### Pasada de revisión (2026-08-03) — errores propios detectados y qué enseñan
@@ -405,10 +405,10 @@ Enriquecimiento **auto-dirigido** (no sale de un path): HTB usa **Nmap para todo
 - **Tesis del bloque** (nota `08 - Cómo te ve el defensor`, Pirámide del Dolor aplicada al atacante): lo que va de **deformar el paquete** (fragmentación, decoys, `--badsum`) está **muerto** contra defensas que reensamblan/modelan comportamiento; lo que va de **mandar menos y parecerse a lo normal** (low-and-slow, blending TLS/JA4, rotación de origen, egress por SaaS) sigue vivo. La fragmentación se reconvierte en **diagnóstico** (identificar el inspector), no evasión.
 - **Matriz de escaneo** (Nmap 09 · perímetro 01/09), resuelve el «todo con Nmap»: **velocidad** (masscan/naabu/RustScan) · **precisión y redes con pérdida** (Nmap) · **pasivo** (Smap/uncover/Shodan) · **evasión de perímetro** (bloque nuevo).
 - **Modernización clave verificada (2026)**: JA3 → **JA4+** (FoxIO) como fingerprint TLS vigente; **JARM** para cazar C2 (lo hace `tlsx`); **domain fronting muerto** desde 2018 (CloudFront/Google/Cloudflare forzaron `SNI==Host`) → sucesor **ECH**; **`uTLS`** para imitar el `ClientHello` de navegador; **`fireprox`** (AWS API Gateway) rota IP y anula el rate-limiting por IP; **portquiz.net**/**Egress-Assess** para probar egress; **BCP38** (anti-spoofing) mata los decoys; reensamblado *host-os-policy* de **Suricata**/**Snort `frag3`** mata la fragmentación; base teórica **Ptacek & Newsham 1998** (inserción/evasión).
-- **`Tools.base`**: las 7 herramientas nuevas se añadieron a la rama `1 · Recon y escaneo` de la fórmula `categoría` (hardcodeada — deuda ADR 019: cada tool nueva obliga a tocarla).
+- **`Tools.base`**: las 7 herramientas nuevas se añadieron a la rama `1 · Recon y escaneo` de la fórmula `categoría` (hardcodeada — deuda ADR 019, **resuelta en ADR 026**: la fórmula ahora deriva la categoría de la carpeta padre, así que añadir una herramienta ya no la toca).
 - **Link heredado roto corregido** (notas 01/02 del bloque): apuntaban a `[[10 - Documentación y reporting]]` (una **carpeta**, no una nota) → redirigidos a `Documentación y reporting.base` y `06 - Cómo redactar un hallazgo`.
 - **Deuda EDR intacta**: la cola del bloque endpoint (`03 - Callbacks de kernel/09 - Manipulación de la imagen de proceso`) tiene `next` a `[[10 - Object callbacks y robo de handles]]`, nota **fantasma** del proyecto EDR en pausa — TODO deliberado, no lo toca este trabajo.
-- **`Firewalk`** conserva nombre con emoji (`👣🏰`) por los backlinks; inconsistencia consciente como `🔨📦 Scapy` (ADR 017).
+- **`Firewalk`** y **`Scapy`** llevaban nombre de nota con emoji como inconsistencia consciente (ADR 017); **normalizados a la convención `00 - …` en la limpieza de ADR 026** (renombre vía API, backlinks reescritos).
 
 ##### Pasada de revisión (2026-08-04) — qué encontró y qué enseña
 
@@ -417,6 +417,37 @@ Revisión crítica de las 10 notas de perímetro + las herramientas de escaneo (
 - **Las notas de herramientas salieron impecables**: 0 errores de dato. Cada versión, fecha, default de flag e interno de código verificado **resultó exacto** (SipHash-2-4 y S-boxes de DES en masscan, TTL 255, `httpx -random-agent` default `true` y `-rl 150`, `ja4ts` en ZMap, Fireprox push abril-2023…). **Lección invertida**: varias veces sospeché un dato y al verificar estaba bien — «corregir» desde memoria habría **metido** un error. Verificar, no presumir.
 - **Hallazgo sistemático — el *trap* del link a carpeta**: `[[NN - Nombre de carpeta]]` (p. ej. `[[10 - Documentación y reporting]]`, `[[07 - Pivoting y túneles]]`) **no resuelve** —la carpeta no es una nota—; es la trampa que avisa la sección Home. **15 casos** repartidos por 6 áreas, corregidos a `[[<Área>.base|…]]`. Un scan Python (regex con lookahead de delimitador para no tocar `[[07 - Pivoting con sshuttle]]`) los caza en bloque. Verificado que **no queda deuda de este patrón** fuera del alcance.
 - **Los errores estaban en lo redactado hoy (mío), no en la fuente** —igual que con *Attacking Network Protocols*—: URL de SpecterOps con **hash inventado** (301 a la raíz del blog) → sustituida por la verificable [Red Team Infrastructure Wiki](https://github.com/bluscreenofjeff/Red-Team-Infrastructure-Wiki); repo **`ginuerzh/gost` desfasado** (v2, 2024) → `go-gost/gost` (v3, vivo); **fecha de JA4+** «2024» → 2023 (repo creado 2023-09-22); ejemplo **`nft` REDIRECT incompleto** (fallaba sin crear tabla/cadena) → completado. **Regla**: toda cita y toda URL propias se verifican contra la API/fuente antes de darlas por buenas, con el mismo rigor que los datos de la fuente.
+
+### Área net-new: OSINT y Google Dorking (ADR 025)
+
+Enriquecimiento **auto-dirigido** (no sale de un path HTB): el vault solo tenía recon técnico disperso (Reconocimiento Web, Footprinting) y un tag plano `OSINT`. Se añadió **OSINT como disciplina completa** —lo que da ventaja al red teamer y los junior no controlan: metodología, OPSEC del investigador, personas, SOCMINT, brechas/stealer logs, GEOINT, dark web, frameworks—. Vive en `Red Team/OSINT/` (**área top-level**, Level-1 `OSINT.base`), 13 Level-2, **58 notas**. **Google Dorking** es el Level-2 `02` (no área hermana). La capa de **infraestructura es puente**: cross-linkea a Recon Web/Footprinting, no los reexplica.
+
+| Sub-tema | Carpeta | Notas |
+| - | - | - |
+| Fundamentos | `OSINT/00 - Fundamentos de OSINT/` + `Fundamentos OSINT.base` | 6 (ciclo de inteligencia, pasivo/semipasivo/activo, taxonomía+Admiralty, legal RGPD/CP, verificación/sesgos) |
+| OPSEC y atribución gestionada | `01 - OPSEC y atribución gestionada/` + `OPSEC OSINT.base` | 4 (4 capas, sock puppets, VM/red/navegador, fugas+checklist) |
+| Google Dorking | `02 - Google Dorking/` + `Google Dorking.base` | 6 (operadores 2026, dorks por objetivo, GHDB/pagodo-archivado/Custom Search API, otros motores+GitHub dorking, defensa) |
+| Personas e identidades | `03 - OSINT de personas e identidades/` + `OSINT de personas.base` | 6 (usernames, correo holehe/GHunt, teléfono, registros, pivote completo) |
+| SOCMINT | `04 - SOCMINT/` + `SOCMINT.base` | 6 (panorama post-API-lockdown, LinkedIn/CrossLinked, X/Reddit, IG/FB/TikTok, Telegram/Discord, análisis de red) |
+| Empresas y organizaciones | `05 - Empresas y organizaciones/` + `OSINT corporativo.base` | 4 (registros, tech stack+spoofability DMARC, cadena de suministro/M&A) |
+| Infraestructura (puente) | `06 - Infraestructura y dominios/` + `OSINT de infraestructura.base` | 4 (Shodan/Censys/FOFA, ASN/BGP, certs/DNS pasivo) |
+| Brechas y credenciales | `07 - Brechas, filtraciones y credenciales/` + `Brechas y filtraciones.base` | 4 (HIBP/Dehashed/IntelX, stealer logs+pass-the-cookie, reuse/spraying) |
+| GEOINT, imágenes y metadatos | `08 - GEOINT, imágenes y metadatos/` + `GEOINT e imágenes.base` | 5 (EXIF/exiftool, inversa+IA, geolocalización Bellingcat, cronolocalización) |
+| Dark web, pastes y foros | `09 - Dark web, pastes y foros/` + `Dark web OSINT.base` | 4 (panorama, Tor/OPSEC, motores/directorios, monitorización CTI) |
+| Automatización y frameworks | `10 - Automatización y frameworks/` + `Frameworks OSINT.base` | 4 (SpiderFoot, recon-ng/Maltego, pipelines+IA) |
+| Contra-OSINT (eje 2) | `11 - Contra-OSINT y reducción de huella/` + `Contra-OSINT.base` | 3 (indetectabilidad, reducción de huella/DELETE Act, detección/deception/canary) |
+| Arsenal (eje 3) | `12 - Arsenal OSINT/` + `Arsenal OSINT.base` | 2 (arsenal por dimensión, estado del ecosistema 2026) |
+
+**Tags**: familia jerárquica `OSINT/…` (paraguas `OSINT` + `OSINT/Fundamentos`, `/OPSEC`, `/Dorking`, `/Personas`, `/SOCMINT`, `/Corporativo`, `/Infraestructura`, `/Brechas`, `/Geoint`, `/Dark-Web`, `/Frameworks`, `/Contra-OSINT`, `/Arsenal`), patrón `Wi-Fi/…` e `IA/…`. El tag plano `OSINT` se mantiene como **umbrella** en notas cross-cutting externas (Fases/05, Footprinting/00-02); `Footprinting/03 - Enumeración de personal` migrado a `OSINT/Personas`.
+
+#### OSINT — notas operativas
+
+- **Cross-links entrantes** añadidos (lección Wi-Fi: escribir salientes no es integrar): Footprinting/00 y /03, Fases/05, Reconocimiento Web/00, Pentesting/11/02, AD/01/01. La subsección "Google Dorking" de `Reconocimiento Web/12 - Search Engine Discovery` se **recortó a puntero** al área nueva.
+- **Frameworks OSINT en el área, no en `Tools/`** (desviación consciente de la regla "tools→Tools/"): SpiderFoot, recon-ng, Maltego se enseñan dentro de `10 - Automatización` por ser orquestadores OSINT-específicos. ProjectDiscovery (ya en `Tools/`) se cross-linkea. **TODO pendiente**: valorar migrarlos a `Tools/` con `.base` propio.
+- **Estado del ecosistema verificado (2026-11-08)**: `pagodo` **archivado** (Google rompió `yagooglesearch`) → Custom Search JSON API; **SpiderFoot adquirido por Intel 471** (nov-2022, OSS sigue MIT en GitHub); `recon-ng` sin commits desde finales de 2024 → Amass; **Censys migró a CenQL** (rompió CSL); **X API de pago** desde feb-2026; **Pushshift (Reddit) muerto** + muro de login jun-2026; **Telepathy sin mantenimiento** → Telethon (v1.45, sep-2026); **`cache:` de Google retirado** 2024; `gitleaks` *feature complete* (`detect`→`git`/`dir`); **BGPView caído** (nov-2025, sin confirmar). Comandos verificados contra repos: holehe, GHunt, CrossLinked, gitleaks, pagodo.
+- **Novedad 2026 a vigilar**: **geolocalización por IA** (GeoSpy, GeoSeer) lee píxeles sin EXIF → relega la búsqueda inversa a "segunda opinión"; precisión no verificada, tratar como hipótesis. **California DELETE Act / DROP** en vivo (ene-2026) para reducción de huella.
+- **Marco legal**: el OSINT de datos personales **es tratamiento** bajo RGPD aunque el dato sea público; frontera penal en acceso ilícito (art. 197 bis CP) y uso de datos robados (197.2); jurisprudencia de scraping (hiQ, Meta v. Bright Data 2024). Las notas de brechas/dark web llevan avisos reforzados: observar/reportar, no descargar/usar fuera de alcance.
+- **Pendiente de cierre** (no ejecutado por límite de uso): auditoría `pkm-structure-audit` formal del área y decisión sobre entrada de OSINT en `📋 Temario.md` como bloque de estudio (no es certificación).
 
 ## Convenciones de nota
 
@@ -587,7 +618,7 @@ Cuando un tema supera ~15 sub-temas, añadir una vista con `groupBy` sobre una *
 - Un sub-tema que crece se parte en **Level 2 hermanos**, no en un Level 1 intermedio — patrón `XSS.base` + `XSS Avanzado.base`, `SQL Injection.base` + `SQLi Blind.base` + `SQLi Avanzado.base`.
 - Si las sub-divisiones son muchas y pequeñas (1-2 notas), **no crear un Level 2 por cada una**: una sola vista con `groupBy: file.folder` (patrón `Common Applications.base`, 36 notas en 13 aplicaciones).
 - Al añadir un área nueva bajo `Red Team/` (o Blue Team, Redes, Ingeniería) **no hay que tocar el Level 0**: el filtro por regex de profundidad la recoge sola.
-- Las **herramientas** siempre a `02 - Recursos/🛠️ Tools/` con su Level 2 propio, indexadas por `Tools.base`.
+- Las **herramientas** siempre a `02 - Recursos/🛠️ Tools/` con su Level 2 propio, indexadas por `Tools.base`, y **organizadas en subcarpetas por función** (`01 - Recon y escaneo` … `10 - Seguridad de IA`, ADR 026). La ruta real es `🛠️ Tools/<NN - categoría>/<Herramienta>/`.
 
 ## Home — el dashboard de entrada (ADR 013)
 

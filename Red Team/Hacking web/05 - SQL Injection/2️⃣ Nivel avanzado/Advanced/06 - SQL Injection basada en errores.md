@@ -4,7 +4,7 @@ tags:
   - SQLi
   - Pentesting/Explotacion
 Descripción: "La SQLi error-based es una técnica in-band que exfiltra datos dentro de los mensajes de error de la base de datos"
-Fecha de actualización: 2026-06-04
+Fecha de actualización: 2026-11-08
 Nota previa: "[[05 - Bypass de caracteres comunes]]"
 Nota siguiente: "[[07 - SQL Injection de segundo orden]]"
 Area: "[[SQLi Avanzado.base|SQLi Avanzado]]"
@@ -57,10 +57,10 @@ El error-based depende de funciones específicas del DBMS —parte del [[01 - De
 | PostgreSQL | `CAST((SELECT ...) AS INT)`, `query_to_xml(...)` |
 | MySQL/MariaDB | `extractvalue(1,concat(0x7e,(SELECT ...)))`, `updatexml(...)`, `exp(~(SELECT ...))` |
 | MSSQL | `CONVERT(int,(SELECT ...))`, `CAST(... AS INT)` |
+| Oracle | `CTXSYS.DRITHSX.SN(1,(SELECT ...))`, `XMLType((SELECT ...))`, `utl_inaddr.get_host_name` |
 
 > [!warning]+ MySQL: `extractvalue`/`updatexml` truncan la salida a ~32 caracteres
 > El mensaje de error XPATH que generan `extractvalue()`/`updatexml()` tiene un límite de **~32 caracteres**, así que un hash o una versión larga sale **cortado** sin avisar. Para datos más largos, itera con `SUBSTRING(dato, N, 30)` sobre el valor antes de concatenarlo, o usa `exp(~(SELECT ...))` (provoca overflow y no trunca, aunque solo confirma booleano). PostgreSQL (`CAST`/`query_to_xml`) no sufre este límite.
-| Oracle | `CTXSYS.DRITHSX.SN(1,(SELECT ...))`, `XMLType((SELECT ...))`, `utl_inaddr.get_host_name` |
 
 > [!warning]+
 > **Realidad 2026**: el error-based <mark style="background: #8000E1A6;">depende de que los errores de la base de datos lleguen al cliente</mark>, algo que las apps bien configuradas desactivan en producción (mensajes genéricos). Por eso es cada vez más raro... salvo que un fallo como el del `X-Forwarded-For` reactive los errores, o que un endpoint de debug los filtre. Cuando está disponible, es la técnica in-band más cómoda tras `UNION`; cuando no, se cae al [[01 - Introducción a Blind SQL Injection|blind]].

@@ -1,7 +1,7 @@
 /*
  * Soft Paper — An Obsidian Theme
  * by Nick Milo
- * Version 1.2.1
+ * Version 1.6.3
  *
  * Based on AnuPpuccin by Anubis (https://github.com/AnubisNekhet/AnuPpuccin)
  * AnuPpuccin is licensed under GPL-3.0.
@@ -57,10 +57,30 @@ settings:
     default: false
   -
     id: sp-compact-properties
-    title: Make in-note properties condensed
-    description: Tighter vertical spacing in the properties/metadata section of notes
+    title: Make in-note properties minimal
+    description: Smaller text, no dividers, no "Properties" title (a small chevron collapses them). Icon and name on the left, values beside them, lists flow inline
     type: class-toggle
     default: false
+  -
+    id: sp-prop-size
+    title: Minimal properties text size
+    description: Text size for minimal in-note properties. Rows, the names column and the buttons scale with it
+    type: variable-number-slider
+    default: 14
+    min: 9
+    max: 16
+    step: 0.5
+    format: px
+  -
+    id: sp-prop-gap
+    title: Minimal properties spacing
+    description: Extra space between properties, for minimal in-note properties. 0 keeps them tight
+    type: variable-number-slider
+    default: 6
+    min: 0
+    max: 12
+    step: 1
+    format: px
   -
     id: sp-compact-body
     title: Make body text condensed
@@ -103,6 +123,18 @@ settings:
     type: class-toggle
     default: false
   -
+    id: sp-heading-font
+    title: Heading font
+    description: Font for headings and note titles. Leave as is for Source Serif (falls back to Georgia if it isn't installed)
+    type: variable-text
+    default: '"Source Serif Pro", "Source Serif 4", Georgia, serif'
+  -
+    id: sp-no-folder-colors
+    title: Turn off folder colors
+    description: Plain file explorer with no colored folders (overrides ACE and rainbow). Useful if you color folders with a plugin
+    type: class-toggle
+    default: false
+  -
     id: sp-rainbow-folders
     title: Rainbow-Colored Folders
     description: Switch from ACE-colored (5 hues) to full 11-color rainbow folders (snippet provided by Joel Anderson)
@@ -134,6 +166,13 @@ settings:
 
 .metadata-properties-heading {
   --bold-weight: var(--font-medium);
+}
+
+/* Property type icons: turn blue (cyan in dark) on hover, like the ×s. Obsidian uses
+   --icon-color-focused here, which is cream (invisible) in light mode */
+.metadata-property-icon:hover,
+.metadata-property-icon:hover .svg-icon {
+  color: var(--pill-color-remove);
 }
 
 /* Properties bottom divider */
@@ -304,7 +343,7 @@ settings:
   --drag-ghost-background: rgb(var(--ctp-text));
   --drag-ghost-text-color: rgb(var(--ctp-crust));
   --nav-indentation-guide-color: rgba(var(--ctp-crust), 0.4);
-  --titlebar-text-color-focused: var(--color-accent);
+  --titlebar-text-color-focused: var(--background-primary);
   --callout-title-padding: var(--size-4-2);
   --embed-block-shadow-hover: none;
   --anp-speech-bubble-opacity: 0.5;
@@ -318,7 +357,7 @@ settings:
 }
 
 .theme-light.theme-light {
-  --canvas-color: var(--ctp-overlay0);
+  --canvas-color: rgb(var(--ctp-overlay0));
 }
 
 /*===============================================================
@@ -438,7 +477,7 @@ settings:
 }
 
 .theme-dark.theme-dark {
-  --canvas-color: var(--ctp-overlay0);
+  --canvas-color: rgb(var(--ctp-overlay0));
 }
 
 /* Dark mode inline title */
@@ -575,12 +614,15 @@ body {
  *===============================================================*/
 
 body {
-  --h1-font: "Source Serif Pro", serif;
-  --h2-font: "Source Serif Pro", serif;
-  --h3-font: "Source Serif Pro", serif;
-  --h4-font: "Source Serif Pro", serif;
-  --h5-font: "Source Serif Pro", serif;
-  --h6-font: "Source Serif Pro", serif;
+  /* Heading font: Source Serif if installed, else Georgia (on every Mac and Windows),
+     else the system serif. Style Settings → "Heading font" overrides it. */
+  --sp-heading-font: "Source Serif Pro", "Source Serif 4", Georgia, serif;
+  --h1-font: var(--sp-heading-font);
+  --h2-font: var(--sp-heading-font);
+  --h3-font: var(--sp-heading-font);
+  --h4-font: var(--sp-heading-font);
+  --h5-font: var(--sp-heading-font);
+  --h6-font: var(--sp-heading-font);
   --h1-size: 1.75em;
   --h1-weight: var(--font-black);
   --h1-line-height: 1.2;
@@ -602,7 +644,7 @@ body {
   --h6-color: #8D8D8D;
   --bold-weight: var(--font-bold);
   --code-comment: var(--color-orange-text);
-  --anp-header-font: "Source Serif Pro", serif;
+  --anp-header-font: var(--sp-heading-font);
   --anp-rainbow-folder-bg-opacity: 0.9;
   --anp-rainbow-folder-border-opacity: 1;
   --anp-rainbow-folder-collapse-border-custom: #00000044;
@@ -666,10 +708,6 @@ body {
   --tab-container-background: var(--card-background-color);
 }
 
-.workspace-tabs.mod-top:has(.obsidian-banner-wrapper) {
-  --file-header-border: none;
-}
-
 .mod-left-split .workspace-tabs .workspace-leaf,
 .mod-right-split .workspace-tabs .workspace-leaf,
 .mod-left-split,
@@ -701,7 +739,9 @@ body {
   border: none;
   margin: var(--anp-card-layout-padding, 10px);
   margin-bottom: 0;
-  background-color: rgba(var(--ctp-accent), 1) !important;
+}
+body .workspace-split.mod-left-split .workspace-sidedock-vault-profile.workspace-sidedock-vault-profile {
+  background-color: rgba(var(--ctp-accent), 1);
 }
 
 .workspace-ribbon.mod-left {
@@ -857,14 +897,14 @@ body {
   background-color: rgba(75, 143, 171, 0.92); /* Very subtle hover shade */
 }
 /* Light mode: Active sidebar tab hover — keep blue bg, slightly lighter */
-.theme-light .mod-left-split .workspace-tab-header.is-active:hover,
-.theme-light .mod-right-split .workspace-tab-header.is-active:hover {
-  background-color: #6097AE !important;
+.theme-light.theme-light .mod-left-split .workspace-tab-header.is-active:hover,
+.theme-light.theme-light .mod-right-split .workspace-tab-header.is-active:hover {
+  background-color: #6097AE;
 }
 /* Dark mode: Active sidebar tab hover */
-.theme-dark .mod-left-split .workspace-tab-header.is-active:hover,
-.theme-dark .mod-right-split .workspace-tab-header.is-active:hover {
-  background-color: #1E8F9D !important;
+.theme-dark.theme-dark .mod-left-split .workspace-tab-header.is-active:hover,
+.theme-dark.theme-dark .mod-right-split .workspace-tab-header.is-active:hover {
+  background-color: #1E8F9D;
 }
 
 .workspace-tab-header-container-inner {
@@ -1054,20 +1094,20 @@ body.is-mobile .mod-vertical .workspace-tabs {
 
 /* Cream icons on blue: sidebar headers, titlebar, vault bar */
 /* Light mode: active sidebar tab icon must be cream on blue bg — always, even when focused */
-.theme-light .mod-left-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
-.theme-light .mod-right-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
-.theme-light .is-focused .mod-left-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
-.theme-light .is-focused .mod-right-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon {
-  color: var(--sp-cream-light) !important;
-  --icon-color: var(--sp-cream-light) !important;
+body.theme-light.theme-light .mod-left-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+body.theme-light.theme-light .mod-right-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+body.theme-light.theme-light .is-focused .mod-left-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+body.theme-light.theme-light .is-focused .mod-right-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+  color: var(--sp-cream-light);
+  --icon-color: var(--sp-cream-light);
 }
 /* Dark mode: active sidebar tab icon must be dark on teal bg */
-.theme-dark .mod-left-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
-.theme-dark .mod-right-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
-.theme-dark .is-focused .mod-left-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
-.theme-dark .is-focused .mod-right-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon {
-  color: var(--sp-surface-gray) !important;
-  --icon-color: var(--sp-surface-gray) !important;
+body.theme-dark.theme-dark .mod-left-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+body.theme-dark.theme-dark .mod-right-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+body.theme-dark.theme-dark .is-focused .mod-left-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+body.theme-dark.theme-dark .is-focused .mod-right-split .mod-active .workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+  color: var(--sp-surface-gray);
+  --icon-color: var(--sp-surface-gray);
 }
 
 .theme-light .mod-left-split .workspace-tab-header-container .clickable-icon,
@@ -1160,9 +1200,9 @@ body.is-mobile .mod-vertical .workspace-tabs {
 }
 
 /* Nav action buttons: dark gray when inactive (not on blue bg) */
-.theme-light .nav-action-button {
-  color: var(--text-muted) !important;
-  --icon-color: var(--text-muted) !important;
+.theme-light.theme-light .nav-action-button:not(.is-active) {
+  color: var(--text-muted);
+  --icon-color: var(--text-muted);
 }
 
 /* Dark mode: inactive nav action buttons */
@@ -1261,6 +1301,15 @@ body.theme-dark:not(.is-mobile) .workspace-split.mod-left-split .workspace-sided
   color: rgb(var(--ctp-overlay2));
 }
 
+/* Dark mode twin: keeps back/forward and view-header icons visible.
+   Without it, the .mod-top-right-space rule paints them surface gray. */
+.theme-dark .view-header .clickable-icon,
+.theme-dark .view-header-nav-buttons .clickable-icon {
+  --icon-color: rgb(var(--ctp-subtext1));
+  --icon-color-hover: rgb(var(--ctp-text));
+  color: rgb(var(--ctp-subtext1));
+}
+
 .theme-light .sidebar-toggle-button,
 .theme-light .sidebar-toggle-button .clickable-icon {
   --icon-color: var(--sp-cream-light);
@@ -1294,6 +1343,31 @@ body.theme-dark:not(.is-mobile) .workspace-split.mod-left-split .workspace-sided
 /*===============================================================
  * CALLOUTS
  *===============================================================*/
+
+/* Callout color that accepts both formats: a full color (Obsidian 1.13+,
+   e.g. rgb(26, 125, 164) or #1a7da4) and the older bare "r, g, b" numbers
+   many callout snippets still use. Both readings are typed as colors, so
+   the one that doesn't parse becomes transparent. Mixing the two and
+   doubling the alpha gives back whichever one is real. */
+@property --sp-callout-full {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+@property --sp-callout-rgb {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+.callout {
+  --sp-callout-full: var(--callout-color);
+  --sp-callout-rgb: rgb(var(--callout-color));
+  --sp-callout: rgb(from color-mix(in srgb, var(--sp-callout-full), var(--sp-callout-rgb)) r g b / calc(alpha * 2));
+  border-color: color-mix(in oklch, var(--sp-callout) calc(var(--callout-border-opacity) * 100%), transparent);
+}
+.callout > .callout-title {
+  color: var(--sp-callout);
+}
 
 /* Sleek Callouts with color toggle */
 .callout:not([data-callout-metadata*=revert]) {
@@ -1340,34 +1414,34 @@ body.theme-dark:not(.is-mobile) .workspace-split.mod-left-split .workspace-sided
 .theme-light .callout:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) > .callout-title {
-  background-color: rgba(var(--callout-color), var(--callout-title-opacity, 0.1));
+  background-color: color-mix(in srgb, var(--sp-callout) calc(var(--callout-title-opacity, 0.1) * 100%), transparent);
 }
 .theme-dark .callout:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) > .callout-title {
-  background-color: rgba(var(--callout-color), 0.15);
+  background-color: color-mix(in srgb, var(--sp-callout) 15%, transparent);
   padding: var(--size-4-1) var(--size-4-2);
 }
 
 .callout:not([data-callout-metadata*=revert],
 [data-callout=blank-container],
 [data-callout=multi-column]) > .callout-content {
-  border-top: var(--callout-border-width) dashed rgba(var(--callout-color), var(--callout-border-opacity));
+  border-top: var(--callout-border-width) dashed color-mix(in srgb, var(--sp-callout) calc(var(--callout-border-opacity) * 100%), transparent);
 }
 
 .callout-content > p:first-child, .callout-content > ul:first-child, .callout-content > ol:first-child { margin-top: 0px; }
 .callout-content > p:last-child, .callout-content > ul:last-child, .callout-content > ol:last-child { margin-bottom: 0px; }
 
 /* Callout Colors */
-.callout[data-callout=abstract], .callout[data-callout=summary], .callout[data-callout=tldr], .callout[data-callout=seealso] { --callout-color: var(--ctp-blue); }
-.callout[data-callout=info], .callout[data-callout=todo], .callout[data-callout=tip], .callout[data-callout=hint], .callout[data-callout=important] { --callout-color: var(--ctp-teal); }
-.callout[data-callout=success], .callout[data-callout=check], .callout[data-callout=done], .callout[data-callout=question], .callout[data-callout=help], .callout[data-callout=faq] { --callout-color: var(--ctp-green); }
-.callout[data-callout=warning], .callout[data-callout=caution], .callout[data-callout=attention] { --callout-color: var(--ctp-yellow); }
-.callout[data-callout=failure], .callout[data-callout=fail], .callout[data-callout=missing] { --callout-color: var(--ctp-maroon); }
-.callout[data-callout=danger], .callout[data-callout=error], .callout[data-callout=bug] { --callout-color: var(--ctp-red); }
-.callout[data-callout=example] { --callout-color: var(--ctp-mauve); }
-.callout[data-callout=quote], .callout[data-callout=cite] { --callout-color: var(--ctp-surface2); }
-.callout[data-callout=note] { --callout-color: var(--ctp-accent); }
+.callout[data-callout=abstract], .callout[data-callout=summary], .callout[data-callout=tldr], .callout[data-callout=seealso] { --callout-color: rgb(var(--ctp-blue)); }
+.callout[data-callout=info], .callout[data-callout=todo], .callout[data-callout=tip], .callout[data-callout=hint], .callout[data-callout=important] { --callout-color: rgb(var(--ctp-teal)); }
+.callout[data-callout=success], .callout[data-callout=check], .callout[data-callout=done], .callout[data-callout=question], .callout[data-callout=help], .callout[data-callout=faq] { --callout-color: rgb(var(--ctp-green)); }
+.callout[data-callout=warning], .callout[data-callout=caution], .callout[data-callout=attention] { --callout-color: rgb(var(--ctp-yellow)); }
+.callout[data-callout=failure], .callout[data-callout=fail], .callout[data-callout=missing] { --callout-color: rgb(var(--ctp-maroon)); }
+.callout[data-callout=danger], .callout[data-callout=error], .callout[data-callout=bug] { --callout-color: rgb(var(--ctp-red)); }
+.callout[data-callout=example] { --callout-color: rgb(var(--ctp-mauve)); }
+.callout[data-callout=quote], .callout[data-callout=cite] { --callout-color: rgb(var(--ctp-surface2)); }
+.callout[data-callout=note] { --callout-color: rgb(var(--ctp-accent)); }
 
 /*===============================================================
  * RAINBOW FOLDERS
@@ -1413,6 +1487,10 @@ body.theme-dark:not(.is-mobile) .workspace-split.mod-left-split .workspace-sided
 .nav-folder-children > .nav-folder:nth-child(11n + 11),
 .nav-files-container > div > .nav-folder:nth-child(11n + 11),
 [data-type="bookmarks"] .tree-item:nth-child(11n + 11) { --rainbow-folder-color: var(--ctp-mauve); }
+
+.nav-folder-children > .nav-folder:nth-child(11n + 1),
+.nav-files-container > div > .nav-folder:nth-child(11n + 1),
+[data-type="bookmarks"] .tree-item:nth-child(11n + 1) { --rainbow-folder-color: var(--ctp-mauve); }
 
 /* Subfolders inherit parent color */
 .nav-files-container .nav-folder.nav-folder .nav-folder,
@@ -1572,9 +1650,9 @@ body:not(.is-grabbing) .nav-files-container > div > .nav-folder .nav-file-title.
 .sp-rainbow-folders .nav-files-container > div > .nav-folder:nth-child(11n + 11),
 .sp-rainbow-folders [data-type="bookmarks"] .tree-item:nth-child(11n + 11) { --rainbow-folder-color: var(--sp-rf-lavender); }
 
-.sp-rainbow-folders .nav-folder-children > .nav-folder:nth-child(11n + 12),
-.sp-rainbow-folders .nav-files-container > div > .nav-folder:nth-child(11n + 12),
-.sp-rainbow-folders [data-type="bookmarks"] .tree-item:nth-child(11n + 12) { --rainbow-folder-color: var(--sp-rf-mauve); }
+.sp-rainbow-folders .nav-folder-children > .nav-folder:nth-child(11n + 1),
+.sp-rainbow-folders .nav-files-container > div > .nav-folder:nth-child(11n + 1),
+.sp-rainbow-folders [data-type="bookmarks"] .tree-item:nth-child(11n + 1) { --rainbow-folder-color: var(--sp-rf-mauve); }
 
 /* Folder title emphasis — stronger tint on the header row */
 .sp-rainbow-folders .nav-files-container > div > .nav-folder > .nav-folder-title {
@@ -1637,6 +1715,55 @@ body.sp-rainbow-folders.theme-dark .nav-files-container .nav-file-title.is-activ
 body.sp-rainbow-folders.theme-dark .nav-files-container .nav-file-title.is-active .nav-file-title-content {
   color: rgb(235, 235, 235);
   font-weight: 600;
+}
+
+/*---------------------------------------------------------------
+ * NO FOLDER COLORS (Style Settings toggle: sp-no-folder-colors)
+ * Plain explorer and bookmarks: no folder tints, Obsidian's own
+ * text and icon colors. Placed after both folder styles so it wins.
+ *---------------------------------------------------------------*/
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container > div > .nav-folder,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container > div > .nav-folder > .nav-folder-title,
+body.sp-no-folder-colors.sp-no-folder-colors [data-type="bookmarks"] .tree-item,
+body.sp-no-folder-colors.sp-no-folder-colors [data-type="bookmarks"] .tree-item > .tree-item-self {
+  background-color: transparent;
+}
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container .nav-folder-title,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container .nav-folder-title-content,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container .nav-file-title,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container .nav-file-title-content,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container > div > .nav-folder .nav-folder-title,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container > div > .nav-folder .nav-folder-title-content,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container > div > .nav-folder .nav-file-title,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container > div > .nav-folder .nav-file-title-content,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container > div > .nav-folder-children > .nav-file .nav-file-title,
+body.sp-no-folder-colors.sp-no-folder-colors [data-type="bookmarks"] .tree-item-inner {
+  color: var(--nav-item-color);
+  --icon-color: var(--text-muted);
+}
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container .collapse-icon svg.svg-icon,
+body.sp-no-folder-colors.sp-no-folder-colors .tree-item-self .tree-item-icon {
+  color: var(--text-faint);
+  --icon-color: var(--text-faint);
+}
+body.sp-no-folder-colors.sp-no-folder-colors:not(.is-grabbing) .nav-files-container .nav-folder-title:hover,
+body.sp-no-folder-colors.sp-no-folder-colors:not(.is-grabbing) .nav-files-container .nav-file-title:hover,
+body.sp-no-folder-colors.sp-no-folder-colors:not(.is-grabbing) .nav-files-container > div > .nav-folder .nav-folder-title:hover,
+body.sp-no-folder-colors.sp-no-folder-colors:not(.is-grabbing) .nav-files-container > div > .nav-folder .nav-file .nav-file-title:hover {
+  color: var(--nav-item-color-hover);
+  background-color: var(--nav-item-background-hover);
+  filter: none;
+}
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container .nav-file-title.is-active,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container .nav-file-title.is-active .nav-file-title-content,
+body.sp-no-folder-colors.sp-no-folder-colors:not(.is-grabbing) .nav-files-container > div > .nav-folder .nav-file-title.is-active {
+  color: var(--nav-item-color-active);
+  background-color: var(--nav-item-background-active);
+  border-color: transparent;
+}
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container .nav-folder > .nav-folder-children,
+body.sp-no-folder-colors.sp-no-folder-colors .nav-files-container > div > .nav-folder > .nav-folder-children {
+  border-color: var(--background-modifier-border);
 }
 
 /*===============================================================
@@ -2012,6 +2139,31 @@ body.theme-dark .git-tools .tree-item-inner {
   opacity: 1;
   visibility: visible;
 }
+/* Git source control panel: it reuses the file explorer's structure, so
+   the folder-color text (cream/dark) would make its filenames invisible.
+   Use normal text and icon colors, no folder tints. */
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .nav-folder-title,
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .nav-file-title,
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .tree-item-inner,
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .nav-folder-title-content,
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .nav-file-title-content {
+  color: var(--nav-item-color);
+  --icon-color: var(--text-muted);
+}
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .nav-folder,
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .nav-folder-title {
+  background-color: transparent;
+}
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .collapse-icon svg.svg-icon,
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .tree-item-icon {
+  color: var(--text-faint);
+  --icon-color: var(--text-faint);
+}
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .nav-folder-title:hover,
+body:is(.theme-light, .theme-dark) .workspace-leaf-content[data-type="git-view"][data-type="git-view"] .view-content .nav-file-title:hover {
+  color: var(--nav-item-color-hover);
+  background-color: var(--nav-item-background-hover);
+}
 body .git-tools .clickable-icon {
   opacity: var(--icon-opacity, 0.7);
 }
@@ -2033,6 +2185,16 @@ body .git-tools .clickable-icon:hover {
   background-color: rgb(var(--ctp-mantle));
 }
 
+/* Graph controls icons (restore / close): keep visible on the light panel,
+   even inside the focused pane where --icon-color-focused is cream */
+.graph-controls .clickable-icon,
+.graph-controls .graph-controls-button {
+  --icon-color: rgb(var(--ctp-subtext1));
+  --icon-color-hover: rgb(var(--ctp-text));
+  --icon-color-active: rgb(var(--ctp-text));
+  --icon-color-focused: rgb(var(--ctp-subtext1));
+}
+
 /* Links - internal: no underline; external: keep underline */
 .markdown-rendered .internal-link,
 .markdown-rendered .internal-link:hover,
@@ -2047,7 +2209,12 @@ span.data-link-text,
 .metadata-container .internal-link,
 .tree-item-inner .internal-link,
 .search-result-file-match .internal-link {
-  text-decoration: none !important;
+  text-decoration: none;
+}
+body {
+  --link-decoration: none;
+  --link-decoration-hover: none;
+  --link-unresolved-decoration-style: none;
 }
 
 .external-link, .external-link:hover {
@@ -2114,11 +2281,6 @@ span.data-link-text,
 /* Nav file label align */
 .nav-file-title-content { flex-grow: 1; }
 .nav-folder-title-content { flex-grow: 1; }
-
-/* Hide empty frontmatter */
-.frontmatter-container:not(:has(.frontmatter-section)) {
-  display: none;
-}
 
 /* Popover animation */
 .popover.hover-popover.is-loaded {
@@ -2253,55 +2415,344 @@ body:is(.sp-compact-panes, .sp-compact-all) [data-type="search"] .search-result-
   padding-bottom: 1px;
 }
 
-/* IN-NOTE PROPERTIES — Condensed Spacing */
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property {
-  padding-top: 0;
-  padding-bottom: 0;
-  min-height: 21px;
+/* IN-NOTE PROPERTIES — Minimal
+   Modeled on the Maps of the Ideaverse menu: smaller text in Obsidian's own font,
+   no boxes, no dividers. Icon and name on the left in a fixed column,
+   values beside them. */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container {
+  /* One size drives everything (Style Settings slider, default 14px) */
+  --sp-prop-value-size: var(--sp-prop-size, 14px);
+  --sp-prop-key-size: var(--sp-prop-value-size);   /* names the same size as values, as in standard Obsidian */
+  --sp-prop-row: calc(var(--sp-prop-value-size) * 1.364);
+  /* Names column fits "excalidraw-pl…", like standard Obsidian */
+  --sp-prop-name-width: calc(var(--sp-prop-key-size) * 7.5);
+  --sp-prop-button: var(--sp-prop-row);
+  --metadata-divider-width: 0;
+  --metadata-property-radius: 0;
+  --metadata-property-background-hover: transparent;
+  --metadata-property-box-shadow-hover: none;
+  --metadata-property-box-shadow-focus: none;
+  --metadata-input-height: var(--sp-prop-row);
+  position: relative;
+  --sp-prop-pad: 10px;
+  padding-top: var(--sp-prop-pad);
+  padding-bottom: var(--sp-prop-pad);
+  margin-bottom: 18px;
+  border-top: 1px solid var(--background-modifier-border);
+  border-bottom: 1px solid var(--background-modifier-border);
 }
 
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-key,
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value {
-  line-height: 1.2;
-  padding-top: 0;
-  padding-bottom: 0;
-  min-height: 20px;
+/* No "Properties" title. The heading becomes a small chevron button in the
+   empty space left of the first property, like the Maps of the Ideaverse
+   collapse button: chevron up = open, chevron down = collapsed. */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties-heading {
+  position: absolute;
+  top: var(--sp-prop-pad);
+  left: 0;
+  z-index: 1;
+  width: var(--sp-prop-button);
+  height: var(--sp-prop-button);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  opacity: 0.7;
+  cursor: pointer;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties-heading:hover {
+  opacity: 1;
+  color: var(--text-normal);
+  border-color: var(--background-modifier-border-hover);
+  background: transparent;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties-title,
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties-heading .collapse-indicator {
+  display: none;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties-heading::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--sp-prop-button) * 0.27);
+  height: calc(var(--sp-prop-button) * 0.27);
+  border-left: 1.25px solid currentColor;
+  border-top: 1.25px solid currentColor;
+  transform: translate(-50%, -25%) rotate(45deg);
+}
+/* Collapsed: chevron points down, line and button stay, nothing else */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container.is-collapsed {
+  min-height: calc(var(--sp-prop-row) + 2 * var(--sp-prop-pad) + 2px);
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container.is-collapsed .metadata-properties-heading::before {
+  transform: translate(-50%, -75%) rotate(225deg);
 }
 
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-key input,
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value input,
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value .multi-select-pill-content {
-  line-height: 1.3;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-content,
 body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties {
+  padding: 0;
   gap: 0;
 }
-
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container {
-  padding-top: 2px;
-  padding-bottom: 4px;
-  margin-bottom: 8px;
+/* Space between properties (Style Settings slider, default 0: tight) */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties {
+  gap: var(--sp-prop-gap, 6px);
+}
+/* Gutter on the left for the chevron and + buttons */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties {
+  padding-left: calc(var(--sp-prop-button) + 8px);
 }
 
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-content {
-  padding-top: 0;
-  padding-bottom: 0;
+/* One row per property, no borders, no hover box */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property {
+  padding: 0;
+  min-height: var(--sp-prop-row);
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  align-items: flex-start;
+  column-gap: 12px;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property:hover .metadata-property-key-input,
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property:focus-within .metadata-property-key-input {
+  color: var(--text-normal);
 }
 
-body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-properties-heading {
-  padding-top: 2px;
-  padding-bottom: 2px;
-  min-height: 20px;
+/* Names: left-aligned, muted */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-key {
+  flex: none;
+  width: auto;
+  min-width: 0;
+  min-height: var(--sp-prop-row);
+  padding: 0;
+  border: none;
+  justify-content: flex-start;
+}
+/* Type icons (click for the property menu): icon, then name, like
+   standard Obsidian, in Obsidian's own icon color */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-key {
+  gap: 0;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: var(--sp-prop-row);
+  min-height: 0;
+  margin: 0 6px 0 0;
+  padding: 0;
+  --icon-size: calc(var(--sp-prop-key-size) * 1.05);
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-icon:hover {
+  color: var(--pill-color-remove);
 }
 
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-key-input {
+  font-size: var(--sp-prop-key-size);
+  line-height: var(--sp-prop-row);
+  color: var(--text-muted);
+  text-align: left;
+  flex: none;
+  width: var(--sp-prop-name-width);
+  min-width: 0;
+  height: var(--sp-prop-row);
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-overflow: ellipsis;
+}
+
+/* Values: left-aligned, same rhythm */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value {
+  min-height: var(--sp-prop-row);
+  padding: 0;
+  border: none;
+  font-size: var(--sp-prop-value-size);
+  line-height: var(--sp-prop-row);
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value :is(input:not([type="checkbox"]), .metadata-input-longtext, .metadata-input-number, .multi-select-input) {
+  font-size: var(--sp-prop-value-size);
+  line-height: var(--sp-prop-row);
+  min-height: var(--sp-prop-row);
+  height: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value .metadata-input-longtext {
+  padding: 0;
+}
+
+/* List values flow inline like words, not stacked pills */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .multi-select-container {
+  padding: 0;
+  gap: 0 var(--sp-pill-gap, 8px);
+  min-height: var(--sp-prop-row);
+  border: none;
+  background: transparent;
+}
 body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .multi-select-pill {
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-top: 0;
-  margin-bottom: 0;
+  font-size: var(--sp-prop-value-size);
+  line-height: var(--sp-prop-row);
+  /* Grow when a long value wraps (Obsidian 1.10+ wraps instead of "…") */
+  height: auto;
+  min-height: var(--sp-prop-row);
+  max-width: 100%;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .multi-select-pill-content {
+  padding: 0;
+  line-height: var(--sp-prop-row);
+  height: auto;
+  min-width: 0;
+}
+/* The empty "type a new value" field shares the last line instead of
+   taking a row of its own; when the list is empty it still shows "Empty" */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .multi-select-container {
+  --sp-pill-gap: 8px;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value .multi-select-pill ~ .multi-select-input {
+  flex: 1 1 0;
+  min-width: 0;
+}
+/* The hover/editing highlight reaches 5px past the text on the left and
+   4px above and below, so values don't sit on its edge. Negative margins
+   cancel the padding, so nothing moves. */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property {
+  overflow: visible;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value {
+  margin: -4px 0 -4px -5px;
+  padding: 4px 0 4px 5px;
+  border-radius: 5px;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .multi-select-pill ~ .multi-select-input:focus {
+  min-width: 6ch;
+}
+/* Remove (×) buttons: always shown, in Obsidian's remove color like standard */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .multi-select-pill-remove-button {
+  display: flex;
+  align-items: center;
+  height: var(--sp-prop-row);
+  flex: none;
+  align-self: flex-start;
+  margin: 0;
+  padding: 0 0 0 4px;
+  --icon-size: calc(var(--sp-prop-value-size) * 0.8);
+  --icon-stroke: 2px;
+  color: var(--pill-color-remove);
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .multi-select-pill-remove-button:hover {
+  color: var(--pill-color-remove-hover);
+}
+
+/* Empty values: quiet gray placeholder */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container [placeholder]:empty::before,
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.45;
+}
+
+/* Values that carry their own inset (dates, links, tags) start flush */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value > :first-child,
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-link,
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-link-inner {
+  margin: 0;
+  padding: 0;
+  min-height: var(--sp-prop-row);
+  line-height: var(--sp-prop-row);
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-link-inner {
+  font-size: var(--sp-prop-value-size);
+  line-height: var(--sp-prop-row);
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container input[type="date"].metadata-input-text.mod-date {
+  height: var(--sp-prop-row);
+}
+/* Dates and date-times: keep Obsidian's calendar icon, with room for it */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value input:is([type="date"], [type="datetime-local"]).metadata-input-text {
+  padding-inline-start: calc(var(--icon-size) + 6px);
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .multi-select-pill-content {
+  margin: 0;
+}
+/* Checkbox values: small, on the row */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value input[type="checkbox"] {
+  --checkbox-size: calc(var(--sp-prop-row) * 0.72);
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  min-width: 0;
+  min-height: 0;
+  border-radius: 3px;
+  margin: calc(var(--sp-prop-row) * 0.14) 0 0;
+}
+
+/* Edit and link icons beside values (date link, edit pencil): always shown, sized to the row */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-link-flair,
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value .clickable-icon {
+  height: var(--sp-prop-row);
+  padding: 0 2px;
+  margin: 0 0 0 4px;
+}
+/* Small icons inside values (date link, etc.) */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-property-value {
+  --icon-size: calc(var(--sp-prop-value-size) * 1.1);
+}
+
+/* Add property: no text, just a "+" button matching the chevron,
+   in the left column on the last property's row */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-add-button {
+  position: absolute;
+  left: 0;
+  bottom: var(--sp-prop-pad);
+  width: var(--sp-prop-button);
+  height: var(--sp-prop-button);
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  opacity: 0.7;
+  --icon-size: calc(var(--sp-prop-button) * 0.67);
+  --icon-stroke: 1.75px;
+}
+/* A single property: give the "+" its own row so it doesn't sit on the chevron */
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container[data-property-count="1"]:not(.is-collapsed) {
+  padding-bottom: calc(var(--sp-prop-row) + 2px + var(--sp-prop-pad));
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-add-button:hover {
+  opacity: 1;
+  color: var(--text-normal);
+  border-color: var(--background-modifier-border-hover);
+  background: transparent;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-add-button .text-button-label {
+  display: none;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-add-button .text-button-icon {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+body:is(.sp-compact-properties, .sp-compact-all) .metadata-container .metadata-add-button .text-button-icon svg {
+  color: currentColor;
 }
 
 /* BODY TEXT — Condensed Spacing */

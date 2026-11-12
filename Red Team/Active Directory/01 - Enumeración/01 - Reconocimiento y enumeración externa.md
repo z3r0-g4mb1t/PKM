@@ -15,7 +15,7 @@ En una evaluación *assumed breach* el reconocimiento externo no busca el acceso
 Buena parte de estas técnicas ya está desarrollada en el módulo de footprinting; aquí las miramos con la lente concreta de "qué de esto me sirve para atacar el dominio".
 
 > [!info]+ No duplicar: ver footprinting
-> El recon de dominio, personal y cloud está detallado en [[00 - Principios y metodología de enumeración]], [[01 - Reconocimiento de dominio]], [[03 - Enumeración de personal]] y [[02 - Recursos cloud]]. Esta nota resume, enlaza y añade el enfoque AD.
+> El recon de dominio, personal y cloud está detallado en [[00 - Principios y metodología de enumeración]], [[01 - Reconocimiento de dominio]], [[03 - Enumeración de personal]] y [[02 - Recursos cloud]]. Esta nota resume, enlaza y añade el enfoque AD. El OSINT externo que nutre esto —[[00 - OSINT de personas - el pegamento de la investigación|personas y correos]], [[00 - Brechas y credenciales - la economía del credencial robado|credenciales filtradas]], SOCMINT— se desarrolla en el área de [[OSINT.base|OSINT]].
 
 # Qué buscamos
 

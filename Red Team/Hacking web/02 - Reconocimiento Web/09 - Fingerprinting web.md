@@ -4,7 +4,7 @@ tags:
   - Pentesting/Enumeracion
   - Recon
 Descripción: "El fingerprinting extrae los detalles técnicos de las tecnologías que sostienen un sitio web: servidor, sistema operativo, lenguaje, framework, CMS, WAF. Igual que una huella…"
-Fecha de actualización: 2026-06-02
+Fecha de actualización: 2026-11-08
 Nota previa: "[[08 - Virtual Hosts]]"
 Nota siguiente: "[[10 - Crawling web]]"
 Area: "[[Reconocimiento Web.base|Reconocimiento Web]]"
@@ -32,7 +32,7 @@ Area: "[[Reconocimiento Web.base|Reconocimiento Web]]"
 | `Wappalyzer` | Extensión/servicio que perfila tecnologías web (CMS, frameworks, analítica)                                                 |
 | `BuiltWith`  | Perfilador con informes detallados del stack                                                                                |
 | `WhatWeb`    | CLI con gran base de firmas                                                                                                 |
-| `Nmap`       | Escáner versátil; con `NSE` hace fingerprinting de servicio/SO (ver [[02 - Escaneo de puertos y hosts escaneo de puertos]]) |
+| `Nmap`       | Escáner versátil; con `NSE` hace fingerprinting de servicio/SO (ver [[02 - Escaneo de puertos y hosts|escaneo de puertos]]) |
 | `Netcraft`   | Informes de tecnología, hosting y postura de seguridad                                                                      |
 | `wafw00f`    | Detecta e identifica `WAF`                                                                                                  |
 

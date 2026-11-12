@@ -4,7 +4,7 @@ tags:
   - Pentesting/Explotacion
   - Proxies
 Descripción: "Más allá del proxy, Burp y ZAP traen fuzzers integrados"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-12
 Nota previa: "[[07 - Proxying de herramientas]]"
 Nota siguiente: "[[09 - Escáner de vulnerabilidades - Burp y ZAP Scanner]]"
 Area: "[[Proxies web.base|Proxies web]]"
@@ -39,7 +39,7 @@ En **Settings**, `Grep - Match` marca las respuestas que contienen una cadena (p
 ![Resultados de Intruder: el payload "admin" devuelve 200 OK (longitud 244), el resto 404 — directorio /admin/ descubierto.](https://academy.hackthebox.com/storage/modules/110/burp_intruder_attack.png)
 
 > [!warning]+ El throttling de la Community lo cambia todo
-> <mark style="background: #FF5582A6;">Burp Intruder **gratis está limitado a ~1 petición/segundo**</mark>; un `ffuf` hace 10.000/s. Para wordlists grandes, el Intruder Community es inusable — usa la CLI ([[16 - Herramientas de fuzzing|ffuf]]) o Burp Pro (sin límite). El Intruder gratis se reserva para ataques **cortos y precisos** donde el control sobre la petición compensa la lentitud: forzar un login con pocas contraseñas, [[02 - Fuerza bruta de contraseñas en el login|password spraying]] contra OWA/Citrix/VPN, fuzzear un parámetro concreto.
+> <mark style="background: #FF5582A6;">Burp Intruder **gratis está limitado a ~1 petición/segundo**</mark>; un `ffuf` hace 10.000/s. Para wordlists grandes, el Intruder Community es inusable — usa la CLI ([[16 - Herramientas de fuzzing|ffuf]]) o Burp Pro (sin límite). El Intruder gratis se reserva para ataques **cortos y precisos** donde el control sobre la petición compensa la lentitud: forzar un login con pocas contraseñas, [[02 - Fuerza bruta de contraseñas en el login|password spraying]] contra OWA/Citrix/VPN, fuzzear un parámetro concreto. En Pro, la extensión **Turbo Intruder** supera de largo al Intruder nativo y trae el *single-packet attack* HTTP/2 (clave para [[05 - Defensas y evasión|race conditions]]) — ver [[10 - Extensiones y BApp Store|extensiones]].
 
 # ZAP Fuzzer
 

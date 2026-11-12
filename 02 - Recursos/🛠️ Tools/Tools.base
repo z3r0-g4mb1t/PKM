@@ -1,19 +1,17 @@
 formulas:
   herramienta: file.name.replace(".base", "")
   categoría: |
-    if(file.name.containsAny("Nmap", "Ffuf", "Masscan", "RustScan", "ZMap", "sx", "Smap", "ProjectDiscovery", "Firewalk"), "1 · Recon y escaneo",
-      if(file.name.containsAny("Nessus", "OpenVAS"), "2 · Evaluación de vulnerabilidades",
-        if(file.name.containsAny("Burp", "ZAP"), "3 · Proxies web",
-          if(file.name.containsAny("Metasploit", "SQLMap"), "4 · Explotación",
-            if(file.name.containsAny("Hashcat", "John"), "5 · Ataques a credenciales",
-              if(file.name.containsAny("Wireshark", "Tcpdump", "Scapy"), "6 · Análisis de red",
-                if(file.name.containsAny("Garak", "PyRIT", "Fickling", "ModelScan", "Picklescan"), "7 · Seguridad de IA",
-                  if(file.name.containsAny("Aircrack-ng", "Reaver", "MDK4", "hcxtools", "Kismet", "EAPHammer", "hostapd", "Wifiphisher"), "8 · Wi-Fi y 802.11",
-                  if(file.name.containsAny("Semgrep", "CodeQL"), "9 · Análisis estático (SAST)",
-                    if(file.name.containsAny("mitmproxy", "bettercap"), "10 · Interceptación y MITM",
-                      if(file.name.containsAny("Ghidra", "Frida"), "11 · Reversing e instrumentación",
-                        if(file.name.containsAny("AFL"), "12 · Fuzzing",
-                    "· Sin clasificar")))))))))))
+    if(file.folder.contains("/01 - Recon y escaneo"), "01 · Recon y escaneo",
+      if(file.folder.contains("/02 - Evaluación de vulnerabilidades"), "02 · Evaluación de vulnerabilidades",
+        if(file.folder.contains("/03 - Web"), "03 · Web",
+          if(file.folder.contains("/04 - Red y MITM"), "04 · Red y MITM",
+            if(file.folder.contains("/05 - Credenciales"), "05 · Credenciales",
+              if(file.folder.contains("/06 - Explotación"), "06 · Explotación",
+                if(file.folder.contains("/07 - Wi-Fi"), "07 · Wi-Fi",
+                  if(file.folder.contains("/08 - Reversing y binario"), "08 · Reversing y binario",
+                    if(file.folder.contains("/09 - SAST"), "09 · SAST",
+                      if(file.folder.contains("/10 - Seguridad de IA"), "10 · Seguridad de IA",
+                    "· Sin clasificar"))))))))))
 properties:
   formula.herramienta:
     displayName: Herramienta
@@ -58,7 +56,7 @@ views:
     name: Todas las notas
     filters:
       and:
-        - file.inFolder("02 - Recursos/🛠️ Tools")
+        - file.folder.startsWith("02 - Recursos/🛠️ Tools")
         - file.ext == "md"
     groupBy:
       property: file.folder

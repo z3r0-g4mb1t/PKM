@@ -4,7 +4,7 @@ tags:
   - Pentesting/Enumeracion
   - Recon
 Descripción: "El search engine discovery (o OSINT con buscadores) usa los motores de búsqueda como herramientas para descubrir información sobre un objetivo: documentos sensibles, páginas de…"
-Fecha de actualización: 2026-06-02
+Fecha de actualización: 2026-11-08
 Nota previa: "[[11 - Spidering con Scrapy]]"
 Nota siguiente: "[[13 - Web Archives]]"
 Area: "[[Reconocimiento Web.base|Reconocimiento Web]]"
@@ -43,32 +43,9 @@ Los operadores son el lenguaje de precisión del buscador. La sintaxis varía al
 
 # Google Dorking
 
-<mark style="background: #ADCCFFA6;">`Google Dorking` (o `Google Hacking`) combina estos operadores para destapar información sensible, vulnerabilidades o contenido oculto</mark>. Patrones habituales:
+<mark style="background: #ADCCFFA6;">`Google Dorking` (o `Google Hacking`) combina estos operadores para destapar información sensible, vulnerabilidades o contenido oculto</mark> —paneles de login, backups `.sql`, ficheros `.env`/`config.php`, listados de directorio, errores reveladores—. <mark style="background: #FF5582A6;">Un `.sql` de backup o un `.env` indexado son credenciales servidas en bandeja</mark>.
 
-```text
-# Páginas de login y admin
-site:example.com (inurl:login OR inurl:admin)
-
-# Ficheros expuestos
-site:example.com (filetype:xls OR filetype:docx OR filetype:pdf)
-
-# Ficheros de configuración
-site:example.com inurl:config.php
-site:example.com (ext:conf OR ext:cnf)
-
-# Backups de base de datos
-site:example.com (inurl:backup OR filetype:sql)
-```
-
-<mark style="background: #FF5582A6;">Un `.sql` de backup, un `.env` o un `config.php` indexados son credenciales servidas en bandeja</mark>. La `Google Hacking Database` (GHDB, en Exploit-DB) recopila miles de dorks por categoría: ficheros con contraseñas, dispositivos expuestos, mensajes de error reveladores.
-
-> [!info]+ Más allá de Google
-> - **Otros buscadores**: Bing, DuckDuckGo y Yandex tienen índices distintos — un dork que no da nada en Google puede acertar en otro. `Shodan`, `Censys` y `FOFA` indexan **dispositivos** y servicios (banners, certificados, paneles) en vez de páginas.
-> - **Búsqueda en código fuente**: `grep.app`, `publicwww` y `SearchCode` buscan en el HTML/JS de millones de sitios — útil para encontrar quién usa una librería vulnerable o un endpoint concreto.
-> - **GitHub dorking**: buscar en GitHub el dominio del objetivo junto a `password`, `api_key`, `secret` destapa credenciales filtradas en commits. Herramientas como `trufflehog` y `gitleaks` lo automatizan sobre repos de la organización.
-> - **`theHarvester`** agrega resultados de buscadores y fuentes OSINT para volcar correos y subdominios.
-
-> [!warning]+ Google bloquea el dorking automatizado
-> Google detecta y frena el *scraping*: tras unas pocas consultas automáticas con operadores aparecen captchas o bloqueos temporales de IP. El dorking masivo programático no es fiable contra Google directamente; para automatizar conviene usar APIs de búsqueda de pago, rotación o motores más permisivos. El dorking manual sigue siendo la vía más fiable para hallazgos puntuales.
+> [!important]+ Referencia completa: área OSINT › Google Dorking
+> El dorking tiene desarrollo propio en el área de OSINT: [[00 - Qué es el Google Dorking|qué es]], la [[01 - Operadores de búsqueda de Google|referencia de operadores (2026, con los muertos marcados)]], las [[02 - Dorks por objetivo|recetas por objetivo]], la [[03 - La Google Hacking Database y la automatización|GHDB y automatización]] (y por qué Google bloquea el scraping), el [[04 - Dorking más allá de Google|dorking en Bing/Yandex/GitHub con trufflehog y gitleaks]] y la [[05 - Defensa y detección|defensa frente al dorking]]. Aquí basta con saber que existe y encaja en el recon pasivo.
 
 Los buscadores indexan el presente. Para ver lo que el sitio **mostraba antes** —rutas borradas, parámetros antiguos, versiones vulnerables— se recurre a los archivos históricos: [[13 - Web Archives]].

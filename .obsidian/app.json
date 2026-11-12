@@ -14,5 +14,6 @@
   "useTab": true,
   "vimMode": false,
   "showUnsupportedFiles": true,
-  "openBehavior": ""
+  "openBehavior": "",
+  "tabSize": 4
 }

@@ -4,7 +4,7 @@ tags:
   - Pentesting/Explotacion
   - Proxies
 Descripción: "El módulo enseña las features; esta nota es cómo se usan de verdad en un engagement, y qué hay más allá de Burp/ZAP en 2026"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-12
 Nota previa: "[[12 - Proxying de apps móviles]]"
 Nota siguiente:
 Area: "[[Proxies web.base|Proxies web]]"
@@ -33,7 +33,8 @@ El módulo enseña las features; esta nota es cómo se **usan de verdad** en un 
 | - | - |
 | <mark style="background: #FFB86CA6;">**DOM Invader**</mark> | Integrado en el navegador de Burp: detecta [[04 - Descubrimiento de XSS\|DOM XSS]], [[09 - Prototype Pollution hacia XSS\|prototype pollution client-side]] y sinks del lado cliente automáticamente. La [[01 - Prototype Pollution server-side\|PP server-side]] no la ve DOM Invader: necesita la [[03 - Detección, herramientas y prevención\|SSPP Scanner]] |
 | **Bambdas** | Scripts Java cortos para filtrar/resaltar/transformar tráfico sin extensión completa |
-| **Burp AI** (Pro) | Explica vulnerabilidades, sugiere payloads y automatiza tareas repetitivas |
+| **Burp AI** (Pro) | Explica vulnerabilidades, sugiere payloads y automatiza tareas repetitivas; *Shadow Repeater* muta tus pruebas de Repeater en segundo plano |
+| <mark style="background: #FFB86CA6;">**Servidor MCP**</mark> | Expone Burp a un cliente MCP (Claude, agentes) para pilotar Proxy/Repeater/scanner desde un LLM — extensión oficial `PortSwigger/mcp-server`. Tratar como superficie de ataque |
 | **Organizer** | Guarda peticiones interesantes para retomarlas, con notas |
 | **Collaborator** | Servidor OOB para detectar [[04 - Blind SSRF\|SSRF/blind]] e interacciones fuera de banda |
 
@@ -59,6 +60,8 @@ Más allá de Proxy/Repeater/Intruder/Scanner, conviene conocer cuatro utilidade
 - **Comparer**: diff visual de dos peticiones/respuestas; aísla qué cambió entre un caso válido y uno inválido (clave en [[01 - Enumeración de usuarios|enumeración por diferencias sutiles]]).
 - **Organizer**: guarda peticiones interesantes con notas para retomarlas sin perderlas en el historial.
 - <mark style="background: #FFB86CA6;">**WebSocket testing**</mark>: Burp no solo intercepta HTTP — la pestaña `WebSockets history` captura los mensajes WS, y se pueden **editar y reenviar** como en Repeater. Imprescindible en apps de chat, notificaciones en tiempo real o trading, donde la lógica viaja por WebSocket y no por peticiones HTTP clásicas.
+- <mark style="background: #FFB86CA6;">**Session handling rules + macros**</mark>: la pieza que falta para fuzzear o escanear flujos **autenticados**. Cuando la app renueva un token `CSRF` en cada respuesta o caduca la sesión, una *macro* re-ejecuta el login (o relee el token fresco) y una **regla de sesión** lo reinyecta en cada petición de Intruder/Scanner. Sin esto, el fuzzing autenticado se cae en la segunda petición y lo atribuyes por error a un falso negativo.
+- **HTTP/2, gRPC y Protobuf**: Burp maneja **HTTP/2 de forma nativa** (control a nivel de frame, clave para [[06 - Introducción a HTTP Request Smuggling|smuggling]] y [[14 - HTTP2 Downgrading|downgrade]]). Para **gRPC/Protobuf** —cada vez más común en APIs y back-ends móviles— **no hay soporte nativo todavía** (verificado 2025): se cubre con extensiones como `blackboxprotobuf`, *gRPC-Web* o un decodificador Protobuf, que añaden una pestaña para ver y editar el mensaje deserializado en vez de un blob binario.
 
 # Atajos que multiplican (Burp)
 

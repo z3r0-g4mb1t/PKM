@@ -39,7 +39,7 @@ Area: "[[Análisis de protocolos.base|Análisis de protocolos]]"
 
 | Herramienta | Estado | Nota |
 | - | - | - |
-| **Scapy** | **2.7.0** (2025-12-26) | Construir, enviar y disecar paquetes arbitrarios ([[🔨📦 Scapy\|Scapy]]) |
+| **Scapy** | **2.7.0** (2025-12-26) | Construir, enviar y disecar paquetes arbitrarios ([[00 - Introducción a Scapy\|Scapy]]) |
 | **hping3** | mantenimiento | Sigue en el apéndice; para lo que hace, Scapy es más flexible |
 | **Nmap / NSE** | activo | Detección de servicio y *scripts* de protocolo ([[Nmap.base\|Nmap]]) |
 | **netcat / ncat** | activo | Replay de flujos TCP y servidor improvisado |

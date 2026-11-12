@@ -1,8 +1,7 @@
 views:
   - type: table
     name: Notas
-    filters:
-      Area == link("Privacidad en IA.base", "Privacidad en IA")
+    filters: Area == link("Privacidad en IA.base", "Privacidad en IA")
     order:
       - file.name
       - Descripción

@@ -88,7 +88,7 @@ $ kaitai-struct-compiler -t csharp,java,go,cpp_stl ...    # y en 10 lenguajes m�
 
 ## Límites que conviene conocer
 
-- <mark style="background: #FFB8EBA6;">**Kaitai solo lee, no escribe.**</mark> El soporte de serialización lleva años en desarrollo y sigue sin ser general. Para **construir** paquetes (que es lo que necesitas para atacar) hace falta otra cosa: [[🔨📦 Scapy|Scapy]], la librería `construct` de Python (declarativa y bidireccional) o código a mano.
+- <mark style="background: #FFB8EBA6;">**Kaitai solo lee, no escribe.**</mark> El soporte de serialización lleva años en desarrollo y sigue sin ser general. Para **construir** paquetes (que es lo que necesitas para atacar) hace falta otra cosa: [[00 - Introducción a Scapy|Scapy]], la librería `construct` de Python (declarativa y bidireccional) o código a mano.
 - **No modela bien el estado de sesión.** Describe *un* mensaje o *un* flujo; una máquina de estados con negociación previa hay que llevarla fuera.
 - **La aritmética es limitada.** Expresiones sobre campos ya leídos, sí; lógica arbitraria, no. Los casos raros necesitan procesos externos (`process: zlib`, o un `process` propio).
 

@@ -4,7 +4,7 @@ tags:
   - Pentesting/Explotacion
   - Brute-Forcing
 Descripción: "Medusa es el primo de Hydra: cracker de logins paralelo, modular y rápido"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-09
 Nota previa: "[[02 - Hydra]]"
 Nota siguiente: "[[04 - Generación de wordlists]]"
 Area: "[[Brute Forcing.base|Brute Forcing]]"
@@ -69,8 +69,8 @@ Donde Medusa brilla de verdad es en **multi-host** (`-H servers.txt`): barrer la
 <mark style="background: #ADCCFFA6;">Habiendo identificado el servidor [[📂🔄 FTP|FTP]], puedes proceder a aplicar fuerza bruta</mark> a su mecanismo de autenticación.
 
 Si exploramos el directorio `/home` en el sistema objetivo, vemos una carpeta `ftpuser`, lo que implica la probabilidad de que el nombre de usuario del servidor FTP sea `ftpuser`. Basándonos en esto, podemos modificar nuestro comando de Medusa en consecuencia:
-```shellsession
-Kronno23@htb[/htb]$ medusa -h 127.0.0.1 -u ftpuser -P 2020-200_most_used_passwords.txt -M ftp -t 5 
+```shell-session
+$ medusa -h 127.0.0.1 -u ftpuser -P 2020-200_most_used_passwords.txt -M ftp -t 5 
 
 Medusa v2.2 [http://www.foofus.net] (C) JoMo-Kun / Foofus Networks <jmk@foofus.net> 
 
@@ -85,8 +85,8 @@ GENERAL: Medusa has finished.
 ```
 
 Tras descifrar con éxito la contraseña de FTP, se puede establecer una conexión FTP:
-```shellsession
-Kronno23@htb[/htb]$ ftp ftp://ftpuser:<FTPUSER_PASSWORD>@localhost
+```shell-session
+$ ftp ftp://ftpuser:<FTPUSER_PASSWORD>@localhost
 ```
 
 # `ffuf`: el brute force de login web actual

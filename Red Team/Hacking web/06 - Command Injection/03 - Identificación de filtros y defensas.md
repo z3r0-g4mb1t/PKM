@@ -5,7 +5,7 @@ tags:
   - Command-Injection
   - Tipo/Defensa
 Descripción: "Cuando la aplicación sí valida en el back-end, el payload 127.0.0.1; whoami deja de funcionar y devuelve un invalid input"
-Fecha de actualización: 2026-06-13
+Fecha de actualización: 2026-11-08
 Nota previa: "[[02 - Operadores de inyección de comandos]]"
 Nota siguiente: "[[04 - Bypass de filtros de espacios]]"
 Area: "[[Command Injection.base|Command Injection]]"
@@ -53,7 +53,7 @@ $ wafw00f https://target.htb -a
 `wafw00f` (de *EnableSecurity*) <mark style="background: #FFB86CA6;">huele la firma de 150+ WAFs</mark>. Señales que también revisar a mano:
 
 - **Cabeceras**: `Server: cloudflare`, `cf-ray`, `x-amzn-*` (AWS WAF), `x-sucuri-id`, `Server: AkamaiGHost`.
-- **Cookies**: `__cfduid`/`__cf_bm` (Cloudflare), `incap_ses`/`visid_incap` (Imperva Incapsula), `ak_bmsc` (Akamai).
+- **Cookies**: `__cf_bm`/`cf_clearance` (Cloudflare; `__cfduid` se retiró en 2021), `incap_ses`/`visid_incap` (Imperva Incapsula), `ak_bmsc` (Akamai).
 - **Página de bloqueo**: el HTML del "Attention Required" de Cloudflare, el "Request blocked" de AWS, el "This website is using a security service" genérico.
 - **Código de estado**: muchos WAFs responden `403`, `406` o `429` ante un payload, no el `200` con "invalid input" de una blacklist de app.
 

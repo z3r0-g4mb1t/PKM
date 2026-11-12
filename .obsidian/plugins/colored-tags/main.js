@@ -93,6 +93,7 @@ var TagApplier = class {
   constructor(options) {
     this.pendingNodes = /* @__PURE__ */ new Set();
     this.flushHandle = null;
+    this.frameWindow = window;
     var _a, _b;
     this.selector = options.selector;
     this.getTagText = (_a = options.getTagText) != null ? _a : defaultTagTextGetter;
@@ -107,7 +108,9 @@ var TagApplier = class {
     );
   }
   start(root = document.body) {
+    var _a, _b;
     this.stop();
+    this.frameWindow = (_b = (_a = root.ownerDocument) == null ? void 0 : _a.defaultView) != null ? _b : window;
     this.apply(root);
     this.observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
@@ -124,6 +127,11 @@ var TagApplier = class {
     var _a;
     (_a = this.observer) == null ? void 0 : _a.disconnect();
     this.observer = void 0;
+    if (this.flushHandle !== null) {
+      this.frameWindow.cancelAnimationFrame(this.flushHandle);
+      this.flushHandle = null;
+    }
+    this.pendingNodes.clear();
   }
   handleMutation(mutation) {
     if (mutation.type === "characterData") {
@@ -144,7 +152,7 @@ var TagApplier = class {
     if (this.flushHandle !== null) {
       return;
     }
-    const requestId = window.requestAnimationFrame(() => {
+    const requestId = this.frameWindow.requestAnimationFrame(() => {
       this.flushHandle = null;
       const nodes = Array.from(this.pendingNodes);
       this.pendingNodes.clear();
@@ -5208,8 +5216,7 @@ var _ColoredTagsPlugin = class extends import_obsidian4.Plugin {
       dark: []
     };
     this.tagColorMap = /* @__PURE__ */ new Map();
-    this.baseViewTagApplier = new BaseViewTagApplier();
-    this.propertiesTagApplier = new PropertiesTagApplier();
+    this.documentAppliers = /* @__PURE__ */ new Map();
     this.saveKnownTagsPromise = null;
     this.saveKnownTagsQueued = false;
   }
@@ -5218,6 +5225,16 @@ var _ColoredTagsPlugin = class extends import_obsidian4.Plugin {
     this.colorService = new ColorService();
     this.cssManager = new CSSManager();
     this.tagManager = new TagManager(this.settings.knownTags);
+    this.registerEvent(
+      this.app.workspace.on("window-open", (workspaceWindow) => {
+        this.startDocumentAppliers(workspaceWindow.doc);
+      })
+    );
+    this.registerEvent(
+      this.app.workspace.on("window-close", (workspaceWindow) => {
+        this.stopDocumentAppliers(workspaceWindow.doc);
+      })
+    );
     this.app.workspace.onLayoutReady(async () => {
       await this.saveKnownTags();
       this.reload();
@@ -5291,8 +5308,10 @@ var _ColoredTagsPlugin = class extends import_obsidian4.Plugin {
     this.onunload();
     this.palettes = palettes != null ? palettes : this.colorService.generatePalettes(this.settings.palette);
     this.refreshTagColorMap();
-    this.baseViewTagApplier.start();
-    this.propertiesTagApplier.start();
+    this.startDocumentAppliers(document);
+    this.app.workspace.iterateAllLeaves((leaf) => {
+      this.startDocumentAppliers(leaf.getContainer().doc);
+    });
     this.update();
   }
   async saveSettings() {
@@ -5435,8 +5454,27 @@ ${css}
   onunload() {
     this.tagManager.clearRenderedTags();
     this.cssManager.removeAll();
-    this.baseViewTagApplier.stop();
-    this.propertiesTagApplier.stop();
+    for (const doc of this.documentAppliers.keys()) {
+      this.stopDocumentAppliers(doc);
+    }
+  }
+  startDocumentAppliers(doc) {
+    if (this.documentAppliers.has(doc)) {
+      return;
+    }
+    const appliers = {
+      bases: new BaseViewTagApplier(),
+      properties: new PropertiesTagApplier()
+    };
+    this.documentAppliers.set(doc, appliers);
+    appliers.bases.start(doc.body);
+    appliers.properties.start(doc.body);
+  }
+  stopDocumentAppliers(doc) {
+    const appliers = this.documentAppliers.get(doc);
+    appliers == null ? void 0 : appliers.bases.stop();
+    appliers == null ? void 0 : appliers.properties.stop();
+    this.documentAppliers.delete(doc);
   }
   refreshTagColorMap() {
     this.tagColorMap = new Map(

@@ -6,7 +6,7 @@ tags:
   - Introduccion
   - Tipo/Introduccion
 Descripción: "Un web proxy es una herramienta que se sitúa entre el navegador (o app móvil) y el servidor back-end para capturar, ver y manipular todo el tráfico web que pasa entre ambos — un…"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-08
 Nota previa:
 Nota siguiente: "[[01 - Instalación y configuración del proxy]]"
 Area: "[[Proxies web.base|Proxies web]]"
@@ -43,7 +43,7 @@ HTB enseña Burp y ZAP. El profesional actual conviene que conozca las cuatro:
 
 La distinción que define tu día a día:
 
-| Feature | Community (gratis) | Professional (~£449/año) |
+| Feature | Community (gratis) | Professional (~$499/año) |
 | - | - | - |
 | Proxy, Repeater, Decoder | ✅ | ✅ |
 | Intruder | ✅ pero **con throttling** | ✅ a velocidad completa |

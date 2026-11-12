@@ -128,7 +128,7 @@ Presentable cuando: contra un cliente OAuth de laboratorio, reconstruye la FSM d
 
 # Conexiones en el vault
 
-Es la industrialización del sub-tema OAuth: [[07 - Introducción a OAuth 2.0]], [[08 - Robo de tokens de acceso OAuth]], [[09 - Protección CSRF deficiente en OAuth]] (el caso `state`) y [[10 - Vulnerabilidades adicionales y prevención OAuth]]. La validación del `id_token` conecta con toda la familia JWT ([[02 - Ataques a la verificación de firma JWT]], [[04 - Confusión de algoritmos JWT]]); el encadenamiento por `redirect_uri` con [[31 - Open Redirect]] si existe. Comparte espíritu con el proyecto [[19 - Auditor de predicción de tokens de sesión]] (romper garantías de autenticación) y con el modelado exhaustivo de estados.
+Es la industrialización del sub-tema OAuth: [[07 - Introducción a OAuth 2.0]], [[08 - Robo de tokens de acceso OAuth]], [[09 - Protección CSRF deficiente en OAuth]] (el caso `state`) y [[10 - Vulnerabilidades adicionales y prevención OAuth]]. La validación del `id_token` conecta con toda la familia JWT ([[02 - Ataques a la verificación de firma JWT]], [[04 - Confusión de algoritmos JWT]]); el encadenamiento por `redirect_uri` con [[00 - Introducción a Open Redirect|Open Redirect]] si existe. Comparte espíritu con el proyecto [[19 - Auditor de predicción de tokens de sesión]] (romper garantías de autenticación) y con el modelado exhaustivo de estados.
 
 > [!info]+ Fuentes
 > - IETF, [RFC 9700 — Best Current Practice for OAuth 2.0 Security](https://datatracker.ietf.org/doc/html/rfc9700) — el catálogo autoritativo de invariantes y ataques (consultado 2026-09-21).

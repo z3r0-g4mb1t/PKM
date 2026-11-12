@@ -4,7 +4,7 @@ tags:
   - Pentesting/Enumeracion
   - Proxies
 Descripción: "Ambos proxies traen un escáner de vulnerabilidades (DAST) que mapea la app y prueba clases comunes de fallos automáticamente"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-08
 Nota previa: "[[08 - Fuzzing web - Burp Intruder y ZAP Fuzzer]]"
 Nota siguiente: "[[10 - Extensiones y BApp Store]]"
 Area: "[[Proxies web.base|Proxies web]]"
@@ -41,7 +41,7 @@ Ambos generan **informes** (HTML/XML/Markdown) con severidad, PoC y remediación
 > El error profesional más grave: exportar el informe del scanner y entregárselo al cliente como producto final. <mark style="background: #FF5582A6;">Los DAST encuentran *low-hanging fruit* y generan falsos positivos; no encuentran lógica de negocio, IDOR, bypass de auth ni cadenas complejas</mark> — el grueso del valor de un pentest es **manual** ([[05 - Repeater - repetir y modificar peticiones|Repeater]]). El active scan además es **ruidoso y destructivo**: jamás lo lances contra producción sin autorización explícita y scope acotado. El informe sirve como **anexo** de datos crudos, nunca como el entregable.
 
 > [!info]+ Vigencia: DAST en 2026
-> Burp Scanner (DAST) es referencia en pentesting y **Burp Suite DAST** (renombrado desde "Enterprise Edition" en el release 2025.5, mayo 2025) lo lleva a CI/CD. ZAP es el DAST open-source para automatización (`zap-baseline`, Automation Framework) — encaja en pipelines DevSecOps. Como complemento community-driven, <mark style="background: #FFB86CA6;">`nuclei`</mark> (plantillas YAML) cubre CVEs conocidos y exposiciones a una velocidad que los DAST clásicos no igualan. El trío Burp/ZAP/nuclei cubre la mayor parte del escaneo automatizado actual.
+> Burp Scanner (DAST) es referencia en pentesting y **Burp Suite DAST** (renombrado desde "Enterprise Edition" en el release 2025.5, abril 2025) lo lleva a CI/CD. ZAP es el DAST open-source para automatización (`zap-baseline`, Automation Framework) — encaja en pipelines DevSecOps. Como complemento community-driven, <mark style="background: #FFB86CA6;">`nuclei`</mark> (plantillas YAML) cubre CVEs conocidos y exposiciones a una velocidad que los DAST clásicos no igualan. El trío Burp/ZAP/nuclei cubre la mayor parte del escaneo automatizado actual.
 
 > [!info]+ Fuentes
 > - [PortSwigger — Burp Scanner](https://portswigger.net/burp/documentation/desktop/scanning) · [ZAP — Automate](https://www.zaproxy.org/docs/automate/) · [nuclei](https://github.com/projectdiscovery/nuclei)

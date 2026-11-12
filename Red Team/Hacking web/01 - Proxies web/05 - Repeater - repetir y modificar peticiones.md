@@ -4,7 +4,7 @@ tags:
   - Pentesting/Explotacion
   - Proxies
 Descripción: "Interceptar, modificar, reenviar y comprobar en el navegador son 5-6 pasos por cada intento"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-12
 Nota previa: "[[04 - Modificación automática (Match and Replace)]]"
 Nota siguiente: "[[06 - Codificación y decodificación]]"
 Area: "[[Proxies web.base|Proxies web]]"
@@ -29,6 +29,10 @@ Localiza la petición en el historial (o en cualquier sitio), `CTRL+R` para envi
 ![Pestaña Repeater de Burp con una petición POST a /ping modificada con command injection y la respuesta con el listado de ficheros.](https://academy.hackthebox.com/storage/modules/110/burp_repeat_modify.png)
 
 <mark style="background: #8000E1A6;">Cambiar el comando y obtener su salida al instante</mark> convierte la enumeración por command injection en algo tan ágil como una shell. Atajo útil: clic derecho → `Change Request Method` alterna POST/GET sin reescribir la petición.
+
+> [!important]+ Repeater moderno (2025)
+> - **Shadow Repeater** (Burp AI, Pro): mientras pruebas a mano, muta en segundo plano tu petición probando variaciones del payload y avisa si alguna cambia la respuesta — amplía tu ataque manual sin esfuerzo (ver [[Burp Suite.base|ficha de Burp]]).
+> - **Grupos de pestañas**: agrupa peticiones relacionadas y usa **Send group in sequence** en *single connection* o en paralelo; el modo **single-packet** (HTTP/2) es la base del ataque de [[05 - Defensas y evasión|race conditions]] (muchas peticiones que "llegan a la vez").
 
 # Request Editor y HUD (ZAP)
 

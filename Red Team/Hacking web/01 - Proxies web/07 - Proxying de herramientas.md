@@ -4,7 +4,7 @@ tags:
   - Pentesting/Enumeracion
   - Proxies
 Descripción: "El proxy no es solo para el navegador. Cualquier herramienta CLI o cliente pesado se puede enrutar por Burp/ZAP apuntando su proxy a http://127.0.0.1:8080"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-08
 Nota previa: "[[06 - Codificación y decodificación]]"
 Nota siguiente: "[[08 - Fuzzing web - Burp Intruder y ZAP Fuzzer]]"
 Area: "[[Proxies web.base|Proxies web]]"
@@ -18,7 +18,7 @@ El proxy no es solo para el navegador. <mark style="background: #ADCCFFA6;">Cual
 
 # proxychains: el método universal
 
-[`proxychains`](https://github.com/haad/proxychains) fuerza el tráfico de **cualquier** comando a través de un proxy, sin que la herramienta tenga que soportarlo nativamente. Es la vía más simple. Edita `/etc/proxychains.conf`, comenta la línea final y añade tu proxy:
+[`proxychains-ng`](https://github.com/rofl0r/proxychains-ng) (fork mantenido; el original de `haad` está muerto) fuerza el tráfico de **cualquier** comando a través de un proxy, sin que la herramienta tenga que soportarlo nativamente. Es la vía más simple. Edita `/etc/proxychains.conf`, comenta la línea final y añade tu proxy:
 
 ```text
 #socks4         127.0.0.1 9050

@@ -2,7 +2,7 @@
 cssclasses:
   - temario
 Descripción: "Fuente única del progreso: certificaciones y bloques de estudio; marca una casilla y la Home se actualiza sola"
-Fecha de actualización: 2026-07-31
+Fecha de actualización: 2026-11-09
 ---
 ---
 
@@ -42,7 +42,7 @@ Foco activo. Seguridad ofensiva de redes inalámbricas 802.11.
 
 Foco activo. Certificación generalista.
 
-- [x] 01 · Penetration Testing Process — `Pentesting/00 - Fases del Pentesting/` (legacy parcial, pendiente enriquecer)
+- [x] 01 · Penetration Testing Process — `Pentesting/00 - Fases del Pentesting/` (14 notas 00-13 + net-new legal/TLPT/arsenal) ✅ 2026-07-31
 - ~~02 · Getting Started~~ — se salta, contenido cubierto en otros módulos
 - [x] 03 · Network Enumeration with Nmap — `02 - Recursos/🛠️ Tools/Nmap/`
 - [x] 04 · Footprinting — `Pentesting/01 - Footprinting/`
@@ -135,9 +135,9 @@ En pausa. Web Pentesting avanzado.
 
 ## Plan de estudio
 
-Rotación de repaso de la base web ya escrita — **dos bloques por semana**. `Reconocimiento Web`, `Proxies web` y `SQLMap` se intercalan cuando sobre tiempo. Lo lee la Home, que calcula el plazo consumido de cada semana y avisa de retrasos y cuellos de botella.
+**Hoja de ruta de tres certificaciones por orden de prioridad: CPTS → CWEE → COAE** (arranque 2026-11-09). Preparación de examen en **segunda pasada** sobre notas ya escritas — de CWEE solo los 11 módulos escritos (las 4 de deserialización/whitebox/parameter-logic se extraen aparte, fuera de este plan). **Fase 1 · CPTS** (sem. 1-13, → 1ª semana de febrero): los 27 módulos del path (`02 · Getting Started` se salta) en orden de cadena de ataque — recon → foothold → web → pivoting → Active Directory → escalada → reporting+capstone; la web (tu punto fuerte) cae en festivos y enero se reserva para AD y escalada, que es lo que más aprieta en el examen. En las semanas web se **intercalan dos módulos senior de CWEE** (Blind SQLi y Advanced XSS & CSRF) para profundizar en caliente sobre el mismo tema. **Fases 2-3 · CWEE + COAE en paralelo** (sem. 14-23): se alternan semana a semana (web senior ↔ hacking de IA) para sacar ambas certificaciones a la vez, cada una en su orden de aprendizaje; terminan juntas a mediados de abril. Lo lee la Home, que calcula el plazo consumido de cada semana y avisa de retrasos y cuellos de botella.
 
-El `esfuerzo` es la **suma de las estimaciones oficiales de HTB Academy** de los módulos de esa semana (campo `estimated_time_of_completion`), no una cifra a ojo.
+El `esfuerzo` es la **estimación oficial de HTB Academy** de cada módulo (campo `estimated_time_of_completion`) **ajustada a segunda pasada** (×~⅔: repasar lo ya estudiado cuesta mucho menos que verlo la primera vez), de modo que ninguna semana pasa de ~23 h — dentro del techo realista de 25 h/semana (las dos más cargadas son las de web de CPTS con módulo CWEE intercalado). Las horas oficiales sin ajustar viven en las tablas de módulos de cada path en `CLAUDE.md`. El coeficiente es orientativo: la web irá más rápida y AD/IA más lento. Las semanas de CWEE y COAE (14-23) van después de CPTS.
 
 **Formato de una línea**, editable desde el modal del plugin Tasks:
 `- [estado] Tarea [[bloque del PKM]] 🛫 inicio 📅 límite ⏫ [esfuerzo:: 6h] [depende:: otra tarea] [nota:: por qué está parada]`
@@ -149,10 +149,30 @@ Estados: `[ ]` pendiente · `[/]` en progreso · `[x]` hecha · `[-]` cancelada.
 >
 > El botón **«+ Nueva tarea»** de la Home añade una plantilla al final de esta sección y abre esta nota para que la rellenes.
 
-- [ ] Semana 1 · Footprinting [[Footprinting.base]] 🛫 2026-10-25 📅 2026-10-31 ⏫ [esfuerzo:: 24h]
-- [x] Semana 2 · Nmap [[Nmap.base]] 🛫 2026-11-01 📅 2026-11-08 🔽 [esfuerzo:: 7h] ✅ 2026-11-04
-- [ ] Semana 3 · SQLi & XSS [[SQL Injection.base]] 🛫 2026-11-09 📅 2026-11-15 [esfuerzo:: 14h]
-- [ ] Semana 4 · SQLMap & Web Proxies [[SQLMap.base]] 🛫 2026-11-16 📅 2026-11-22 [esfuerzo:: 12h]
+- [ ] Semana 1 · CPTS · Recon de red: Proceso, Nmap, Vuln Assessment y Recon web [[Nmap.base|Nmap]] 🛫 2026-11-09 📅 2026-11-15 🔼 [esfuerzo:: 15h]
+- [ ] Semana 2 · CPTS · Footprinting, File Transfers y Metasploit [[Footprinting.base|Footprinting]] 🛫 2026-11-16 📅 2026-11-22 🔼 [esfuerzo:: 16h]
+- [ ] Semana 3 · CPTS · Foothold: Shells & Payloads y servicios comunes [[Shells y Payloads.base|Shells y Payloads]] 🛫 2026-11-23 📅 2026-11-29 🔼 [esfuerzo:: 16h]
+- [ ] Semana 4 · CPTS · Ataques a contraseñas [[Ataques a contraseñas.base|Ataques a contraseñas]] 🛫 2026-11-30 📅 2026-12-06 🔼 [esfuerzo:: 16h]
+- [ ] Semana 5 · CPTS · Web I: Proxies, Ffuf, Brute Forcing, SQLi + CWEE Blind SQLi [[SQL Injection.base|SQL Injection]] 🛫 2026-12-07 📅 2026-12-13 🔼 [esfuerzo:: 22h]
+- [ ] Semana 6 · CPTS · Web II: SQLMap, XSS, File Inclusion + CWEE Advanced XSS & CSRF [[XSS.base|XSS]] 🛫 2026-12-14 📅 2026-12-20 🔼 [esfuerzo:: 23h]
+- [ ] Semana 7 · CPTS · Web III: Command Injection, File Upload y Web Attacks (festivos) [[Web Attacks.base|Web Attacks]] 🛫 2026-12-21 📅 2026-12-27 🔼 [esfuerzo:: 20h]
+- [ ] Semana 8 · CPTS · Attacking Common Applications (festivos) [[Common Applications.base|Common Applications]] 🛫 2026-12-28 📅 2027-01-03 🔼 [esfuerzo:: 21h]
+- [ ] Semana 9 · CPTS · Pivoting y túneles + escalada Linux [[Pivoting y túneles.base|Pivoting y túneles]] 🛫 2027-01-04 📅 2027-01-10 ⏫ [esfuerzo:: 16h]
+- [ ] Semana 10 · CPTS · Active Directory (1/2): enumeración y credenciales [[AD Enumeración.base|AD Enumeración]] 🛫 2027-01-11 📅 2027-01-17 ⏫ [esfuerzo:: 19h]
+- [ ] Semana 11 · CPTS · Active Directory (2/2): ACLs, escalada, movimiento y trusts [[AD Escalada y movimiento.base|AD Escalada y movimiento]] 🛫 2027-01-18 📅 2027-01-24 ⏫ [esfuerzo:: 19h]
+- [ ] Semana 12 · CPTS · Escalada de privilegios Windows [[Escalada de privilegios Windows.base|Escalada de privilegios Windows]] 🛫 2027-01-25 📅 2027-01-31 ⏫ [esfuerzo:: 21h]
+- [ ] Semana 13 · CPTS · Reporting y capstone (Attacking Enterprise Networks) — simulacro [[Ataque a redes empresariales.base|Ataque a redes empresariales]] 🛫 2027-02-01 📅 2027-02-07 ⏫ [esfuerzo:: 21h]
+- [ ] Semana 14 · CWEE · Injection Attacks (LDAP/XPath/PDF) y NoSQL Injection [[LDAP Injection.base|Injection Attacks]] 🛫 2027-02-08 📅 2027-02-14 🔼 [esfuerzo:: 16h]
+- [ ] Semana 15 · COAE · Fundamentos IA, Applications InfoSec, Red Teaming AI y Prompt Injection [[Red Teaming AI.base|Red Teaming AI]] 🛫 2027-02-15 📅 2027-02-21 🔼 [esfuerzo:: 18h]
+- [ ] Semana 16 · CWEE · Attacking Authentication, HTTPS/TLS y HTTP Misconfigurations [[HTTP Misconfigurations.base|HTTP Misconfigurations]] 🛫 2027-02-22 📅 2027-02-28 🔼 [esfuerzo:: 21h]
+- [ ] Semana 17 · COAE · LLM Output Attacks y AI Data Attacks [[LLM Output Attacks.base|LLM Output Attacks]] 🛫 2027-03-01 📅 2027-03-07 🔼 [esfuerzo:: 21h]
+- [ ] Semana 18 · CWEE · HTTP Attacks y Advanced SQL Injections [[HTTP Attacks.base|HTTP Attacks]] 🛫 2027-03-08 📅 2027-03-14 🔼 [esfuerzo:: 21h]
+- [ ] Semana 19 · COAE · Attacking AI (App/Sistema/MCP) y Evasión (fundamentos + 1er orden) [[Evasión de modelos.base|Evasión de modelos]] 🛫 2027-03-15 📅 2027-03-21 🔼 [esfuerzo:: 21h]
+- [ ] Semana 20 · CWEE · Intro to Whitebox Pentesting [[Whitebox Pentesting.base|Whitebox Pentesting]] 🛫 2027-03-22 📅 2027-03-28 🔼 [esfuerzo:: 16h]
+- [ ] Semana 21 · COAE · AI Evasion - Sparsity Attacks [[Ataques dispersos.base|Ataques dispersos]] 🛫 2027-03-29 📅 2027-04-04 🔼 [esfuerzo:: 16h]
+- [ ] Semana 22 · CWEE · Modern Web Exploitation Techniques [[Modern Exploitation.base|Modern Exploitation]] 🛫 2027-04-05 📅 2027-04-11 🔼 [esfuerzo:: 11h]
+- [ ] Semana 23 · COAE · AI Privacy y AI Defense [[Privacidad en IA.base|Privacidad en IA]] 🛫 2027-04-12 📅 2027-04-18 🔼 [esfuerzo:: 21h]
+- [x] Repaso previo · CPTS · Nmap [[Nmap.base|Nmap]] 🛫 2026-11-01 📅 2026-11-08 🔽 [esfuerzo:: 7h] ✅ 2026-11-04
 
 ## Ejes
 

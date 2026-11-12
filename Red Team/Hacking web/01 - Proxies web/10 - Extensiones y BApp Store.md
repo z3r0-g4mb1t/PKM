@@ -4,7 +4,7 @@ tags:
   - Pentesting/Explotacion
   - Proxies
 Descripción: "Lo que de verdad hace a Burp imbatible es su ecosistema de extensiones"
-Fecha de actualización: 2026-06-23
+Fecha de actualización: 2026-11-12
 Nota previa: "[[09 - Escáner de vulnerabilidades - Burp y ZAP Scanner]]"
 Nota siguiente: "[[11 - OPSEC y evasión de detección]]"
 Area: "[[Proxies web.base|Proxies web]]"
@@ -36,6 +36,9 @@ Area: "[[Proxies web.base|Proxies web]]"
 
 > [!important]+ Bambdas: el scripting moderno de Burp
 > Desde 2023 Burp incluye **Bambdas**: snippets de Java que filtran el proxy/historial, definen reglas de Match & Replace dinámicas o resaltan peticiones según lógica propia, sin escribir una extensión completa. <mark style="background: #8000E1A6;">Es la forma actual de personalizar Burp</mark> para un objetivo concreto (p. ej. resaltar toda petición con un parámetro `redirect` para cazar [[08 - Robo de tokens de acceso OAuth\|open redirects]]).
+
+> [!info]+ Montoya API: la API moderna de extensiones
+> Las BApps actuales se escriben contra la **Montoya API**, que sustituye a la legacy *Extender*/`IBurpExtender` — relevante si desarrollas tooling propio para un objetivo. La BApp Store marca además las extensiones que consumen la **plataforma de IA** de Burp, y existe el **servidor MCP oficial** para pilotar Burp desde un agente (ver [[Burp Suite.base|ficha de Burp]]).
 
 # ZAP Marketplace
 
