@@ -10,8 +10,6 @@ Nota previa:
 Nota siguiente: "[[01 - Sintaxis, rangos y exclusiones]]"
 Area: "[[Masscan.base|Masscan]]"
 ---
----
-
 <mark style="background: #ADCCFFA6;">`masscan` es un escáner de puertos TCP asíncrono con **pila TCP/IP propia en espacio de usuario**</mark>, escrito por Robert Graham. Su autor lo resume como *«lo que nginx es a Apache»* aplicado al escaneo: la misma tarea, otro modelo de concurrencia. Anuncia hasta **25 millones de paquetes por segundo** y barrer el IPv4 público en un puerto en unos 3 minutos.
 
 Aquí importa el **porqué**, no la cifra. Entender por qué puede ir tan rápido explica también sus tres debilidades —no hace *fingerprinting*, degrada con pérdida de paquetes y es imposible de disimular— y por eso [[09 - Arsenal de herramientas de escaneo|el pipeline profesional]] lo combina con [[00 - Introducción a Nmap|Nmap]] en vez de sustituirlo.

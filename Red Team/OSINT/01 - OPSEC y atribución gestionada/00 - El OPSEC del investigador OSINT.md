@@ -9,8 +9,6 @@ Nota previa:
 Nota siguiente: "[[01 - Sock puppets - crear y mantener identidades de investigación]]"
 Area: "[[OPSEC OSINT.base|OPSEC OSINT]]"
 ---
----
-
 El OSINT parece de sentido único —tú miras, el objetivo no— pero no lo es. <mark style="background: #FF5582A6;">Cada plataforma que consultas te ve consultarla</mark>, y algunas se lo cuentan al objetivo. Si investigas a ACME con tu cuenta real de LinkedIn, dejas un patrón —tu perfil visitando a 40 empleados de la misma empresa— que su equipo puede ver y atribuirte. Peor aún en bug bounty o red team contra un adversario capaz: quemar tu identidad real puede costarte la operación, la cuenta o la seguridad personal.
 
 <mark style="background: #ADCCFFA6;">El `OPSEC` del investigador (o **atribución gestionada**, *managed attribution*) es el conjunto de medidas para que tu actividad de recolección no se pueda vincular ni a tu identidad real ni entre sí</mark>. No es paranoia: es la diferencia entre un investigador profesional y un aficionado que se delata en la primera búsqueda.

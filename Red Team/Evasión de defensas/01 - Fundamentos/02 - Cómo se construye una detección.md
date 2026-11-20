@@ -58,7 +58,7 @@ network where event.type == "start" and network.direction == "outgoing" and
  not process.name in ("chrome.exe","msedge.exe","firefox.exe", ...)
 ```
 
-Aunque renombres la herramienta, <mark style="background: #FFB86CA6;">hablar por el puerto 88 desde un proceso que no es `lsass.exe` sigue disparando</mark>. Pero fíjate en la **lista de exenciones**: si renombras tu binario a `opera.exe` (que está exento) *y* cambias los argumentos, evades ambas. Cada exención que un ingeniero añade para bajar falsos positivos es un [[03 - Tipos de bypass y la cadena de evasión|logical bypass]] regalado. [[11 - Kerberoasting|Ver el ataque en detalle]].
+Aunque renombres la herramienta, <mark style="background: #FFB86CA6;">hablar por el puerto 88 desde un proceso que no es `lsass.exe` sigue disparando</mark>. Pero fíjate en la **lista de exenciones**: si renombras tu binario a `opera.exe` (que está exento) *y* cambias los argumentos, evades ambas. Cada exención que un ingeniero añade para bajar falsos positivos es un [[03 - Tipos de bypass y la cadena de evasión|logical bypass]] regalado. [[23 - Kerberoasting|Ver el ataque en detalle]].
 
 # La pirámide del dolor
 

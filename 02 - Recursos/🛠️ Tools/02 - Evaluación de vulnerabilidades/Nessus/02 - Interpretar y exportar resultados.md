@@ -8,8 +8,6 @@ Nota previa: "[[01 - Escaneo y configuración avanzada]]"
 Nota siguiente: "[[03 - Problemas de escaneo]]"
 Area: "[[Nessus.base|Nessus]]"
 ---
----
-
 Un escaneo solo vale por lo que sacas de él. Nessus exporta en formatos para humanos y para máquinas.
 
 # Informes para el cliente
@@ -26,10 +24,10 @@ Con el escaneo terminado, se exporta como **`.pdf`**, **`.html`** o **`.csv`**. 
 
 # Interpretar (el paso que no es automático)
 
-<mark style="background: #8000E1A6;">Nessus prioriza por severidad ([[03 - CVSS|CVSS]]), pero la validación es humana</mark>: no todo lo que marca es real. Antes de reportar:
+<mark style="background: #FFB8EBA6;">Nessus prioriza por severidad</mark> ([[03 - CVSS|CVSS]]), pero la validación es humana: <mark style="background: #FF5582A6;">no todo lo que marca es real</mark>. Antes de reportar:
 
-- **Valida los críticos/altos** manualmente (descarta falsos positivos).
-- **Reprioriza** con contexto de negocio, `EPSS` y `CISA KEV` — no reportes 200 "críticos" sin criterio.
-- Agrupa hallazgos repetidos y filtra el ruido informativo.
+- **Valida los críticos/altos** <mark style="background: #ADCCFFA6;">manualmente</mark> (descarta falsos positivos).
+- **Reprioriza** con contexto de negocio, `EPSS` y `CISA KEV` — <mark style="background: #ADCCFFA6;">no reportes 200 "críticos" sin criterio</mark>.
+- <mark style="background: #ADCCFFA6;">Agrupa hallazgos repetidos y filtra el ruido informativo</mark>.
 
 Un informe lleno de falsos positivos destruye la credibilidad de todo el trabajo (ver [[06 - Reporting]]). Antes de escanear en serio, conviene conocer sus riesgos: [[03 - Problemas de escaneo]].

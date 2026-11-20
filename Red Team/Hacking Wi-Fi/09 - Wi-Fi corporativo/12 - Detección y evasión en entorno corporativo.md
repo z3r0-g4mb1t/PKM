@@ -66,7 +66,7 @@ El NAC es el control que rompe la cadena en su punto crítico: aunque la credenc
 
 # Plano dominio
 
-A partir del pivote, el ataque deja de ser inalámbrico y aplica la detección estándar de AD, desarrollada en [[25 - Detección y evasión en AD]] y [[16 - Detección y respuesta a lo largo de la cadena]]. Los eventos de esta cadena concreta:
+A partir del pivote, el ataque deja de ser inalámbrico y aplica la detección estándar de AD, desarrollada en [[37 - Detección y evasión en AD]] y [[16 - Detección y respuesta a lo largo de la cadena]]. Los eventos de esta cadena concreta:
 
 | Acción | Evento | Ruido |
 | ------ | ------ | ----- |

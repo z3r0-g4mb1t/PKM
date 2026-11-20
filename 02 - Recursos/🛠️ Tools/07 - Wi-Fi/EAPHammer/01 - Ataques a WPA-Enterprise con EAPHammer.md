@@ -78,7 +78,7 @@ $ sudo ./eaphammer --eap-spray --interface wlan0 --essid CorpWiFi \
       --user-list usuarios.txt --password 'Empresa2026!'
 ```
 
-<mark style="background: #FF5582A6;">Cada intento fallido va contra Active Directory</mark>, así que aplica la disciplina de *password spraying*: una o dos contraseñas contra muchos usuarios, respetando el umbral de bloqueo y la ventana de reintentos del dominio. Recorrer un diccionario aquí bloquea cuentas y convierte el pentest en un incidente. La metodología está en [[10 - Password Spraying interno]].
+<mark style="background: #FF5582A6;">Cada intento fallido va contra Active Directory</mark>, así que aplica la disciplina de *password spraying*: una o dos contraseñas contra muchos usuarios, respetando el umbral de bloqueo y la ventana de reintentos del dominio. Recorrer un diccionario aquí bloquea cuentas y convierte el pentest en un incidente. La metodología está en [[22 - Password Spraying interno]].
 
 # WPA3-Enterprise y PMF
 

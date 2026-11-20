@@ -46,6 +46,7 @@ El vault es una base de conocimiento de seguridad ofensiva que debe servir **ind
 3. **HTB CPTS** — *Certified Penetration Testing Specialist* (path "Penetration Tester"). 28 módulos. Pentesting **generalista**: reconocimiento, red/infraestructura, Active Directory, escalada de privilegios (Linux/Windows), web y reporting. **✅ Los 28 módulos net-new completados (2026-07-31).**
 4. **HTB COAE** — *Certified Offensive AI Expert* (path "AI Red Teamer", desarrollado con Google). 12 módulos. Seguridad ofensiva de sistemas de IA: fundamentos de ML/DL, prompt injection, ataques a la salida de LLM, envenenamiento de datos, evasión adversarial, privacidad y defensa. Examen práctico de 7 días sobre infraestructura AI-driven. **✅ Los 12 módulos completados (2026-07-29).**
 5. **HTB CWPE** — *Certified Wi-Fi Pentesting Expert* (path "Wi-Fi Penetration Tester", id 421). 10 módulos, 170 secciones. Seguridad ofensiva de redes inalámbricas **802.11**: fundamentos de trama y modo monitor, WPS, WEP, WPA/WPA2, evil twins, WPA3/SAE, portales cautivos, cracking de contraseñas y Wi-Fi corporativo (802.1X/EAP). **Foco activo.**
+6. **CRTO** — *Red Team Operator* (Zero-Point Security; **no es HTB**, curso propio con Cobalt Strike). Objetivo tras CPTS. Red Team sobre AD con fuerte peso en **evasión y OPSEC**. No tiene path de módulos HTB: su temario mapea a contenido del vault (sobre todo el área AD) y motiva el enriquecimiento **auto-dirigido de evasión AD** (ADR 028).
 
 > **Foco actual: CWPE** (CPTS y COAE ya completas; parón temporal en las certis web CWES/CWEE). El **detalle vivo** de qué módulos están hechos/pendientes vive en la **memoria** y en la columna `Estado` de las tablas de path más abajo — no en esta sección, que solo fija el rumbo. **CPTS quedó completa el 2026-07-31** (Penetration Testing Process #1 + Attacking Enterprise Networks #28 cerraron el path) y **COAE el 2026-07-29** (los 12 módulos). Lo único vivo hoy es **CWPE**, arrancado el 2026-08-01 por los módulos 222/186/185.
 >
@@ -140,10 +141,10 @@ Las certis/áreas futuras (no solo web) siguen esta receta — evita re-improvis
 | 8 | Blind SQL Injection | `Hacking web/05 - SQL Injection/2️⃣ Nivel avanzado/Blind/` | Completado |
 | 9 | Intro to Whitebox Pentesting | `Hacking web/35 - Whitebox Pentesting/` (19 notas 00-18 + `.base`; metodología ASVS 5.0/WSTG/Secure Code Review Cheat Sheet + caso práctico eval injection NodeJS; net-new: `Detección y evasión`, `Arsenal`. **SAST → `Tools/`**: `Semgrep` [+Opengrep, 4 notas] y `CodeQL` [4 notas]. Tags nuevos `Whitebox`, `Code-Injection`. ADR 016) | ✅ Completado (2026-08-01) |
 | 10 | Modern Web Exploitation Techniques | `Hacking web/28 - Modern Exploitation/` (DNS rebinding · second-order · WebSockets · notas 00-17) | Completado |
-| 11 | Introduction to Deserialization Attacks | `Hacking web/Deserialization/Intro/` *(crear)* | Pendiente |
-| 12 | Whitebox Attacks | `Hacking web/36 - Whitebox Attacks/` *(crear · Level 2 hermano de 35, no anidado — ADR 016)* | Pendiente |
+| 11 | Introduction to Deserialization Attacks | `Hacking web/36 - Deserialización/` (15 notas 00-14 + `.base`; fundamentos [formato PHP byte a byte + `mangling` de propiedades privadas], PHP [sink/lab, object injection, magic methods→RCE, PHAR, PHPGGC], Python [máquina pickle, object injection+RCE, bypass de filtros, jsonpickle/PyYAML/ruamel]; net-new: `Detección y evasión` + `Defensa` + `Arsenal`. Modernizado a 2026: **OWASP A08:2025** [antes 2021], CWE 5.0, `yaml.load` TypeError desde PyYAML 6.0, `jsonpickle safe=True` no asegura, PHAR vive vía `getMetadata()`, erratas de HTB [PHP7 55,1%→24,5%], PEAS muerto→`fickling`, `gASV`→`gAWV` en pickle 3.14. ADR 027) | ✅ Completado (2026-11-20) |
+| 12 | Whitebox Attacks | `Hacking web/37 - Whitebox Attacks/` *(crear · Level 2 hermano de 35, no anidado — ADR 016; renumerado de 36→37 porque 36 lo ocupa Deserialización)* | Pendiente |
 | 13 | Advanced SQL Injections | `Hacking web/05 - SQL Injection/2️⃣ Nivel avanzado/Advanced/` | Completado |
-| 14 | Advanced Deserialization Attacks | `Hacking web/Deserialization/Advanced/` *(crear)* | Pendiente |
+| 14 | Advanced Deserialization Attacks | `Hacking web/38 - Deserialización avanzada/` *(crear · Level-2 hermano de 36, no anidado)* | Pendiente |
 | 15 | Parameter Logic Bugs | `Hacking web/Parameter Logic Bugs/` *(crear)* | Pendiente |
 
 ### Path CPTS (Penetration Tester)
@@ -344,6 +345,55 @@ Y un error **propio** detectado a tiempo: deduje "FT-PSK" del nombre de la varia
 #### CPTS — estándares de calidad extra
 
 Todos los módulos CPTS net-new siguen los **3 ejes del vault** (detección · evasión · arsenal + fuentes + gráficos) — son especialmente críticos aquí porque los módulos de red/infra de HTB llevan años sin actualizarse. Ver la sección **"Estándares de calidad — los 3 ejes"** al principio del documento.
+
+### Path CAPE (Active Directory Penetration Tester)
+
+Path "Active Directory Penetration Tester" de HTB Academy (id **417**) — **15 módulos**. Certificación **HTB CAPE** (*Certified Active Directory Penetration Expert*). Pentesting especializado y a fondo de **Active Directory** y los componentes que lo rodean: enumeración, Kerberos, abuso de DACLs, NTLM relay, ADCS, trusts, movimiento lateral, C2 y evasión.
+
+**Solapamiento con CPTS**: el módulo #1 (143, *AD Enumeration & Attacks*) **ya está hecho** como CPTS #13 → `Red Team/Active Directory/`, y se reutiliza. El resto son net-new, más profundos y por herramienta/técnica concreta.
+
+**Ubicación del contenido** (sigue el patrón del área AD ya existente):
+- **Contenido ofensivo de AD** → `Red Team/Active Directory/`, en Level-2 por sub-tema. El módulo 22 (*Active Directory LDAP*) entró como sub-tema **`02 - LDAP y enumeración`** (8 notas, hoy 10-17 + `AD LDAP.base`): ver "Estructura del área Active Directory" abajo.
+- **Fundamentos** (LDAP como protocolo) → cross-link a `Red Team/Hacking web/21 - LDAP Injection` (la vuln) y a los fundamentos; no se reexplica.
+- **Herramientas** → `02 - Recursos/🛠️ Tools/` con su Level-2, como siempre.
+
+| #  | ID  | Módulo HTB | Carpeta destino | Estado |
+| -- | --- | ---------- | --------------- | ------ |
+| 1  | 143 | Active Directory Enumeration & Attacks | `Red Team/Active Directory/` (**reutilizado de CPTS #13** · 6 Level-2 · 27 notas) | ✅ Reutilizado |
+| 2  | 22  | Active Directory LDAP | `Red Team/Active Directory/02 - LDAP y enumeración/` (8 notas 10-17 + `AD LDAP.base`; fundamentos LDAP/BIND/rootDSE, filtros RFC 4515 + 4 matching-rule OIDs, filtros de alto valor [UAC/kerberoast/deleg/RBCD/shadow-creds/LAPS/gMSA], herramientas integradas, bind anónimo + cLDAP, enum con credenciales; net-new `Detección y evasión` + `Arsenal`. Modernizado: LDAP signing 2026 + `CVE-2026-70229`, ADWS/SOAPy, `windapsearch`/PowerView muertos→ldeep/NetExec/BloodHound CE, `Get-WmiObject`→`Get-CimInstance`; erratas de HTB [bind anónimo "común", RSAT gist, 3 OIDs→4, MaxValRange 1000→1500]. Las 4 secciones solapadas [AD Overview, Why Enumerate, Rights & Privileges, NT AUTHORITY\SYSTEM] **enriquecidas + cross-linkeadas**, no duplicadas. ADR 027) | ✅ Completado (2026-11-20) |
+| 3  | 68  | Active Directory PowerView | `Red Team/Active Directory/` *(tentativo · tool → `Tools/PowerView` o `.py`)* | Pendiente |
+| 4  | 69  | Active Directory BloodHound | `Red Team/Active Directory/` + `Tools/BloodHound` *(tentativo)* | Pendiente |
+| 5  | 263 | Windows Lateral Movement | `Red Team/Active Directory/` *(tentativo)* | Pendiente |
+| 6  | 84  | Using CrackMapExec | `02 - Recursos/🛠️ Tools/NetExec/` *(CME→NetExec · tentativo)* | Pendiente |
+| 7  | 25  | Kerberos Attacks | `Red Team/Active Directory/` *(tentativo · complementa Kerberoasting #11)* | Pendiente |
+| 8  | 219 | DACL Attacks I | `Red Team/Active Directory/03 - Abuso de ACLs/` *(amplía)* | Pendiente |
+| 9  | 255 | DACL Attacks II | `Red Team/Active Directory/03 - Abuso de ACLs/` *(amplía)* | Pendiente |
+| 10 | 232 | NTLM Relay Attacks | `Red Team/Active Directory/` *(tentativo)* | Pendiente |
+| 11 | 236 | ADCS Attacks | `Red Team/Active Directory/` + `Tools/Certipy` *(tentativo)* | Pendiente |
+| 12 | 253 | Active Directory Trust Attacks | `Red Team/Active Directory/05 - Trusts de dominio/` *(amplía)* | Pendiente |
+| 13 | 241 | Intro to C2 Operations with Sliver | `Red Team/` + `Tools/Sliver` *(tentativo)* | Pendiente |
+| 14 | 254 | Introduction to Windows Evasion Techniques | `Red Team/Evasión de defensas/` *(tentativo)* | Pendiente |
+| 15 | 267 | MSSQL, Exchange, and SCCM Attacks | `Red Team/Active Directory/` *(tentativo)* | Pendiente |
+
+> ⚠️ **Acrónimo CAPE verificado** contra la API de HTB (`certification_acronym` del path 417). Foco: ampliación auto-dirigida (no es el foco de estudio activo, que es CPTS→CWEE→COAE).
+
+#### Estructura del área Active Directory (actualizada 2026-11-20, ADR 028)
+
+El área `Red Team/Active Directory/` quedó con **9 Level-2 y 45 notas** (secuencia global 00-44), tras dos renumerados vía API (`app.fileManager.renameFile`, receta ADR 017) ya **ejecutados**:
+
+| Folder | Sub-tema | Notas | Origen |
+| - | - | - | - |
+| `00 - Fundamentos de AD` | Fundamentos AD.base | 00-03 | **net-new** (ADR 028): modelo de identidad, dónde viven las credenciales, NTLM por dentro, Kerberos por dentro |
+| `01 - Enumeración` | AD Enumeración.base | 04-09 | CPTS #13 (era 00-05) |
+| `02 - LDAP y enumeración` | AD LDAP.base | 10-17 | CAPE #2 (era 06-13) |
+| `03 - Ataques de credenciales` | AD Ataques de credenciales.base | 18-23 | CPTS #13 |
+| `04 - Abuso de ACLs` | AD Abuso de ACLs.base | 24-27 | CPTS #13 |
+| `05 - Escalada y movimiento` | AD Escalada y movimiento.base | 28-31 | CPTS #13 |
+| `06 - Trusts de dominio` | AD Trusts de dominio.base | 32-34 | CPTS #13 |
+| `07 - Defensa, detección y arsenal` | AD Defensa y arsenal.base | 35-38 | CPTS #13 (hardening, auditoría, hub de detección 37, arsenal) |
+| `08 - Evasión y OPSEC` | Evasión y OPSEC.base | 39-44 | **net-new** (ADR 028, foco CRTO): modelo de detección/mindset, recon sigiloso, OPSEC de Kerberos, forjado de tickets y su detección, OPSEC de credential access, movimiento lateral/ejecución/deception |
+
+El área quedó con **9 Level-2 y 45 notas** (00-44). La cadena Zettelkasten es una sola: fundamentos 00→01→02→03 → `04 - Introducción` → … → `38 - Arsenal` → `39 - OPSEC` → … → `44 - Movimiento lateral`. La nota `37 - Detección y evasión en AD` es la referencia rápida "ataque→telemetría"; el sub-tema `08` es la OPSEC a fondo. Gotcha confirmado **dos veces**: `app.fileManager.renameFile` **no** reescribe wikilinks dentro de bloques de código (el `[[… - Kerberoasting]]` del comentario `Get-DomainUser -SPN` en `Enumeración con credenciales` hubo que corregirlo a mano en ambos renumerados).
 
 ### Módulos extra (fuera de los paths CWES/CWEE)
 

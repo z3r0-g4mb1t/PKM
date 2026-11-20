@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "RaBleedingEye",
       "RaHelp",
       "LiBrokenLink",
       "RaHood",
-      "FabWindows",
-      "RiVirusLine"
+      "FabWindows"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -33,10 +33,6 @@
     "lucideIconPackType": "native",
     "debugMode": false,
     "useInternalPlugins": false
-  },
-  "Build Obsidian REFERENCIAS.md": {
-    "iconName": "LiFileCode",
-    "iconColor": "#eeff00"
   },
   "REVISAR ENLACES.md": {
     "iconName": "LiCurlyBraces",
@@ -92,5 +88,6 @@
   "Red Team/Active Directory": "FabWindows",
   "Red Team/Evasión de defensas": "RaHood",
   "Red Team/Hacking de protocolos": "LiBrokenLink",
-  "Red Team/Doctrina pentesting": "RaHelp"
+  "Red Team/Doctrina pentesting": "RaHelp",
+  "Red Team/OSINT": "RaBleedingEye"
 }

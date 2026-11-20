@@ -16,6 +16,9 @@ Todo lo anterior en esta carpeta produce **predicciones erróneas**. Esto produc
 
 <mark style="background: #ADCCFFA6;">El problema no está en las matemáticas de la red neuronal: está en cómo se guardan y se cargan los modelos.</mark>
 
+> [!info]+ Esto es deserialización insegura aplicada a ML
+> `pickle` aquí es el mismo `CWE-502` que afecta a la web. La mecánica general —la máquina de pila de pickle, `__reduce__`, los bypass de filtros y las otras librerías (`jsonpickle`, `PyYAML`)— vive en el área [[Deserialización.base|Deserialización]], en concreto [[08 - Python - pickle y su máquina virtual]]. Lo propio del ecosistema ML (el cambio de `torch.load` a `weights_only=True` en PyTorch 2.6 y su bypass `CVE-2025-32434`, los `safe_mode` de Keras) es lo que añade esta carpeta.
+
 # `pickle` y `__reduce__`
 
 `pickle` es la forma estándar de Python de serializar un objeto y reconstruirlo. Y es peligroso por diseño, no por error de implementación.

@@ -88,7 +88,7 @@ Cuando en un laboratorio con al menos dos PSO de umbrales distintos vinculados a
 
 # Conexiones en el vault
 
-La técnica base está en [[07 - Password Spraying - visión general]] y su ejecución en [[10 - Password Spraying interno]]; la enumeración de la que parte el modelo, en [[08 - Enumerar políticas de contraseñas]] y [[09 - Construir la lista de usuarios objetivo]].
+La técnica base está en [[19 - Password Spraying - visión general]] y su ejecución en [[22 - Password Spraying interno]]; la enumeración de la que parte el modelo, en [[20 - Enumerar políticas de contraseñas]] y [[21 - Construir la lista de usuarios objetivo]].
 
 > [!info]+ Fuentes
 > - Fox-IT, [*Further abusing the badPwdCount attribute*](https://blog.fox-it.com/2017/11/28/further-abusing-the-badpwdcount-attribute/) — mecánica real de replicación del contador y el papel del PDC.

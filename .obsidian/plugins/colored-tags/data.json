@@ -10,6 +10,8 @@
     "highTextContrast": true
   },
   "knownTags": {
+    "12→37": 367,
+    "14→38": 368,
     "active-directory": 130,
     "agil": 41,
     "análisis": 42,
@@ -43,6 +45,7 @@
     "datos": 43,
     "deception": 265,
     "desarrollo-web": 286,
+    "deserializacion": 366,
     "deteccion": 266,
     "dns": 225,
     "doctrina": 267,

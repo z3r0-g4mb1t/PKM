@@ -1,0 +1,77 @@
+views:
+  - type: table
+    name: Notas
+    filters: Area == link("Deserialización.base", "Deserialización")
+    order:
+      - file.name
+      - file.tags
+      - Fecha de actualización
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 420
+      file.tags: 471
+      note.Fecha de actualización: 150
+  - type: table
+    name: Fundamentos
+    filters:
+      and:
+        - Area == link("Deserialización.base", "Deserialización")
+        - file.name < "03"
+    order:
+      - file.name
+      - Descripción
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 380
+      note.Descripción: 520
+  - type: table
+    name: PHP
+    filters:
+      and:
+        - Area == link("Deserialización.base", "Deserialización")
+        - file.name >= "03"
+        - file.name < "08"
+    order:
+      - file.name
+      - Descripción
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 380
+      note.Descripción: 520
+  - type: table
+    name: Python
+    filters:
+      and:
+        - Area == link("Deserialización.base", "Deserialización")
+        - file.name >= "08"
+        - file.name < "12"
+    order:
+      - file.name
+      - Descripción
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 380
+      note.Descripción: 520
+  - type: table
+    name: Defensa y operativa
+    filters:
+      and:
+        - Area == link("Deserialización.base", "Deserialización")
+        - file.name >= "12"
+    order:
+      - file.name
+      - Descripción
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 380
+      note.Descripción: 520

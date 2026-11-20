@@ -89,7 +89,7 @@ PASS Sup3rS3cret!
 Un switch entrega cada trama **solo** al puerto destino, así que en modo promiscuo no ves el tráfico ajeno — solo el tuyo. Para capturar credenciales de otros hosts necesitas **posicionarte en el camino**:
 
 - **ARP poisoning** — envenenas la tabla ARP de víctima y gateway para que el tráfico pase por ti (MITM). Es el emparejamiento clásico de este sniffer.
-- **Envenenamiento LLMNR/NBT-NS** — [[06 - Envenenamiento LLMNR y NBT-NS]], respondes a resoluciones de nombre para robar hashes NetNTLM.
+- **Envenenamiento LLMNR/NBT-NS** — [[18 - Envenenamiento LLMNR y NBT-NS]], respondes a resoluciones de nombre para robar hashes NetNTLM.
 - **Puerto SPAN/TAP** o una **workstation ya comprometida** cuyo propio tráfico saliente sniffeas (el escenario que asume el libro, sin necesidad de MITM).
 
 > [!important]+ OPSEC: pasivo es sigiloso, el posicionamiento no

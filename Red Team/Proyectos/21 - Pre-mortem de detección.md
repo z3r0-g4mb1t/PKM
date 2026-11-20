@@ -124,7 +124,7 @@ No ejecuta técnicas ni las evade activamente — planifica. No es un C2 ni un l
 
 # Conexiones en el vault
 
-Es la materialización operativa de la [[01 - Frameworks de threat intelligence y la Pyramid of Pain]] y del [[00 - El mindset del atacante persistente]]: subir por la pirámide exige saber qué comportamiento se observa. Enlaza fuerte con [[08 - Cómo te ve el defensor]] (la óptica del defensor en el perímetro) y con [[02 - Cómo se construye una detección]] y [[01 - Mapa de telemetría de Windows]] del bloque EDR. En AD, complementa a [[25 - Detección y evasión en AD]]. Desde la óptica azul, dialoga con [[01 - Sensores defensivos - tipos y colocación]].
+Es la materialización operativa de la [[01 - Frameworks de threat intelligence y la Pyramid of Pain]] y del [[00 - El mindset del atacante persistente]]: subir por la pirámide exige saber qué comportamiento se observa. Enlaza fuerte con [[08 - Cómo te ve el defensor]] (la óptica del defensor en el perímetro) y con [[02 - Cómo se construye una detección]] y [[01 - Mapa de telemetría de Windows]] del bloque EDR. En AD, complementa a [[37 - Detección y evasión en AD]]. Desde la óptica azul, dialoga con [[01 - Sensores defensivos - tipos y colocación]].
 
 > [!info]+ Fuentes
 > - SigmaHQ, [pySigma](https://github.com/SigmaHQ/pySigma) y [sigma-cli](https://github.com/SigmaHQ/sigma-cli) — parseo y conversión de reglas (consultado 2026-09-21).

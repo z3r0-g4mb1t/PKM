@@ -127,7 +127,7 @@ Presentable cuando: sobre un laboratorio de AD con las tres delegaciones configu
 
 # Conexiones en el vault
 
-Profundiza en [[11 - Kerberoasting]] y en el [[17 - El problema Double Hop de Kerberos]] (la delegación es la otra cara de la moneda), y en las [[18 - Vulnerabilidades bleeding-edge]] y [[19 - Configuraciones erróneas varias]] donde vive RBCD. La suplantación por ticket enlaza con [[14 - Pass the Ticket (PtT)]] y [[05 - Autenticación de Windows - NTLM y Kerberos]]; el destino final, con [[15 - DCSync]] y [[16 - Acceso privilegiado]]. La coerción y su ruido, con [[06 - Envenenamiento LLMNR y NBT-NS]] (familia de coerción/relay) y [[25 - Detección y evasión en AD]]. Se apoya en el [[23 - Verificador de rutas de Active Directory]] para descartar cadenas mitigadas.
+Profundiza en [[23 - Kerberoasting]] y en el [[29 - El problema Double Hop de Kerberos]] (la delegación es la otra cara de la moneda), y en las [[30 - Vulnerabilidades bleeding-edge]] y [[31 - Configuraciones erróneas varias]] donde vive RBCD. La suplantación por ticket enlaza con [[14 - Pass the Ticket (PtT)]] y [[05 - Autenticación de Windows - NTLM y Kerberos]]; el destino final, con [[27 - DCSync]] y [[28 - Acceso privilegiado]]. La coerción y su ruido, con [[18 - Envenenamiento LLMNR y NBT-NS]] (familia de coerción/relay) y [[37 - Detección y evasión en AD]]. Se apoya en el [[23 - Verificador de rutas de Active Directory]] para descartar cadenas mitigadas.
 
 > [!info]+ Fuentes
 > - The Hacker Recipes, [Kerberos delegations](https://www.thehacker.recipes/ad/movement/kerberos/delegations) — taxonomía de los tres tipos y sus abusos (consultado 2026-09-21).

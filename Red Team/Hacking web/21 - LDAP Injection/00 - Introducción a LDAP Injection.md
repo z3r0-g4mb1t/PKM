@@ -16,6 +16,9 @@ Area: "[[LDAP Injection.base|LDAP Injection]]"
 
 <mark style="background: #FFB8EBA6;">A diferencia de XPath, la LDAP injection es muy relevante en entornos empresariales</mark>: intranets, SSO, portales de RRHH y libretas de direcciones tiran de AD constantemente. Es un vector habitual tanto en pentest interno como en aplicaciones corporativas expuestas al exterior.
 
+> [!info]+ Las dos caras de LDAP en el vault
+> Esta área cubre **atacar una aplicación** que construye mal un filtro LDAP. La otra cara —usar LDAP como **herramienta de enumeración de Active Directory** desde una cuenta de dominio— vive en [[10 - LDAP en Active Directory]] (sub-tema del área AD). La sintaxis de filtros de RFC 4515 es la misma en ambas; aquí se abusa de ella por inyección, allí se usa para inventariar el directorio.
+
 # Fundamentos de LDAP
 
 - **Directory Server (DS)**: almacena los datos (p. ej. OpenLDAP), con un modelo distinto al de una base de datos relacional.

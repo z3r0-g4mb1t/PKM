@@ -78,7 +78,7 @@ Vías para lidiar con ello, en un entorno autorizado:
 
 ## Y su uso más rentable: nombres internos
 
-Donde el DNS spoofing sigue siendo devastador es en **nombres internos que no tienen certificado válido de todos modos**: `\\fileserver`, `intranet`, `wpad`, `sccm`, `mssql-prod`. Ahí no hay HSTS, no hay pinning, y muchas veces no hay ni TLS. Es el mismo terreno que cubren `Responder` para LLMNR/NBT-NS/mDNS ([[06 - Envenenamiento LLMNR y NBT-NS]]) y `mitm6` para IPv6 — tres protocolos de resolución sin autenticar cubriendo el mismo hueco.
+Donde el DNS spoofing sigue siendo devastador es en **nombres internos que no tienen certificado válido de todos modos**: `\\fileserver`, `intranet`, `wpad`, `sccm`, `mssql-prod`. Ahí no hay HSTS, no hay pinning, y muchas veces no hay ni TLS. Es el mismo terreno que cubren `Responder` para LLMNR/NBT-NS/mDNS ([[18 - Envenenamiento LLMNR y NBT-NS]]) y `mitm6` para IPv6 — tres protocolos de resolución sin autenticar cubriendo el mismo hueco.
 
 > [!info]+ Fuentes
 > - [RFC 5452](https://datatracker.ietf.org/doc/html/rfc5452) — resistencia de resolvers a respuestas falsificadas (aleatorización de puerto).

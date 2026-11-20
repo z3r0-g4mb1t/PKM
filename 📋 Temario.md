@@ -127,11 +127,45 @@ En pausa. Web Pentesting avanzado.
 - [x] 08 · Blind SQL Injection — `Hacking web/05 - SQL Injection/2️⃣ Nivel avanzado/Blind/`
 - [x] 09 · Intro to Whitebox Pentesting — `Hacking web/35 - Whitebox Pentesting/` (19 notas) + `Tools/{Semgrep,CodeQL}/`
 - [x] 10 · Modern Web Exploitation Techniques — `Hacking web/28 - Modern Exploitation/`
-- [ ] 11 · Introduction to Deserialization Attacks — `Hacking web/Deserialization/Intro/` (crear)
-- [ ] 12 · Whitebox Attacks — `Hacking web/Whitebox/Attacks/` (crear)
+- [x] 11 · Introduction to Deserialization Attacks — `Hacking web/36 - Deserialización/` (15 notas)
+- [ ] 12 · Whitebox Attacks — `Hacking web/37 - Whitebox Attacks/` (crear)
 - [x] 13 · Advanced SQL Injections — `Hacking web/05 - SQL Injection/2️⃣ Nivel avanzado/Advanced/`
 - [ ] 14 · Advanced Deserialization Attacks — `Hacking web/Deserialization/Advanced/` (crear)
 - [ ] 15 · Parameter Logic Bugs — `Hacking web/Parameter Logic Bugs/` (crear)
+
+## CAPE · Active Directory Penetration Tester
+
+Ampliación auto-dirigida. Pentesting a fondo de Active Directory.
+
+- [x] 01 · Active Directory Enumeration & Attacks — `Red Team/Active Directory/` (reutilizado de CPTS)
+- [x] 02 · Active Directory LDAP — `Red Team/Active Directory/02 - LDAP y enumeración/` (8 notas)
+- [ ] 03 · Active Directory PowerView — `Red Team/Active Directory/` (tentativo)
+- [ ] 04 · Active Directory BloodHound — `Red Team/Active Directory/` + `Tools/BloodHound`
+- [ ] 05 · Windows Lateral Movement — `Red Team/Active Directory/` (tentativo)
+- [ ] 06 · Using CrackMapExec — `Tools/NetExec/` (CME→NetExec)
+- [ ] 07 · Kerberos Attacks — `Red Team/Active Directory/` (tentativo)
+- [ ] 08 · DACL Attacks I — `Red Team/Active Directory/03 - Abuso de ACLs/`
+- [ ] 09 · DACL Attacks II — `Red Team/Active Directory/03 - Abuso de ACLs/`
+- [ ] 10 · NTLM Relay Attacks — `Red Team/Active Directory/` (tentativo)
+- [ ] 11 · ADCS Attacks — `Red Team/Active Directory/` + `Tools/Certipy`
+- [ ] 12 · Active Directory Trust Attacks — `Red Team/Active Directory/05 - Trusts de dominio/`
+- [ ] 13 · Intro to C2 Operations with Sliver — `Red Team/` + `Tools/Sliver`
+- [ ] 14 · Introduction to Windows Evasion Techniques — `Red Team/Evasión de defensas/`
+- [ ] 15 · MSSQL, Exchange, and SCCM Attacks — `Red Team/Active Directory/` (tentativo)
+
+## CRTO · Red Team Operator
+
+Objetivo tras CPTS. Red Team con Cobalt Strike; AD y evasión/OPSEC con mucho peso. No es un path HTB (curso de Zero-Point Security), así que los bloques mapean a contenido del vault, no a módulos.
+
+- [x] Fundamentos de AD (identidad, credenciales, NTLM, Kerberos) — `Red Team/Active Directory/00 - Fundamentos de AD/`
+- [x] Enumeración de AD (host, dominio, LDAP, BloodHound) — `Active Directory/01-02`
+- [x] Robo de credenciales (SAM, LSASS, DCSync, DPAPI) — `Active Directory/04` + `Pentesting/05`
+- [x] Movimiento lateral y escalada (RDP/WinRM/MSSQL, ACLs, Kerberos) — `Active Directory/03-05`
+- [x] Trusts y dominio total — `Active Directory/06`
+- [x] Evasión y OPSEC específicos de AD (recon sigiloso, OPSEC de tickets, forjado/detección, honeytokens, credential-access OPSEC) — `Active Directory/08 - Evasión y OPSEC/` (6 notas, ADR 028)
+- [ ] Evasión de endpoint/EDR (AMSI/ETW, inyección, in-memory) — `Red Team/Evasión de defensas/` (en pausa)
+- [ ] C2 y tradecraft (Cobalt Strike, perfiles malleable, redirectores) — pendiente, área propia a decidir
+- [ ] Pivoting y túneles — `Pentesting/07 - Pivoting y túneles/` (reutilizado de CPTS)
 
 ## Plan de estudio
 
@@ -149,10 +183,10 @@ Estados: `[ ]` pendiente · `[/]` en progreso · `[x]` hecha · `[-]` cancelada.
 >
 > El botón **«+ Nueva tarea»** de la Home añade una plantilla al final de esta sección y abre esta nota para que la rellenes.
 
-- [ ] Semana 1 · CPTS · Recon de red: Proceso, Nmap, Vuln Assessment y Recon web [[Nmap.base|Nmap]] 🛫 2026-11-09 📅 2026-11-15 🔼 [esfuerzo:: 15h]
+- [/] Semana 1 · CPTS · Recon de red: Proceso, Nmap, Vuln Assessment y Recon web [[Nmap.base|Nmap]] 🛫 2026-11-09 📅 2026-11-15 🔼 [esfuerzo:: 15h]
 - [ ] Semana 2 · CPTS · Footprinting, File Transfers y Metasploit [[Footprinting.base|Footprinting]] 🛫 2026-11-16 📅 2026-11-22 🔼 [esfuerzo:: 16h]
 - [ ] Semana 3 · CPTS · Foothold: Shells & Payloads y servicios comunes [[Shells y Payloads.base|Shells y Payloads]] 🛫 2026-11-23 📅 2026-11-29 🔼 [esfuerzo:: 16h]
-- [ ] Semana 4 · CPTS · Ataques a contraseñas [[Ataques a contraseñas.base|Ataques a contraseñas]] 🛫 2026-11-30 📅 2026-12-06 🔼 [esfuerzo:: 16h]
+- [/] Semana 4 · CPTS · Ataques a contraseñas [[Ataques a contraseñas.base|Ataques a contraseñas]] 🛫 2026-11-30 📅 2026-12-06 🔼 [esfuerzo:: 16h]
 - [ ] Semana 5 · CPTS · Web I: Proxies, Ffuf, Brute Forcing, SQLi + CWEE Blind SQLi [[SQL Injection.base|SQL Injection]] 🛫 2026-12-07 📅 2026-12-13 🔼 [esfuerzo:: 22h]
 - [ ] Semana 6 · CPTS · Web II: SQLMap, XSS, File Inclusion + CWEE Advanced XSS & CSRF [[XSS.base|XSS]] 🛫 2026-12-14 📅 2026-12-20 🔼 [esfuerzo:: 23h]
 - [ ] Semana 7 · CPTS · Web III: Command Injection, File Upload y Web Attacks (festivos) [[Web Attacks.base|Web Attacks]] 🛫 2026-12-21 📅 2026-12-27 🔼 [esfuerzo:: 20h]

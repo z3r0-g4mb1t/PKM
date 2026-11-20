@@ -80,7 +80,7 @@ Esto acaba en un hallazgo, así que las recomendaciones tienen que ser accionabl
 - **RA Guard** y **DHCPv6 Guard** en los switches de acceso — es la contramedida directa, y es la que casi nunca está.
 - **Bloquear DHCPv6 entrante** (UDP 546/547) por *firewall* en los endpoints si no se usa.
 - **Desactivar WPAD**: entrada `wpad` en el DNS interno apuntando a `::1`/`127.0.0.1`, o política `WpadOverride`. **No** basta con quitarlo del navegador: el servicio `WinHTTP Web Proxy Auto-Discovery` lo sigue usando.
-- **Firmar y sellar**: exigir firma SMB y LDAP signing + *channel binding* en los DC. Eso corta el *relay*, que es lo que convierte el MITM en compromiso de dominio. Ver [[23 - Hardening de Active Directory]].
+- **Firmar y sellar**: exigir firma SMB y LDAP signing + *channel binding* en los DC. Eso corta el *relay*, que es lo que convierte el MITM en compromiso de dominio. Ver [[35 - Hardening de Active Directory]].
 - **No «desactivar IPv6»** sin más: Microsoft lo desaconseja explícitamente. Lo correcto es administrarlo, no fingir que no está.
 
 ## Más allá de mitm6
@@ -92,7 +92,7 @@ Otros vectores IPv6 del mismo paquete (`THC-IPv6`):
 - **`parasite6`** — el equivalente IPv6 del ARP poisoning, vía NA falsificados.
 - **SLAAC attack** — anunciar prefijo propio y hacerse gateway IPv6 de todo el segmento.
 
-Combina bien con el envenenamiento de nombres de IPv4: `Responder` para LLMNR/NBT-NS/mDNS ([[06 - Envenenamiento LLMNR y NBT-NS]]) y `mitm6` para IPv6 cubren las dos vías de resolución que quedan sin autenticar.
+Combina bien con el envenenamiento de nombres de IPv4: `Responder` para LLMNR/NBT-NS/mDNS ([[18 - Envenenamiento LLMNR y NBT-NS]]) y `mitm6` para IPv6 cubren las dos vías de resolución que quedan sin autenticar.
 
 > [!info]+ Fuentes
 > - [mitm6](https://github.com/dirkjanm/mitm6) — Dirk-jan Mollema (Fox-IT), con el artículo original *«Compromising IPv4 networks via IPv6»*.

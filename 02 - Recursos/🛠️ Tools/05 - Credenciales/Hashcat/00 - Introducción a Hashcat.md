@@ -66,7 +66,7 @@ $ hashcat -m 1000 -a 6 hashes.txt rockyou.txt '?d?d?d'
 $ hashcat -m 1000 hashes.txt --show
 ```
 
-<mark style="background: #FFB86CA6;">El orden importa: `hashcat -m <tipo> -a <modo> <hashfile> <wordlist/máscara>`</mark>. Si el hash lleva el username (`user:hash`), añade `--username` para que lo ignore.
+El orden importa: `hashcat -m <tipo> -a <modo> <hashfile> <wordlist/máscara>`. Si el hash lleva el username (`user:hash`), añade `--username` para que lo ignore.
 
 # El potfile
 

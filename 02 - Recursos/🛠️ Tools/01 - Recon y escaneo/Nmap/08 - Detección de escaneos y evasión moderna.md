@@ -44,7 +44,7 @@ Aquí es donde la evasión clásica muere. Plataformas como **Darktrace** o **Ve
 
 ## 1. Recon pasivo primero (no toques el objetivo)
 
-La mejor evasión es **no escanear**. Antes de mandar un paquete: `Shodan`, `Censys`, `ZoomEye` y los *Certificate Transparency logs* ya tienen mapeados puertos, servicios, versiones y certificados de casi cualquier IP pública. Buena parte del "escaneo" moderno es OSINT: llegas al escaneo activo sabiendo ya qué buscar, reduciendo el ruido a lo mínimo. Herramientas en [[09 - Arsenal de herramientas de escaneo]].
+La mejor evasión es **no escanear**. Antes de mandar un paquete: `Shodan`, `Censys`, `ZoomEye` y los *Certificate Transparency logs* ya tienen mapeados puertos, servicios, versiones y certificados de casi cualquier IP pública. Buena parte del "escaneo" moderno es [[00 - Qué es OSINT y por qué da ventaja|OSINT]]: llegas al escaneo activo sabiendo ya qué buscar, reduciendo el ruido a lo mínimo. Herramientas en [[09 - Arsenal de herramientas de escaneo]].
 
 ## 2. Low-and-slow
 
@@ -56,7 +56,7 @@ Contra detección por umbral, bajar por debajo del umbral funciona: `-T0`/`-T1`,
 - Escanear **solo puertos comunes** en vez de barridos completos (el sondeo de 80/443, además, queda fuera del finding de GuardDuty).
 - Escanear **en horario laboral**, cuando tu tráfico se pierde entre el legítimo.
 - Salir desde **rangos con buena reputación** (cloud conocido) en vez de una IP residencial sospechosa.
-- Cambiar el *user-agent* de los scripts HTTP: `--script-args http.useragent="Mozilla/5.0..."` para no cantar en un WAF (appsecvenue, 2025).
+- Cambiar el *user-agent* de los scripts [[HTTP]]: `--script-args http.useragent="Mozilla/5.0..."` para no cantar en un WAF (appsecvenue, 2025).
 
 ## 4. Distribuir el origen
 

@@ -70,7 +70,7 @@ $ sudo dnsmasq -d -i eth0 \
 >
 > - **Opción 3** (router) → te conviertes en el gateway. Requiere `ip_forward` y SNAT.
 > - **Opción 6** (DNS) → controlas la resolución de nombres sin tocar ARP. A menudo **más rentable que ser el gateway**, porque redirige selectivamente y pasa mucho más desapercibido.
-> - **Opción 252** (WPAD) → el cliente descarga un fichero de autoconfiguración de proxy y **envía su tráfico HTTP/HTTPS a tu proxy voluntariamente**. En entornos Windows esto es de lo más productivo que existe: combinado con autenticación NTLM, es la vía directa a capturar y retransmitir hashes ([[06 - Envenenamiento LLMNR y NBT-NS]]).
+> - **Opción 252** (WPAD) → el cliente descarga un fichero de autoconfiguración de proxy y **envía su tráfico HTTP/HTTPS a tu proxy voluntariamente**. En entornos Windows esto es de lo más productivo que existe: combinado con autenticación NTLM, es la vía directa a capturar y retransmitir hashes ([[18 - Envenenamiento LLMNR y NBT-NS]]).
 > - **Opción 121 / 249** (rutas estáticas sin clase) → inyectas rutas concretas en vez de secuestrar el gateway entero. **Mucho más sigiloso**: solo desvías el tráfico hacia el rango que te interesa y el resto sigue su camino normal.
 
 ## Frente a ARP poisoning

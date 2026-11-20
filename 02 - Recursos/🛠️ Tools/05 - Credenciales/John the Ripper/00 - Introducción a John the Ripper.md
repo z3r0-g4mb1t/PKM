@@ -10,9 +10,7 @@ Nota previa:
 Nota siguiente: "[[01 - Cracking en la práctica con John]]"
 Area: "[[John the Ripper.base|John the Ripper]]"
 ---
----
-
-<mark style="background: #ADCCFFA6;">`John the Ripper` (JtR) es un *password cracker* open source de Openwall</mark>, orientado a `CPU` (con soporte `OpenCL` para GPU), multiplataforma y con soporte para cientos de tipos de hash. Es, junto a [[00 - Introducción a Hashcat|Hashcat]], la herramienta de referencia para el descifrado offline de hashes capturados durante un pentest.
+<mark style="background: #ADCCFFA6;">`John the Ripper` (JtR) es un password cracker open source de Openwall</mark>, orientado a `CPU` (con soporte `OpenCL` para GPU), multiplataforma y con soporte para cientos de tipos de hash. Es, junto a [[00 - Introducción a Hashcat|Hashcat]], la herramienta de referencia para el descifrado offline de hashes capturados durante un pentest.
 
 > [!important]+ Usa siempre la versión "Jumbo"
 > La versión "core" de John soporta pocos formatos. <mark style="background: #FFB86CA6;">La que se usa en pentest es `John the Ripper Jumbo` (community edition)</mark> — trae cientos de formatos (NTLM, Kerberos, sha512crypt, bcrypt…) y los *2john* que extraen hashes de ficheros. Kali/Parrot ya la traen. Repo: [github.com/openwall/john](https://github.com/openwall/john).
@@ -21,13 +19,13 @@ Area: "[[John the Ripper.base|John the Ripper]]"
 
 <mark style="background: #FFB8EBA6;">JtR no es solo "diccionario": tiene varios modos, y elegir el correcto define el éxito</mark>:
 
-| Modo | Flag | Qué hace |
-| --- | --- | --- |
-| **Single crack** | `--single` | Deriva candidatos del propio *username* y GECOS — rapidísimo y sorprendentemente eficaz |
-| **Wordlist** | `--wordlist=` | Prueba una lista, opcionalmente con reglas de mutación (`--rules`) |
-| **Mask** | `--mask=` | Fuerza bruta por patrón (`?u?l?l?l?d?d`), calcado del `-a 3` de Hashcat — útil sin GPU (solo Jumbo) |
-| **Incremental** | `--incremental` | Fuerza bruta inteligente por frecuencia de caracteres |
-| **External** | `--external=` | Modo programable en C definido por el usuario |
+| **Modo**       | **Flag**        | **Qué hace**                                                                                        |
+| -------------- | --------------- | --------------------------------------------------------------------------------------------------- |
+| *Single crack* | `--single`      | Deriva candidatos del propio *username* y GECOS — rapidísimo y sorprendentemente eficaz             |
+| *Wordlist*     | `--wordlist=`   | Prueba una lista, opcionalmente con reglas de mutación (`--rules`)                                  |
+| *Mask*         | `--mask=`       | Fuerza bruta por patrón (`?u?l?l?l?d?d`), calcado del `-a 3` de Hashcat — útil sin GPU (solo Jumbo) |
+| *Incremental*  | `--incremental` | Fuerza bruta inteligente por frecuencia de caracteres                                               |
+| *External*     | `--external=`   | Modo programable en C definido por el usuario                                                       |
 
 El flujo habitual: **single → wordlist con reglas → incremental** como último recurso (el incremental puede tardar eternidades). Jumbo añade también `--loopback`, que recrackea usando las contraseñas ya rotas (del *potfile*) como diccionario — muy eficaz para cazar reutilización de patrones entre cuentas.
 

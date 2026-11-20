@@ -63,16 +63,16 @@ Cuando no puedes calcular los valores a mano (caja negra), Nmap trae seis perfil
 
 Los valores concretos que mueve cada plantilla (los más relevantes, [doc oficial](https://nmap.org/book/man-performance.html)):
 
-| Plantilla | Delay entre sondas | initial-RTT | max-RTT | max-retries | Extra |
-| --------- | ------------------ | ----------- | ------- | ----------- | ----- |
-| `-T0`     | **5 min** (serializado, 1 puerto a la vez) | — | — | — | — |
-| `-T1`     | **15 s**           | —           | —       | —           | — |
-| `-T2`     | **0,4 s**          | —           | —       | —           | — |
-| `-T3`     | — (por defecto)    | 1000 ms     | 10 s    | 10          | — |
-| `-T4`     | tope TCP 10 ms     | 500 ms      | 1250 ms | 6           | — |
-| `-T5`     | tope TCP 5 ms      | 250 ms      | 300 ms  | 2           | host-timeout 15 min · script-timeout 10 min |
+| **Plantilla** | **Delay entre sondas**                         | **initial-RTT** | **max-RTT** | **max-retries** | **Extra**                                       |
+| --------- | ------------------------------------------ | ----------- | ------- | ----------- | ------------------------------------------- |
+| `-T0`     | **5 min** (serializado, 1 puerto a la vez) | —           | —       | —           | —                                           |
+| `-T1`     | **15 s**                                   | —           | —       | —           | —                                           |
+| `-T2`     | **0,4 s**                                  | —           | —       | —           | —                                           |
+| `-T3`     | — (por defecto)                            | 1000 ms     | 10 s    | 10          | —                                           |
+| `-T4`     | tope TCP 10 ms                             | 500 ms      | 1250 ms | 6           | —                                           |
+| `-T5`     | tope TCP 5 ms                              | 250 ms      | 300 ms  | 2           | host-timeout 15 min · script-timeout 10 min |
 
-<mark style="background: #ADCCFFA6;">`-T0`/`-T1` juegan con el **espaciado temporal**</mark> (5 min / 15 s entre sondas) para diluir el patrón de *portscan*; <mark style="background: #FFB86CA6;">`-T4`/`-T5` recortan *timeouts* y reintentos</mark> (de 10 s/10 a 1250 ms/6 y a 300 ms/2), por eso van rápido pero dan por muertos los hosts lentos.
+<mark style="background: #ADCCFFA6;">`-T0`/`-T1` juegan con el espaciado temporal</mark> (5 min / 15 s entre sondas) para diluir el patrón de *portscan*; <mark style="background: #FFB86CA6;">`-T4`/`-T5` recortan timeouts y reintentos</mark> (de 10 s/10 a 1250 ms/6 y a 300 ms/2), por eso van rápido pero dan por muertos los hosts lentos.
 
 ```shell-session
 $ sudo nmap 10.129.2.0/24 -F              # -T3 por defecto: 32.44s

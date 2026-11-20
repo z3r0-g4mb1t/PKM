@@ -22,13 +22,6 @@
         "name": "",
         "active": true,
         "type": "FILES",
-        "pattern": "Build Obsidian REFERENCIAS.md",
-        "patternType": "STRICT"
-      },
-      {
-        "name": "",
-        "active": true,
-        "type": "FILES",
         "pattern": "REVISAR ENLACES.md",
         "patternType": "STRICT"
       },
@@ -408,6 +401,20 @@
         "active": true,
         "type": "FILES",
         "pattern": "02 - Recursos/🛠️ Tools/01 - Recon y escaneo/Nmap/Nmap.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "02 - Recursos/🛠️ Tools/01 - Recon y escaneo/ProjectDiscovery/ProjectDiscovery.base",
+        "patternType": "STRICT"
+      },
+      {
+        "name": "",
+        "active": true,
+        "type": "FILES",
+        "pattern": "02 - Recursos/🛠️ Tools/02 - Evaluación de vulnerabilidades/Nessus/Nessus.base",
         "patternType": "STRICT"
       }
     ],

@@ -92,7 +92,7 @@ Cuando en un laboratorio con señuelos desplegados según las guías de Microsof
 
 # Conexiones en el vault
 
-La perspectiva defensiva del engaño está en el bloque de doctrina defensiva de Blue Team; la lógica de por qué el defensor invierte en trampas y qué le cuesta al atacante, en [[01 - Frameworks de threat intelligence y la Pyramid of Pain]]. La técnica que más se beneficia de este filtro es el Kerberoasting de [[11 - Kerberoasting]], y el cruce con el planificador de [[04 - Planificador de spraying con modelo de bloqueo]] es directo.
+La perspectiva defensiva del engaño está en el bloque de doctrina defensiva de Blue Team; la lógica de por qué el defensor invierte en trampas y qué le cuesta al atacante, en [[01 - Frameworks de threat intelligence y la Pyramid of Pain]]. La técnica que más se beneficia de este filtro es el Kerberoasting de [[23 - Kerberoasting]], y el cruce con el planificador de [[04 - Planificador de spraying con modelo de bloqueo]] es directo.
 
 > [!info]+ Fuentes
 > - Microsoft, [*Deceptive defense — best practices for identity based honeytokens in Defender for Identity*](https://techcommunity.microsoft.com/blog/microsoftthreatprotectionblog/deceptive-defense-best-practices-for-identity-based-honeytokens-in-microsoft-def/3851641) — cómo se despliegan; leído al revés, cómo se detectan.

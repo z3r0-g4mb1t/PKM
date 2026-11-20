@@ -126,7 +126,7 @@ Presentable cuando: dado un export de BloodHound de un laboratorio de AD con una
 
 # Conexiones en el vault
 
-Es la capa de precisión sobre todo el sub-tema de ACLs: [[12 - Primer de abuso de ACLs]], [[13 - Enumeración de ACLs]], [[14 - Tácticas de abuso de ACLs]] y [[15 - DCSync]] (la ruta estrella que más duele verificar mal). Se apoya en la enumeración con credenciales de [[04 - Enumeración con credenciales]] y en el arsenal de [[26 - Arsenal de herramientas AD]]. El ruido de la recolección LDAP conecta con [[25 - Detección y evasión en AD]]. Complementa —no repite— al [[06 - Cartógrafo de pivoting y alcanzabilidad]] del catálogo de Go (aquel mapea red; este, permisos) y al [[05 - Detector de señuelos defensivos en Active Directory]] (aquel detecta honeytokens; este, falsos positivos de ruta).
+Es la capa de precisión sobre todo el sub-tema de ACLs: [[24 - Primer de abuso de ACLs]], [[25 - Enumeración de ACLs]], [[26 - Tácticas de abuso de ACLs]] y [[27 - DCSync]] (la ruta estrella que más duele verificar mal). Se apoya en la enumeración con credenciales de [[08 - Enumeración con credenciales]] y en el arsenal de [[38 - Arsenal de herramientas AD]]. El ruido de la recolección LDAP conecta con [[37 - Detección y evasión en AD]]. Complementa —no repite— al [[06 - Cartógrafo de pivoting y alcanzabilidad]] del catálogo de Go (aquel mapea red; este, permisos) y al [[05 - Detector de señuelos defensivos en Active Directory]] (aquel detecta honeytokens; este, falsos positivos de ruta).
 
 > [!info]+ Fuentes
 > - SpecterOps / BloodHound, [issue #392 — BHCE does not honor on-premise AD deny ACLs](https://github.com/SpecterOps/BloodHound/issues/392) — la limitación, reconocida por los propios autores (consultado 2026-09-21).

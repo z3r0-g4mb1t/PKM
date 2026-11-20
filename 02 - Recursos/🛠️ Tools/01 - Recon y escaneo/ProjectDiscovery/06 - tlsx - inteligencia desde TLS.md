@@ -95,7 +95,7 @@ Esto importa más de lo que parece: la librería estándar de Go **rechaza** con
 $ tlsx -l hosts.txt -p 443,8443,993,995,465,3389,5986 -silent -san -cn
 ```
 
-Los servicios con TLS que no son web son donde salen los hallazgos que nadie más mira: **IMAPS/POP3S** (993/995), **SMTPS** (465), **RDP** (3389), **WinRM sobre HTTPS** (5986). Sus certificados suelen llevar el **nombre real de la máquina y el dominio interno** — material directo para la fase de Active Directory ([[02 - Enumeración inicial del dominio]]).
+Los servicios con TLS que no son web son donde salen los hallazgos que nadie más mira: **IMAPS/POP3S** (993/995), **SMTPS** (465), **RDP** (3389), **WinRM sobre HTTPS** (5986). Sus certificados suelen llevar el **nombre real de la máquina y el dominio interno** — material directo para la fase de Active Directory ([[06 - Enumeración inicial del dominio]]).
 
 # Salida
 

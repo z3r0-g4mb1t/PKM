@@ -11,7 +11,7 @@ Area: "[[Wi-Fi corporativo.base|Wi-Fi corporativo]]"
 ---
 ---
 
-Esta nota **no reexplica** las técnicas de Active Directory: cada una tiene su desarrollo en [[00 - Introducción a la enumeración y ataques en AD|el área de AD]]. Lo que documenta es <mark style="background: #ADCCFFA6;">la secuencia de decisiones que lleva de una credencial capturada por radio hasta el dominio</mark>, incluidos los intentos que no llevan a ninguna parte, que son la mitad del trabajo real.
+Esta nota **no reexplica** las técnicas de Active Directory: cada una tiene su desarrollo en [[04 - Introducción a la enumeración y ataques en AD|el área de AD]]. Lo que documenta es <mark style="background: #ADCCFFA6;">la secuencia de decisiones que lleva de una credencial capturada por radio hasta el dominio</mark>, incluidos los intentos que no llevan a ninguna parte, que son la mitad del trabajo real.
 
 # El punto de partida
 
@@ -54,7 +54,7 @@ Los tres primeros nodos en rojo son intentos **fallidos**, y merecen tanto espac
 
 | Intento | Resultado | Por qué se prueba igualmente |
 | ------- | --------- | ---------------------------- |
-| [[11 - Kerberoasting]] | `No entries found!` | Es el primer disparo con cualquier credencial válida: barato y a veces decisivo |
+| [[23 - Kerberoasting]] | `No entries found!` | Es el primer disparo con cualquier credencial válida: barato y a veces decisivo |
 | AS-REP Roasting | Ninguna cuenta sin preautenticación | Además **enumera usuarios**: el error distingue cuenta inexistente de cuenta sin el flag |
 | Módulos de NetExec (`gpp_password`, `enum_ca`) | Nada | Segundos de coste; GPP y AD CS son fallos frecuentes |
 | Shares del DC | `Automation` y `Configuration` sin lectura | **Se anotan**: si más tarde cae otra cuenta, se reintentan |
@@ -105,14 +105,14 @@ $ .\SharpHound.exe -d starlight.ad -c All --DomainController 172.16.10.72 --ZipF
 $ secretsdump.py infra-adm:'<pass>'@172.16.10.72 -outputfile starlight_ntds
 ```
 
-BloodHound revela que `infra-adm` tiene `GetChanges` y `GetChangesAll` sobre el objeto de dominio: [[15 - DCSync]] directo, sin ser administrador de dominio. Y con el hash del `Administrator` (RID 500), acceso al DC:
+BloodHound revela que `infra-adm` tiene `GetChanges` y `GetChangesAll` sobre el objeto de dominio: [[27 - DCSync]] directo, sin ser administrador de dominio. Y con el hash del `Administrator` (RID 500), acceso al DC:
 
 ```shell-session
 $ wmiexec.py administrator@172.16.10.72 -hashes :<NT hash>
 ```
 
 > [!info]+ BloodHound CE es lo actual
-> El flujo con `neo4j start` + la GUI de escritorio corresponde a **BloodHound legacy**. Desde 2023 el proyecto vigente es **BloodHound Community Edition**, que se despliega con Docker Compose, trae su propia base de datos y usa un `SharpHound` distinto. Las consultas y los *edges* han cambiado de nombre en varios casos. Ver [[26 - Arsenal de herramientas AD]].
+> El flujo con `neo4j start` + la GUI de escritorio corresponde a **BloodHound legacy**. Desde 2023 el proyecto vigente es **BloodHound Community Edition**, que se despliega con Docker Compose, trae su propia base de datos y usa un `SharpHound` distinto. Las consultas y los *edges* han cambiado de nombre en varios casos. Ver [[38 - Arsenal de herramientas AD]].
 
 # Lo que hace especial a esta cadena
 

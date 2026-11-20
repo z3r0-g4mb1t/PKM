@@ -54,7 +54,7 @@ Los cuatro canales por los que se filtra, en orden de sutileza:
 
 La corrección del canal temporal es **ejecutar siempre el mismo trabajo**: hashear contra una contraseña señuelo cuando el usuario no exista, para que el tiempo sea constante.
 
-Metodología completa en [[01 - Enumeración de usuarios]] y [[08 - Enumerar políticas de contraseñas]].
+Metodología completa en [[01 - Enumeración de usuarios]] y [[20 - Enumerar políticas de contraseñas]].
 
 ## Comparación en tiempo variable
 

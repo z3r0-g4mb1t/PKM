@@ -77,7 +77,7 @@ Es la misma función que cumple `dnsx` en la suite de ProjectDiscovery ([[02 - a
 
 - **`AXFR`** — transferencia de zona. Sigue apareciendo, y sigue regalando la zona entera ([[04 - Transferencias de zona DNS]]).
 - **`CAA`, `DMARC`, `SPF`, `TXT`** — revelan qué CA emite los certificados, qué proveedores de correo y SaaS usa el cliente, y a menudo verificaciones de dominio que nombran servicios internos.
-- **`SRV`** — en dominios con Active Directory expuesto, `_ldap._tcp.dc._msdcs.<dominio>` canta los controladores ([[02 - Enumeración inicial del dominio|enumeración de AD]]).
+- **`SRV`** — en dominios con Active Directory expuesto, `_ldap._tcp.dc._msdcs.<dominio>` canta los controladores ([[06 - Enumeración inicial del dominio|enumeración de AD]]).
 - **`BINDVERSION`** — consulta `version.bind` en CHAOS; identifica el software del servidor DNS.
 - **`NSEC`/`NSEC3`** — habilitan el *zone walking* cuando DNSSEC está mal configurado.
 
